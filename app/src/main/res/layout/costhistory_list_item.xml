@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="9月23日"
+        android:id="@+id/costHistoryDate"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="16:20"
+        android:id="@+id/costHistoryTime"
+        android:layout_alignTop="@+id/costHistoryDate"
+        android:layout_toEndOf="@+id/costHistoryDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="消费金额:"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/costHistoryDate"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/costHistoryCount"
+        android:layout_below="@+id/costHistoryDate"
+        android:layout_toEndOf="@+id/costHistoryDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="消费账号:"
+        android:id="@+id/textView8"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/costHistoryAccout"
+        android:layout_alignTop="@+id/textView8"
+        android:layout_alignStart="@+id/costHistoryCount"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="储值卡"
+        android:id="@+id/costHistoryCardType"
+        android:layout_above="@+id/costHistoryCount"
+        android:layout_toEndOf="@+id/costHistoryCount"/>
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/imageView2"
+        android:layout_alignTop="@+id/costHistoryCount"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="5dp"/>
+</RelativeLayout>
