@@ -1,5 +1,10 @@
 package com.zhongchuangtiyu.denarau.Entities;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
+
 /**
  * Created by WangMeng on 2015/10/19.
  */
@@ -56,5 +61,12 @@ public class UsersDetail
     public int getBirthday()
     {
         return birthday;
+    }
+    public static List<UsersDetail> instance(String str)
+    {
+
+        Gson gson = new Gson();
+        return gson.fromJson(str, new TypeToken<List<UsersDetail>>() {
+        }.getType());
     }
 }

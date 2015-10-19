@@ -5,10 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageButton;
 import android.widget.ListView;
-
-import com.zhongchuangtiyu.denarau.Adapters.CardBagListAdapter;
 import com.zhongchuangtiyu.denarau.R;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,5 +1,8 @@
 package com.zhongchuangtiyu.denarau.Entities;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.List;
 
 /**
@@ -137,5 +140,12 @@ public class CoachesDetail
         {
             return lessons;
         }
+    }
+    public static List<CoachesDetail> instance(String str)
+    {
+
+        Gson gson = new Gson();
+        return gson.fromJson(str, new TypeToken<List<CoachesDetail>>() {
+        }.getType());
     }
 }

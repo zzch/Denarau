@@ -1,5 +1,8 @@
 package com.zhongchuangtiyu.denarau.Entities;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.List;
 
 /**
@@ -230,5 +233,12 @@ public class ClubsHome
         {
             return published_at;
         }
+    }
+    public static List<ClubsHome> instance(String str)
+    {
+
+        Gson gson = new Gson();
+        return gson.fromJson(str, new TypeToken<List<ClubsHome>>() {
+        }.getType());
     }
 }

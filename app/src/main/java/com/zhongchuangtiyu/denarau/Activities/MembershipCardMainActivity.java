@@ -9,13 +9,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.zhongchuangtiyu.denarau.Adapters.MemberShipViewPagerAdapter;
 import com.zhongchuangtiyu.denarau.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
