@@ -1,5 +1,6 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,13 +10,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.zhongchuangtiyu.denarau.Adapters.CardbagListAdapter;
+import com.zhongchuangtiyu.denarau.Entities.ClubsMembership;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MembershipCardMainActivity extends AppCompatActivity
+public class MembershipCardMainActivity extends AppCompatActivity implements View.OnClickListener
 {
 
     @Bind(R.id.membershipCardMainTitleLeft)
@@ -53,7 +60,26 @@ public class MembershipCardMainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         membershipCardMainToolbar = (Toolbar) findViewById(R.id.membershipCardMainToolbar);
         setSupportActionBar(membershipCardMainToolbar);
-
+        setListeners();
     }
 
+    private void setListeners()
+    {
+        membershipCardMainTitleRight.setOnClickListener(this);
+        btnOrderPositon.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.membershipCardMainTitleRight:
+                startActivity(new Intent(MembershipCardMainActivity.this, CardBagListActivity.class));
+                break;
+            case R.id.btnOrderPositon:
+                startActivity(new Intent(MembershipCardMainActivity.this,PositionOrderActivity.class));
+                break;
+        }
+    }
 }

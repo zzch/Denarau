@@ -24,7 +24,7 @@ public class Xlog {
     public static final int LEVEL_ASSERT = 6;
 
 	/** 日志输出时的TAG */
-	private static String mTag = "HEZHONG";
+	private static String mTag = "WANGMENG";
 	/** 是否允许输出log */
 	// private static int mDebuggable = LEVEL_ERROR;
 	private static int mDebuggable = LEVEL_DEBUG;

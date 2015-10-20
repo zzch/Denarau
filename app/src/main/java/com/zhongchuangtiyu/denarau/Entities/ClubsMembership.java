@@ -3,12 +3,13 @@ package com.zhongchuangtiyu.denarau.Entities;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by WangMeng on 2015/10/19.
  */
-public class ClubsMembership
+public class ClubsMembership implements Serializable
 {
 
     /**

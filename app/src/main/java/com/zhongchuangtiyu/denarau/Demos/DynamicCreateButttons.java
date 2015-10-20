@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,5 +34,6 @@ public class DynamicCreateButttons extends Activity
             button.setText(list.get(i));
             linearLayout.addView(button);
         }
+        Xlog.d(CacheUtils.getString(DynamicCreateButttons.this, "token", null)+"-------------------------------");
     }
 }

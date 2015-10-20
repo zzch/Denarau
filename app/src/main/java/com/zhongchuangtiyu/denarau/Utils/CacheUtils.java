@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  */
 public class CacheUtils {
 
-	private static final String CACHE_FILE_NAME = "fcqxdoctor";
+	private static final String CACHE_FILE_NAME = "token&uuidPersistence";
 	private static SharedPreferences mSharedPreferences;
 
 	public static void putBoolean(Context context, String key, boolean value) {

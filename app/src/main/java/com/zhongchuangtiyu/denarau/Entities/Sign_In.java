@@ -1,14 +1,13 @@
 package com.zhongchuangtiyu.denarau.Entities;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by WangMeng on 2015/10/19.
  */
-public class Sign_In
+public class Sign_In implements Serializable
 {
 
     /**
@@ -18,6 +17,13 @@ public class Sign_In
 
     private UserEntity user;
     private ClubEntity club;
+    /**
+     * exception_code : 20003
+     * message : 验证码不正确
+     */
+
+    private int exception_code;
+    private String message;
 
     public void setUser(UserEntity user)
     {
@@ -37,6 +43,26 @@ public class Sign_In
     public ClubEntity getClub()
     {
         return club;
+    }
+
+    public void setException_code(int exception_code)
+    {
+        this.exception_code = exception_code;
+    }
+
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
+
+    public int getException_code()
+    {
+        return exception_code;
+    }
+
+    public String getMessage()
+    {
+        return message;
     }
 
     public static class UserEntity
@@ -124,11 +150,10 @@ public class Sign_In
             return uuid;
         }
     }
-    public static List<Sign_In> instance(String str)
+    public static Sign_In instance(String string)
     {
 
         Gson gson = new Gson();
-        return gson.fromJson(str, new TypeToken<List<Sign_In>>() {
-        }.getType());
+        return gson.fromJson(string,Sign_In.class);
     }
 }

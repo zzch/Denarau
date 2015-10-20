@@ -26,11 +26,9 @@ public class Welcome
     {
         return sentences;
     }
-    public static List<Welcome> instance(String str)
+    public static Welcome instance(String string)
     {
-
         Gson gson = new Gson();
-        return gson.fromJson(str, new TypeToken<List<Welcome>>() {
-        }.getType());
+        return gson.fromJson(string,Welcome.class);
     }
 }
