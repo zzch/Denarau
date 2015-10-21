@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Denarau.iml" filepath="$PROJECT_DIR$/Denarau.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-numberpicker/library-numberpicker.iml" filepath="$PROJECT_DIR$/library-numberpicker/library-numberpicker.iml" />
     </modules>
   </component>
 </project>

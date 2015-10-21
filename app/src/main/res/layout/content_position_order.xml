@@ -141,14 +141,26 @@
     </RelativeLayout>
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="New Button"
-        android:id="@+id/btnOrderTime"
+
+    <com.iwhys.library.UnitNumberPicker
+        android:id="@+id/clock"
+        style="@style/DateNumberPicker"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="5dp"/>
+
+
+
+
+
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:text="New Button"-->
+        <!--android:id="@+id/btnOrderTime"-->
+        <!--android:layout_below="@+id/linearLayout2"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="10dp"/>-->
 
 </RelativeLayout>
 

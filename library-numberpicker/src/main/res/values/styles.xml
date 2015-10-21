@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Theme for Dialog -->
+    <style name="Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- Copy the attribute to your own theme or add the attribute (or its child) to NumberPicker widget in your xml layout file.
+        <item name="numberPickerStyle">@style/CommonNumberPicker</item>
+    -->
+    <style name="CommonNumberPicker">
+        <item name="android:orientation">vertical</item>
+        <item name="android:fadingEdge">vertical</item>
+        <item name="android:fadingEdgeLength">50dip</item>
+        <item name="solidColor">#e0e0e0</item>
+        <item name="selectionDividerHeight">2dip</item>
+        <item name="internalLayout">@layout/number_picker_with_selector_wheel</item>
+        <item name="internalMinWidth">64dip</item>
+        <item name="internalMaxHeight">180dip</item>
+        <item name="middleTextSize">20sp</item>
+        <item name="middleTextColor">#000000</item>
+        <item name="virtualButtonTextSize">12sp</item>
+        <item name="virtualButtonTextAlpha">120</item>
+    </style>
+
+    <!-- bottom animation like method -->
+    <style name="AnimationBottomDialog">
+        <item name="android:windowEnterAnimation">@anim/input_method_enter</item>
+        <item name="android:windowExitAnimation">@anim/input_method_exit</item>
+    </style>
+
+    <!--DateNumberPicker-->
+    <style name="DateNumberPicker" parent="CommonNumberPicker">
+        <item name="android:descendantFocusability">blocksDescendants</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="solidColor">#e0e0e0</item>
+        <item name="selectionDividerColor">#ff664b49</item>
+        <item name="selectionDividerHeight">0dp</item>
+        <item name="unitTextSize">6sp</item>
+        <item name="middleTextSize">16sp</item>
+        <item name="unitTextColor">#999</item>
+    </style>
+
+</resources>

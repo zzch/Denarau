@@ -1,8 +1,5 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -59,12 +56,10 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
     Button btnOrder;
     @Bind(R.id.positionOrderButtonRl)
     RelativeLayout positionOrderButtonRl;
-    @Bind(R.id.btnOrderTime)
-    Button btnOrderTime;
     @Bind(R.id.positionOrderWind)
     TextView positionOrderWind;
     private int i;
-    private AlertDialog.Builder builder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -82,7 +77,6 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         btnToday.setOnClickListener(this);
         btnTomorrow.setOnClickListener(this);
         btnTheDayAfterTomorrow.setOnClickListener(this);
-        btnOrder.setOnClickListener(this);
     }
 
     private void requestData()
@@ -105,31 +99,17 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                 String wind = data.get(i).getWind();
                 String formatDate = String.valueOf(date);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
+                String formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate)));
                 positionOrderDate.setText(formatedDate);
                 positionOrderTemperature.setText(String.valueOf(maximum_temperature));
                 positionOrderWeatherTv.setText(content);
                 positionOrderWind.setText(wind);
-                builder = new AlertDialog.Builder(PositionOrderActivity.this);
-                builder.setTitle("预定成功");
-                builder.setMessage("你已经成功预定" + formatedDate + "的打位，可以在“个人中心”>“打位预约”中查看");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
-                { //设置确定按钮
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss(); //关闭dialog
-                        Toast.makeText(PositionOrderActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.create();
-
             }
 
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.toast(PositionOrderActivity.this, "无法获取天气信息");
+                CustomToast.toast(PositionOrderActivity.this,"无法获取天气信息");
             }
         });
     }
@@ -151,12 +131,8 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                 i = 2;
                 requestData();
                 break;
-            case R.id.btnOrder:
-                builder.show();
-                break;
             default:
                 break;
         }
     }
-
 }
