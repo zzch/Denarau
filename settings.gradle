@@ -1,1 +1,1 @@
-include ':app', ':library-numberpicker'
+include ':library-numberpicker', ':app'

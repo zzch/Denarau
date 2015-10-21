@@ -24,6 +24,7 @@ import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,7 +32,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -71,10 +71,15 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
     TextView textView2;
     @Bind(R.id.clock)
     UnitNumberPicker clock;
+    @Bind(R.id.probabilityOfPrecipitation)
+    TextView probabilityOfPrecipitation;
     private int i;
-    private  String[] data = {"09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00"};
+    private String[] data = {"09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00"};
     private String selectedValue = "9:00";
     private AlertDialog.Builder builder;
+    private String combinedTimeToPost, formatedDate;
+    private long combinedTimeStamp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -100,9 +105,9 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         calendar0.setTime(now0);
         calendar1.setTime(now1);
         calendar2.setTime(now2);
-        calendar0.add(calendar0.DATE,0);
-        calendar1.add(calendar1.DATE,1);
-        calendar2.add(calendar2.DATE,2);
+        calendar0.add(calendar0.DATE, 0);
+        calendar1.add(calendar1.DATE, 1);
+        calendar2.add(calendar2.DATE, 2);
         now0 = calendar0.getTime();
         now1 = calendar1.getTime();
         now2 = calendar2.getTime();
@@ -127,6 +132,7 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
             public void onValueChange(NumberPicker picker, int oldVal, int newVal)
             {
                 selectedValue = data[newVal];
+                Xlog.d(selectedValue + "selectedValue------------------------------------------");
             }
         });
     }
@@ -137,6 +143,7 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         btnTomorrow.setOnClickListener(this);
         btnTheDayAfterTomorrow.setOnClickListener(this);
         btnOrder.setOnClickListener(this);
+        positionOrderTitleLeft.setOnClickListener(this);
     }
 
     private void requestData()
@@ -151,7 +158,6 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
             @Override
             public void netSuccess(String response)
             {
-//                - TimeZone.getDefault().getRawOffset()
                 List<Weathers> data = Weathers.instance(response);
                 int date = data.get(i).getDate();
                 int day_of_week = data.get(i).getDay_of_week();
@@ -160,17 +166,62 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                 int maximum_temperature = data.get(i).getMaximum_temperature();
                 String probability_of_precipitation = data.get(i).getProbability_of_precipitation();
                 String wind = data.get(i).getWind();
-                String formatDate = String.valueOf(date);
+                String formatDate = String.valueOf(date - 28800);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
+                SimpleDateFormat detailedSimpleDateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+                String detailedSimpleDateFormated = detailedSimpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
+                formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
+                String editedTime = detailedSimpleDateFormated.toString();
+                long editedTimeStringToAppend = Long.valueOf(editedTime);
+                String editedSelectedValue = selectedValue.replace(":", "");
+                long selectedValueToAppend = Long.valueOf(editedSelectedValue);
+                combinedTimeToPost = String.valueOf(editedTimeStringToAppend + selectedValueToAppend);
+                SimpleDateFormat combinedDateFormater = new SimpleDateFormat("yyMMddHHmm");
+                try
+                {
+                    Date combinedDate = combinedDateFormater.parse(combinedTimeToPost);
+                    combinedTimeStamp = combinedDate.getTime() / 1000;
+                } catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
+                Xlog.d(detailedSimpleDateFormated + "-------------------------------------------");
                 Xlog.d(formatedDate + "-------------------------------------------");
+                Xlog.d(combinedTimeToPost + "-------------------------------------------");
+                Xlog.d(combinedTimeStamp + "-------------------------------------------");
+                Xlog.d(date + "-------------------------------------------");
+
                 positionOrderDate.setText(formatedDate);
-                positionOrderTemperature.setText(String.valueOf(maximum_temperature));
+                positionOrderTemperature.setText(String.valueOf(maximum_temperature) + "℃");
                 positionOrderWeatherTv.setText(content);
                 positionOrderWind.setText(wind);
+                probabilityOfPrecipitation.setText("降水概率" + " " + probability_of_precipitation);
+            }
+
+            @Override
+            public void netFail(VolleyError error)
+            {
+                CustomToast.toast(PositionOrderActivity.this, "无法获取天气信息");
+            }
+        });
+    }
+
+    private void sendOrderRequest()
+    {
+        Map<String, String> map = new HashMap<>();
+        String token = CacheUtils.getString(PositionOrderActivity.this, "token", "aa");
+        String club_uuid = CacheUtils.getString(PositionOrderActivity.this, "clubuuid", "aa");
+        map.put("token", token);
+        map.put("club_uuid", club_uuid);
+        map.put("reserve_at", String.valueOf(combinedTimeStamp));
+        MyApplication.volleyPOST(APIUrls.RESERVATION_URL, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
                 builder = new AlertDialog.Builder(PositionOrderActivity.this);
                 builder.setTitle("预定成功");
-                builder.setMessage("你已经成功预定" + formatedDate + "的打位，可以在“个人中心”>“打位预约”中查看");
+                builder.setMessage("你已经成功预定" + formatedDate + " " + selectedValue + "的打位，可以在“个人中心”>“打位预约”中查看");
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
                 { //设置确定按钮
                     @Override
@@ -180,15 +231,19 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                         Toast.makeText(PositionOrderActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
                     }
                 });
+                builder.setCancelable(false);
                 builder.create();
+                builder.show();
+                Xlog.d(response + "response------------------------------------------");
             }
 
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.toast(PositionOrderActivity.this, "无法获取天气信息");
+                CustomToast.toast(PositionOrderActivity.this, error.toString());
             }
         });
+
     }
 
     @Override
@@ -209,10 +264,15 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                 requestData();
                 break;
             case R.id.btnOrder:
-                builder.show();
+                sendOrderRequest();
+                break;
+            case R.id.positionOrderTitleLeft:
+                finish();
                 break;
             default:
                 break;
         }
     }
+
+
 }
