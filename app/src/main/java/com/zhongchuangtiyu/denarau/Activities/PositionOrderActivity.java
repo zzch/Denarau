@@ -1,6 +1,8 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.iwhys.library.NumberPicker;
+import com.iwhys.library.UnitNumberPicker;
 import com.zhongchuangtiyu.denarau.Entities.Weathers;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
@@ -21,10 +25,13 @@ import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -58,8 +65,16 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
     RelativeLayout positionOrderButtonRl;
     @Bind(R.id.positionOrderWind)
     TextView positionOrderWind;
+    @Bind(R.id.relativeLayout2)
+    RelativeLayout relativeLayout2;
+    @Bind(R.id.textView2)
+    TextView textView2;
+    @Bind(R.id.clock)
+    UnitNumberPicker clock;
     private int i;
-
+    private  String[] data = {"09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00"};
+    private String selectedValue = "9:00";
+    private AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -70,6 +85,50 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         setSupportActionBar(toolbar);
         requestData();
         setListeners();
+        initCustomTimePicker();
+        initButtenText();
+    }
+
+    private void initButtenText()
+    {
+        Date now0 = new Date();
+        Date now1 = new Date();
+        Date now2 = new Date();
+        Calendar calendar0 = new GregorianCalendar();
+        Calendar calendar1 = new GregorianCalendar();
+        Calendar calendar2 = new GregorianCalendar();
+        calendar0.setTime(now0);
+        calendar1.setTime(now1);
+        calendar2.setTime(now2);
+        calendar0.add(calendar0.DATE,0);
+        calendar1.add(calendar1.DATE,1);
+        calendar2.add(calendar2.DATE,2);
+        now0 = calendar0.getTime();
+        now1 = calendar1.getTime();
+        now2 = calendar2.getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
+        String today = formatter.format(now0);
+        String tomorrow = formatter.format(now1);
+        String theDayAfterTomorrow = formatter.format(now2);
+        btnToday.setText("今天" + today);
+        btnTomorrow.setText("明天" + tomorrow);
+        btnTheDayAfterTomorrow.setText("后天" + theDayAfterTomorrow);
+    }
+
+    private void initCustomTimePicker()
+    {
+
+        clock.setDisplayedValues(data);
+        clock.setMinValue(0);
+        clock.setMaxValue(data.length - 1);
+        clock.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
+            {
+                selectedValue = data[newVal];
+            }
+        });
     }
 
     private void setListeners()
@@ -77,10 +136,13 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         btnToday.setOnClickListener(this);
         btnTomorrow.setOnClickListener(this);
         btnTheDayAfterTomorrow.setOnClickListener(this);
+        btnOrder.setOnClickListener(this);
     }
 
     private void requestData()
     {
+        initCustomTimePicker();
+        Xlog.d(selectedValue + "--------------------------------------------currentOne");
         Map<String, String> map = new HashMap<>();
         String token = CacheUtils.getString(PositionOrderActivity.this, "token", "aa");
         String club_uuid = CacheUtils.getString(PositionOrderActivity.this, "clubuuid", "aa");
@@ -89,6 +151,7 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
             @Override
             public void netSuccess(String response)
             {
+//                - TimeZone.getDefault().getRawOffset()
                 List<Weathers> data = Weathers.instance(response);
                 int date = data.get(i).getDate();
                 int day_of_week = data.get(i).getDay_of_week();
@@ -99,17 +162,31 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                 String wind = data.get(i).getWind();
                 String formatDate = String.valueOf(date);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate)));
+                String formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
+                Xlog.d(formatedDate + "-------------------------------------------");
                 positionOrderDate.setText(formatedDate);
                 positionOrderTemperature.setText(String.valueOf(maximum_temperature));
                 positionOrderWeatherTv.setText(content);
                 positionOrderWind.setText(wind);
+                builder = new AlertDialog.Builder(PositionOrderActivity.this);
+                builder.setTitle("预定成功");
+                builder.setMessage("你已经成功预定" + formatedDate + "的打位，可以在“个人中心”>“打位预约”中查看");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+                { //设置确定按钮
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss(); //关闭dialog
+                        Toast.makeText(PositionOrderActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.create();
             }
 
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.toast(PositionOrderActivity.this,"无法获取天气信息");
+                CustomToast.toast(PositionOrderActivity.this, "无法获取天气信息");
             }
         });
     }
@@ -130,6 +207,9 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
             case R.id.btnTheDayAfterTomorrow:
                 i = 2;
                 requestData();
+                break;
+            case R.id.btnOrder:
+                builder.show();
                 break;
             default:
                 break;
