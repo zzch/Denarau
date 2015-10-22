@@ -10,5 +10,8 @@ public class APIUrls
     public static String CARDBAGLIST_URL = "http://123.57.210.52:80/api/v1/clubs/membership.json?token=";
     public static String WEATHER_URL = "http://123.57.210.52:80/api/v1/weathers/recently.json?";
     public static String RESERVATION_URL = "http://123.57.210.52:80/api/v1/reservations.json";
+    public static String FEEDBACKS_URL = "http://123.57.210.52:80/api/v1/feedbacks.json";
+    public static String ANNOUNCEMENTS_DETAIL_URL = "http://123.57.210.52:80/api/v1/announcements/detail.json?";
+    public static String CLUBS_HOME_URL = "http://123.57.210.52:80/api/v1/clubs/home.json?";
 
 }

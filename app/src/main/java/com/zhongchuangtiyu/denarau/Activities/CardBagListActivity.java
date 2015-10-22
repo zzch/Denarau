@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Adapters.CardbagListAdapter;
 import com.zhongchuangtiyu.denarau.Entities.ClubsMembership;
@@ -77,7 +79,7 @@ public class CardBagListActivity extends AppCompatActivity
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.toast(CardBagListActivity.this,"无数据");
+                Toast.makeText(CardBagListActivity.this,"无数据",Toast.LENGTH_SHORT).show();
             }
         });
     }

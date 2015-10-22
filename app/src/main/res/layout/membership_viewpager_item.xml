@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="300dp"
                 android:padding="10dp"
                 android:id="@+id/membershipCardViewPagerRoot">
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/membershipViewPagerCourseImage"
-        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/membershipViewPagerCourseImage"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="珀翡高尔夫俱乐部"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="珀翡高"
         android:id="@+id/membershipViewPagerCourseName"
-        android:layout_marginBottom="18dp"
-        android:layout_alignBottom="@+id/membershipViewPagerCourseImage"
+        android:layout_marginLeft="2dp"
+        android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/membershipViewPagerCourseImage"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginTop="11dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,9 +27,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="储值卡"
         android:id="@+id/membershipViewPagerCardType"
-        android:layout_below="@+id/membershipViewPagerCourseName"
-        android:layout_alignEnd="@+id/membershipViewPagerCourseName"
-        android:layout_marginTop="36dp"/>
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/membershipViewPagerCourseImage"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#a29d9d"
-        android:layout_marginTop="69dp"
+        android:layout_marginTop="60dp"
         android:layout_below="@+id/membershipViewPagerCardType"
         android:layout_alignParentStart="true"/>
 </RelativeLayout>

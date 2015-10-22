@@ -32,6 +32,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -75,10 +76,10 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
     TextView probabilityOfPrecipitation;
     private int i;
     private String[] data = {"09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00"};
-    private String selectedValue = "9:00";
+    private String selectedValue = "09:00";
     private AlertDialog.Builder builder;
-    private String combinedTimeToPost, formatedDate;
-    private long combinedTimeStamp;
+    private String formatedDate;
+    private int combinedTimeStamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -91,34 +92,8 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         requestData();
         setListeners();
         initCustomTimePicker();
-        initButtenText();
     }
 
-    private void initButtenText()
-    {
-        Date now0 = new Date();
-        Date now1 = new Date();
-        Date now2 = new Date();
-        Calendar calendar0 = new GregorianCalendar();
-        Calendar calendar1 = new GregorianCalendar();
-        Calendar calendar2 = new GregorianCalendar();
-        calendar0.setTime(now0);
-        calendar1.setTime(now1);
-        calendar2.setTime(now2);
-        calendar0.add(calendar0.DATE, 0);
-        calendar1.add(calendar1.DATE, 1);
-        calendar2.add(calendar2.DATE, 2);
-        now0 = calendar0.getTime();
-        now1 = calendar1.getTime();
-        now2 = calendar2.getTime();
-        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
-        String today = formatter.format(now0);
-        String tomorrow = formatter.format(now1);
-        String theDayAfterTomorrow = formatter.format(now2);
-        btnToday.setText("今天" + today);
-        btnTomorrow.setText("明天" + tomorrow);
-        btnTheDayAfterTomorrow.setText("后天" + theDayAfterTomorrow);
-    }
 
     private void initCustomTimePicker()
     {
@@ -153,6 +128,8 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         Map<String, String> map = new HashMap<>();
         String token = CacheUtils.getString(PositionOrderActivity.this, "token", "aa");
         String club_uuid = CacheUtils.getString(PositionOrderActivity.this, "clubuuid", "aa");
+        map.put("token", token);
+        map.put("clubuuid",club_uuid);
         MyApplication.volleyGET(APIUrls.WEATHER_URL + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
         {
             @Override
@@ -160,55 +137,69 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
             {
                 List<Weathers> data = Weathers.instance(response);
                 int date = data.get(i).getDate();
+                int btnTodayDate = data.get(0).getDate();
+                int btnTomorrowDate = data.get(1).getDate();
+                int btnTheDayAfterTomorrowDate = data.get(2).getDate();
                 int day_of_week = data.get(i).getDay_of_week();
                 String content = data.get(i).getContent();
                 int day_code = data.get(i).getDay_code();
                 int maximum_temperature = data.get(i).getMaximum_temperature();
                 String probability_of_precipitation = data.get(i).getProbability_of_precipitation();
                 String wind = data.get(i).getWind();
-                String formatDate = String.valueOf(date - 28800);
+                String formatDate = String.valueOf(date);
+                String day1Date = String.valueOf(btnTodayDate);
+                String day2Date = String.valueOf(btnTomorrowDate);
+                String day3Date = String.valueOf(btnTheDayAfterTomorrowDate);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat detailedSimpleDateFormat = new SimpleDateFormat("yyyyMMddHHmm");
-                String detailedSimpleDateFormated = detailedSimpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
+                SimpleDateFormat formatMMdd = new SimpleDateFormat("MM-dd");
+                formatMMdd.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+                String btnDay1 = formatMMdd.format(new Date(Long.parseLong(day1Date) * 1000));
+                String btnDay2 = formatMMdd.format(new Date(Long.parseLong(day2Date) * 1000));
+                String btnDay3 = formatMMdd.format(new Date(Long.parseLong(day3Date) * 1000));
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));
                 formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
-                String editedTime = detailedSimpleDateFormated.toString();
-                long editedTimeStringToAppend = Long.valueOf(editedTime);
                 String editedSelectedValue = selectedValue.replace(":", "");
-                long selectedValueToAppend = Long.valueOf(editedSelectedValue);
-                combinedTimeToPost = String.valueOf(editedTimeStringToAppend + selectedValueToAppend);
-                SimpleDateFormat combinedDateFormater = new SimpleDateFormat("yyMMddHHmm");
-                try
-                {
-                    Date combinedDate = combinedDateFormater.parse(combinedTimeToPost);
-                    combinedTimeStamp = combinedDate.getTime() / 1000;
-                } catch (ParseException e)
-                {
-                    e.printStackTrace();
-                }
-                Xlog.d(detailedSimpleDateFormated + "-------------------------------------------");
-                Xlog.d(formatedDate + "-------------------------------------------");
-                Xlog.d(combinedTimeToPost + "-------------------------------------------");
-                Xlog.d(combinedTimeStamp + "-------------------------------------------");
-                Xlog.d(date + "-------------------------------------------");
+                String startTwo = editedSelectedValue.substring(0,2);
+                String endTwo  = editedSelectedValue.substring(2,4);
+                int hour = Integer.valueOf(startTwo);
+                int minute = Integer.valueOf(endTwo);
+                combinedTimeStamp = date + hour * 3600 + minute * 60;
 
                 positionOrderDate.setText(formatedDate);
                 positionOrderTemperature.setText(String.valueOf(maximum_temperature) + "℃");
                 positionOrderWeatherTv.setText(content);
                 positionOrderWind.setText(wind);
                 probabilityOfPrecipitation.setText("降水概率" + " " + probability_of_precipitation);
+
+                Date now = new Date();
+                SimpleDateFormat nowFormatter = new SimpleDateFormat("MM-dd");
+                String nowDate = nowFormatter.format(now);
+                btnTheDayAfterTomorrow.setSingleLine(true);
+                if (nowDate.equals(btnDay1))
+                {
+                    btnToday.setText("今天" + btnDay1);
+                    btnTomorrow.setText("明天" + btnDay2);
+                    btnTheDayAfterTomorrow.setText("后天" + btnDay3);
+                }else
+                {
+                    btnToday.setText("明天" + btnDay1);
+                    btnTomorrow.setText("后天" + btnDay2);
+                    btnTheDayAfterTomorrow.setText("大后天" + btnDay3);
+                }
+
             }
 
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.toast(PositionOrderActivity.this, "无法获取天气信息");
+
             }
         });
     }
 
     private void sendOrderRequest()
     {
-        Map<String, String> map = new HashMap<>();
+        final Map<String, String> map = new HashMap<>();
         String token = CacheUtils.getString(PositionOrderActivity.this, "token", "aa");
         String club_uuid = CacheUtils.getString(PositionOrderActivity.this, "clubuuid", "aa");
         map.put("token", token);
@@ -240,7 +231,7 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.toast(PositionOrderActivity.this, error.toString());
+                Toast.makeText(PositionOrderActivity.this,"预定失败，请检查网络连接或稍后再试",Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -235,11 +235,11 @@ public class ClubsHome implements Serializable
             return published_at;
         }
     }
-    public static List<ClubsHome> instance(String str)
+    public static ClubsHome instance(String str)
     {
 
         Gson gson = new Gson();
-        return gson.fromJson(str, new TypeToken<List<ClubsHome>>() {
+        return gson.fromJson(str, new TypeToken<ClubsHome>() {
         }.getType());
     }
 }

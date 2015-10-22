@@ -1,24 +1,39 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhongchuangtiyu.denarau.Adapters.CardbagListAdapter;
+import com.zhongchuangtiyu.denarau.Adapters.MembershipCardViewpagerAdapter;
+import com.zhongchuangtiyu.denarau.Entities.ClubsHome;
 import com.zhongchuangtiyu.denarau.Entities.ClubsMembership;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -52,6 +67,9 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
     @Bind(R.id.btnGiveAdvice)
     RelativeLayout btnGiveAdvice;
     private List<View> pagerViews;
+    private MembershipCardViewpagerAdapter adapter;
+    private View view;
+    private com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -59,8 +77,62 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         membershipCardMainToolbar = (Toolbar) findViewById(R.id.membershipCardMainToolbar);
+        imageLoader.init(ImageLoaderConfiguration.createDefault(MembershipCardMainActivity.this));
         setSupportActionBar(membershipCardMainToolbar);
         setListeners();
+        requestCardInfo();
+    }
+
+    private void requestCardInfo()
+    {
+        Map<String, String> map = new HashMap<>();
+        String token = CacheUtils.getString(MembershipCardMainActivity.this, "token","aa");
+        String club_uuid = CacheUtils.getString(MembershipCardMainActivity.this, "clubuuid","aa");
+        Xlog.d(club_uuid + "club_uuid----------------------------------------");
+
+        MyApplication.volleyGET(APIUrls.CLUBS_HOME_URL + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+                ClubsHome data = ClubsHome.instance(response);
+                pagerViews = new ArrayList<View>();
+                String size = String.valueOf(data.getMembers().size());
+                Xlog.d(size + "size----------------------------------------");
+                for (int i = 0; i < data.getMembers().size(); i++)
+                {
+                    view = LayoutInflater.from(MembershipCardMainActivity.this).inflate(R.layout.membership_viewpager_item,null);
+                    ImageView membershipViewPagerCourseImage = (ImageView) view.findViewById(R.id.membershipViewPagerCourseImage);
+                    TextView membershipViewPagerCourseName = (TextView) view.findViewById(R.id.membershipViewPagerCourseName);
+                    TextView membershipViewPagerCardType = (TextView) view.findViewById(R.id.membershipViewPagerCardType);
+                    TextView membershipViewPagerCardBalance = (TextView) view.findViewById(R.id.membershipViewPagerCardBalance);
+                    TextView membershipViewPagerCardNumber = (TextView) view.findViewById(R.id.membershipViewPagerCardNumber);
+                    RelativeLayout membershipCardViewPagerRoot = (RelativeLayout) view.findViewById(R.id.membershipCardViewPagerRoot);
+                    imageLoader.displayImage(data.getClub().getLogo(), membershipViewPagerCourseImage);
+                    membershipViewPagerCourseName.setText(data.getClub().getName());
+                    membershipViewPagerCardType.setText(data.getMembers().get(i).getCard().getName());
+                    membershipViewPagerCardBalance.setText(data.getMembers().get(i).getBalance());
+                    membershipViewPagerCardNumber.setText(data.getMembers().get(i).getNumber());
+                    membershipCardViewPagerRoot.setBackgroundColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
+                    pagerViews.add(view);
+                    adapter = new MembershipCardViewpagerAdapter(pagerViews,MembershipCardMainActivity.this);
+                    membershipCardViewPager.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void netFail(VolleyError error)
+            {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        requestCardInfo();
     }
 
     private void setListeners()
@@ -80,6 +152,8 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
             case R.id.btnOrderPositon:
                 startActivity(new Intent(MembershipCardMainActivity.this,PositionOrderActivity.class));
                 break;
+            case R.id.btnGiveAdvice:
+                startActivity(new Intent(MembershipCardMainActivity.this,FeedBackActivity.class));
         }
     }
 }
