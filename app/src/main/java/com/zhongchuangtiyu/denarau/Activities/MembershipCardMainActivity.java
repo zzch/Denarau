@@ -95,7 +95,7 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
             @Override
             public void netSuccess(String response)
             {
-                ClubsHome data = ClubsHome.instance(response);
+                final ClubsHome data = ClubsHome.instance(response);
                 pagerViews = new ArrayList<View>();
                 String size = String.valueOf(data.getMembers().size());
                 Xlog.d(size + "size----------------------------------------");
@@ -115,8 +115,18 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
                     membershipViewPagerCardNumber.setText(data.getMembers().get(i).getNumber());
                     membershipCardViewPagerRoot.setBackgroundColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
                     pagerViews.add(view);
+                    final int finalI = i;
+                    membershipCardViewPagerRoot.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            Xlog.d(data.getMembers().get(finalI).getCard().getName() + "cardname----------------------------------------");
+                        }
+                    });
                     adapter = new MembershipCardViewpagerAdapter(pagerViews,MembershipCardMainActivity.this);
                     membershipCardViewPager.setAdapter(adapter);
+
                 }
             }
 

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class MembershipCardViewpagerAdapter extends PagerAdapter
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position)
+    public Object instantiateItem(ViewGroup container, final int position)
     {
         container.addView(views.get(position));
         return views.get(position);
