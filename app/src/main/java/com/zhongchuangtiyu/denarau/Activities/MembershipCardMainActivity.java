@@ -2,17 +2,23 @@ package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -29,6 +35,7 @@ import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,8 +74,9 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
     @Bind(R.id.btnGiveAdvice)
     RelativeLayout btnGiveAdvice;
     private List<View> pagerViews;
-    private MembershipCardViewpagerAdapter adapter;
+//    private MembershipCardViewpagerAdapter adapter;
     private View view;
+    private PagerAdapter adapter;
     private com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,6 +86,7 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
         ButterKnife.bind(this);
         membershipCardMainToolbar = (Toolbar) findViewById(R.id.membershipCardMainToolbar);
         imageLoader.init(ImageLoaderConfiguration.createDefault(MembershipCardMainActivity.this));
+        membershipCardViewPager.setPageMargin(20);
         setSupportActionBar(membershipCardMainToolbar);
         setListeners();
         requestCardInfo();
@@ -95,13 +104,13 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
             @Override
             public void netSuccess(String response)
             {
-                ClubsHome data = ClubsHome.instance(response);
+                final ClubsHome data = ClubsHome.instance(response);
                 pagerViews = new ArrayList<View>();
                 String size = String.valueOf(data.getMembers().size());
                 Xlog.d(size + "size----------------------------------------");
                 for (int i = 0; i < data.getMembers().size(); i++)
                 {
-                    view = LayoutInflater.from(MembershipCardMainActivity.this).inflate(R.layout.membership_viewpager_item,null);
+                    view = LayoutInflater.from(MembershipCardMainActivity.this).inflate(R.layout.membership_viewpager_item, null);
                     ImageView membershipViewPagerCourseImage = (ImageView) view.findViewById(R.id.membershipViewPagerCourseImage);
                     TextView membershipViewPagerCourseName = (TextView) view.findViewById(R.id.membershipViewPagerCourseName);
                     TextView membershipViewPagerCardType = (TextView) view.findViewById(R.id.membershipViewPagerCardType);
@@ -113,9 +122,68 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
                     membershipViewPagerCardType.setText(data.getMembers().get(i).getCard().getName());
                     membershipViewPagerCardBalance.setText(data.getMembers().get(i).getBalance());
                     membershipViewPagerCardNumber.setText(data.getMembers().get(i).getNumber());
-                    membershipCardViewPagerRoot.setBackgroundColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
+//                    membershipCardViewPagerRoot.setBackgroundColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
+                    GradientDrawable myGrad = (GradientDrawable) membershipCardViewPagerRoot.getBackground();
+                    myGrad.setColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
+                    final int finalI = i;
+                    membershipCardViewPagerRoot.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            Toast.makeText(MembershipCardMainActivity.this, data.getMembers().get(finalI).getCard().getName(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     pagerViews.add(view);
-                    adapter = new MembershipCardViewpagerAdapter(pagerViews,MembershipCardMainActivity.this);
+//                    adapter = new MembershipCardViewpagerAdapter(pagerViews,MembershipCardMainActivity.this);
+//                    membershipCardViewPager.setAdapter(adapter);
+                        adapter = new PagerAdapter()
+                        {
+                            @Override
+                            public int getCount()
+                            {
+                                return pagerViews.size();
+                            }
+
+                            @Override
+                            public boolean isViewFromObject(View view, Object object)
+                            {
+                                return view == object;
+                            }
+
+                            public Object instantiateItem(ViewGroup container, int position)
+                            {
+//                            View item = pagerViews.get(position);
+//                            container.addView( item);
+//                            return item;
+                                try
+                                {
+                                    if (pagerViews.get(position).getParent() == null)
+                                    {
+                                        container.addView(pagerViews.get(position));
+                                    } else
+                                    {
+                                        ((ViewGroup) pagerViews.get(position).getParent()).removeView(pagerViews.get(position));
+                                        container.addView(pagerViews.get(position));
+                                    }
+                                } catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                                return pagerViews.get(position);
+                            }
+
+                            @Override
+                            public Parcelable saveState()
+                            {
+                                return super.saveState();
+                            }
+
+                            public void destroyItem(android.view.ViewGroup container, int position, Object object)
+                            {
+//                            container.removeView( (View)object);
+                            }
+                        };
                     membershipCardViewPager.setAdapter(adapter);
                 }
             }

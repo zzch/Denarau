@@ -3,6 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:padding="10dp"
+                android:background="@drawable/layout_border"
                 android:id="@+id/membershipCardViewPagerRoot">
 
     <de.hdodenhof.circleimageview.CircleImageView
