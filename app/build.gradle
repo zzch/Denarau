@@ -31,4 +31,5 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile 'com.google.code.gson:gson:2.4'
     compile project(':library-numberpicker')
+    compile 'fr.baloomba:viewpagerindicator:2.4.2'
 }

@@ -61,6 +61,19 @@ public class CycleViewPager extends ViewPager
             {
                 listener.onPageScrollStateChanged(arg0);
             }
+            if (mAdapter.getCount() != 1)
+            {
+                if (arg0 == ViewPager.SCROLL_STATE_IDLE)
+                {
+                    if (position == mAdapter.getCount() - 1)
+                    {
+                        setCurrentItem(1, false);
+                    } else if (position == 0)
+                    {
+                        setCurrentItem(mAdapter.getCount() - 2, false);
+                    }
+                }
+            }else
             if (arg0 == ViewPager.SCROLL_STATE_IDLE)
             {
                 if (position == mAdapter.getCount() - 1)
@@ -68,7 +81,7 @@ public class CycleViewPager extends ViewPager
                     setCurrentItem(1, false);
                 } else if (position == 0)
                 {
-                    setCurrentItem(mAdapter.getCount() - 2, false);
+                    setCurrentItem(0, false);
                 }
             }
         }
@@ -103,19 +116,16 @@ public class CycleViewPager extends ViewPager
             this.adapter = adapter;
             adapter.registerDataSetObserver(new DataSetObserver()
             {
-
                 @Override
                 public void onChanged()
                 {
                     notifyDataSetChanged();
                 }
-
                 @Override
                 public void onInvalidated()
                 {
                     notifyDataSetChanged();
                 }
-
             });
         }
 
@@ -134,17 +144,21 @@ public class CycleViewPager extends ViewPager
         @Override
         public Object instantiateItem(ViewGroup container, int position)
         {
-            if (position == 0)
-            {
-                position = adapter.getCount() - 1;
-            } else if (position == adapter.getCount() + 1)
-            {
-                position = 0;
-            } else
-            {
-                position -= 1;
-            }
-            return adapter.instantiateItem(container, position);
+                if (position == 0)
+                {
+                    position = adapter.getCount() - 1;
+                    Xlog.d(String.valueOf(position) + "原来的0-------------------------");
+                }
+                else if (position == adapter.getCount() + 1)
+                {
+                    position = 0;
+                    Xlog.d(String.valueOf(position) + "原来的4-------------------------");
+                } else
+                {
+                    position -= 1;
+                    Xlog.d(String.valueOf(position) + "原来的当前position-------------------------");
+                }
+                return adapter.instantiateItem(container, position);
         }
 
         @Override
