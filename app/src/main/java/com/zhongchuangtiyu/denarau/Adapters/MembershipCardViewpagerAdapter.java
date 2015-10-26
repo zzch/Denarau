@@ -2,8 +2,10 @@ package com.zhongchuangtiyu.denarau.Adapters;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Toast;
 
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
@@ -31,12 +33,6 @@ public class MembershipCardViewpagerAdapter extends PagerAdapter
         container.removeView(views.get(position));
     }
 
-    @Override
-    public Object instantiateItem(ViewGroup container, final int position)
-    {
-        container.addView(views.get(position));
-        return views.get(position);
-    }
 
     @Override
     public int getCount()
@@ -48,5 +44,12 @@ public class MembershipCardViewpagerAdapter extends PagerAdapter
     public boolean isViewFromObject(View view, Object object)
     {
         return view == object;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position)
+    {
+        container.addView(views.get(position));
+        return views.get(position);
     }
 }

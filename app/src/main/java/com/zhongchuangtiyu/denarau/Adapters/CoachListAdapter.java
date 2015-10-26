@@ -11,6 +11,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhongchuangtiyu.denarau.Entities.Coaches;
 import com.zhongchuangtiyu.denarau.R;
+
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -24,22 +27,20 @@ public class CoachListAdapter extends BaseAdapter
     private static final int TYPE_NORMAL = 1;//普通教练
     private static final int TYPE_COUNT = 2;//item类型的总数
     private int currentType;
-    private ImageLoader imageLoader;
-    private Coaches coaches;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
+    private List<Coaches> list;
     private Context context;
 
-    public CoachListAdapter(Coaches coaches, Context context)
+    public CoachListAdapter(List<Coaches> list, Context context)
     {
-        this.coaches = coaches;
+        this.list = list;
         this.context = context;
     }
-
-
 
     @Override
     public int getCount()
     {
-        return coaches.getNormal().size() + coaches.getFeatured().size();
+        return list.size();
     }
 
     @Override
@@ -47,11 +48,11 @@ public class CoachListAdapter extends BaseAdapter
     {
         if (getItemViewType(position) == TYPE_FEATURED)
         {
-            return coaches.getFeatured().get(position);
+            return list.get(position);
         }
         else
         {
-            return coaches.getNormal().get(position);
+            return list.get(position);
         }
     }
 
@@ -63,10 +64,10 @@ public class CoachListAdapter extends BaseAdapter
     @Override
     public int getItemViewType(int position)
     {
-        if ("featured".equals(coaches.getFeatured().get(position).get);
+        if (Coaches.FEATURED.equals(list.get(position).getCoachType()))
         {
             return TYPE_FEATURED;
-        } else if ("normal".equals(coaches.)
+        } else if (Coaches.NORMAL.equals(list.get(position).getCoachType()))
         {
             return TYPE_NORMAL;
         } else
@@ -96,14 +97,18 @@ public class CoachListAdapter extends BaseAdapter
                 typeFeatured = LayoutInflater.from(context).inflate(R.layout.coach_tutorial_list_item1, null);
                 featuredViewHolder = new FeaturedViewHolder(typeFeatured);
                 typeFeatured.setTag(featuredViewHolder);
+                convertView = typeFeatured;
             } else
             {
                 typeFeatured = convertView;
                 featuredViewHolder = (FeaturedViewHolder) typeFeatured.getTag();
             }
-            imageLoader.displayImage(coaches.getFeatured().get(position).getPortrait().toString(), featuredViewHolder.headerCoachImage);
-            featuredViewHolder.headerCoachName.setText(coaches.getFeatured().get(position).getName());
-            featuredViewHolder.headerCoachType.setText(coaches.getFeatured().get(position).getTitle());
+            if (list.get(position).getPortrait() != null)
+            {
+                imageLoader.displayImage(list.get(position).getPortrait().toString(), featuredViewHolder.headerCoachImage);
+            }
+            featuredViewHolder.headerCoachName.setText(list.get(position).getName());
+            featuredViewHolder.headerCoachType.setText(list.get(position).getTitle());
 //            featuredViewHolder.headerCoachIntro.setText(coaches.getFeatured().get(position).get);
         } else if (currentType == TYPE_NORMAL)
         {
@@ -112,14 +117,18 @@ public class CoachListAdapter extends BaseAdapter
                 typeNormal = LayoutInflater.from(context).inflate(R.layout.coach_tutorial_list_item2, null);
                 normalViewHolder = new NormalViewHolder(typeNormal);
                 typeNormal.setTag(normalViewHolder);
+                convertView = typeNormal;
             }else
             {
                 typeNormal = convertView;
                 normalViewHolder = (NormalViewHolder) typeNormal.getTag();
             }
-            imageLoader.displayImage(coaches.getNormal().get(position).getPortrait().toString(),normalViewHolder.listCoachImage);
-            normalViewHolder.listCoachName.setText(coaches.getNormal().get(position).getName());
-            normalViewHolder.listCoachType.setText(coaches.getNormal().get(position).getTitle());
+            if (list.get(position).getPortrait() != null)
+            {
+                imageLoader.displayImage(list.get(position).getPortrait().toString(),normalViewHolder.listCoachImage);
+            }
+            normalViewHolder.listCoachName.setText(list.get(position).getName());
+            normalViewHolder.listCoachType.setText(list.get(position).getTitle());
 //            normalViewHolder.listCoachPrice.setText(coaches.getNormal().get(position).get);
         }
         return convertView;

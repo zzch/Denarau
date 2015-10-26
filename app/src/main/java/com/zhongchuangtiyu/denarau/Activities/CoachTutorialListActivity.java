@@ -57,6 +57,10 @@ public class CoachTutorialListActivity extends AppCompatActivity
             public void netSuccess(String response)
             {
                 Coaches data = Coaches.instance(response);
+                List<Coaches> result = data.generateListInfo();
+                CoachListAdapter adapter = new CoachListAdapter(result,CoachTutorialListActivity.this);
+                coachTutorialListView.setAdapter(adapter);
+                //setAdapter
             }
 
             @Override
