@@ -231,7 +231,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="餐饮服务"
+                android:text="意见反馈"
                 android:id="@+id/textView8"
                 android:layout_alignParentBottom="true"
                 android:layout_alignEnd="@+id/view6"/>

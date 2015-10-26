@@ -227,6 +227,8 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
     {
         membershipCardMainTitleRight.setOnClickListener(this);
         btnOrderPositon.setOnClickListener(this);
+        btnGiveAdvice.setOnClickListener(this);
+        btnCoachTurorial.setOnClickListener(this);
     }
 
     @Override
@@ -242,6 +244,11 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
                 break;
             case R.id.btnGiveAdvice:
                 startActivity(new Intent(MembershipCardMainActivity.this, FeedBackActivity.class));
+                break;
+            case R.id.btnCoachTurorial:
+                startActivity(new Intent(MembershipCardMainActivity.this,CoachTutorialListActivity.class));
+                break;
+
         }
     }
 }
