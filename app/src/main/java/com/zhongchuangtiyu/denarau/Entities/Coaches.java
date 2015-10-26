@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by WangMeng on 2015/10/19.
@@ -119,7 +122,7 @@ public class Coaches implements Serializable
 
         private String uuid;
         private String name;
-        private String portrait;
+        private Object portrait;
         private String gender;
         private String title;
 
@@ -158,7 +161,7 @@ public class Coaches implements Serializable
             return name;
         }
 
-        public String getPortrait()
+        public Object getPortrait()
         {
             return portrait;
         }
@@ -173,11 +176,11 @@ public class Coaches implements Serializable
             return title;
         }
     }
-    public static List<Coaches> instance(String str)
+    public static Coaches  instance(String str)
     {
 
         Gson gson = new Gson();
-        return gson.fromJson(str, new TypeToken<List<Coaches>>() {
+        return gson.fromJson(str, new TypeToken<Coaches>() {
         }.getType());
     }
 }

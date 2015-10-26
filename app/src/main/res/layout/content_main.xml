@@ -30,7 +30,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="2dp"
             android:ellipsize="marquee"
-            android:text="9月份到店有礼领取纪念高尔夫一枚"
+            android:text="9月份到店有礼领取纪念高尔夫一枚w"
             android:marqueeRepeatLimit="marquee_forever"
             android:gravity="center_vertical"
             android:textColor="#000000"
@@ -54,25 +54,37 @@
             />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/membershipCardViewPagerRl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@+id/relativeLayout"
         android:layout_alignParentStart="true"
+        android:orientation="vertical"
         android:layout_weight="5">
     <android.support.v4.view.ViewPager
         android:id="@+id/membershipCardViewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="10dp"
-        android:persistentDrawingCache="animation">
-
+        android:persistentDrawingCache="animation"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="10">
     </android.support.v4.view.ViewPager>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/indicatorLinearLayout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/membershipCardViewPager"
+            android:weightSum="1"
+            android:gravity="center"
+            android:layout_weight="1"
+            >
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -219,7 +231,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="餐饮服务"
+                android:text="意见反馈"
                 android:id="@+id/textView8"
                 android:layout_alignParentBottom="true"
                 android:layout_alignEnd="@+id/view6"/>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:id="@+id/headerCoachImage"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/headerCoachName"
+        android:layout_alignTop="@+id/headerCoachImage"
+        android:layout_toEndOf="@+id/headerCoachImage"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/headerCoachType"
+        android:layout_below="@+id/headerCoachName"
+        android:layout_toEndOf="@+id/headerCoachImage"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/headerCoachIntro"
+        android:layout_below="@+id/headerCoachType"
+        android:layout_marginTop="10dp"
+        android:layout_alignBottom="@+id/headerCoachImage"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/headerCoachType"/>
+</RelativeLayout>
