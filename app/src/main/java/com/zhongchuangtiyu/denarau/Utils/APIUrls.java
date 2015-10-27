@@ -14,5 +14,7 @@ public class APIUrls
     public static String ANNOUNCEMENTS_DETAIL_URL = "http://123.57.210.52:80/api/v1/announcements/detail.json?";
     public static String CLUBS_HOME_URL = "http://123.57.210.52:80/api/v1/clubs/home.json?";
     public static String COACHES_URL = "http://123.57.210.52:80/api/v1/coaches.json?";
+    public static String COACHES_DETAIL_URL = "http://123.57.210.52:80/api/v1/coaches/detail.json?";
+    public static String COACHES_DETAIL_COURSES_URL = "http://123.57.210.52:80/api/v1/courses/detail.json?";
 
 }

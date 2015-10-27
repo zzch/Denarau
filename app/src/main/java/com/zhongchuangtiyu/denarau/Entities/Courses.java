@@ -87,11 +87,11 @@ public class Courses implements Serializable
     {
         return description;
     }
-    public static List<Courses> instance(String str)
+    public static Courses instance(String str)
     {
 
         Gson gson = new Gson();
-        return gson.fromJson(str, new TypeToken<List<Courses>>() {
+        return gson.fromJson(str, new TypeToken<Courses>() {
         }.getType());
     }
 }

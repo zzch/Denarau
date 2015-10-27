@@ -28,7 +28,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ValidateRlContainer"
+        android:id="@+id/validateRlContainer"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:layout_below="@+id/welcomeCourseTextView">

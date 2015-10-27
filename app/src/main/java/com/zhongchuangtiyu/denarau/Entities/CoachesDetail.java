@@ -142,11 +142,11 @@ public class CoachesDetail implements Serializable
             return lessons;
         }
     }
-    public static List<CoachesDetail> instance(String str)
+    public static CoachesDetail instance(String str)
     {
 
         Gson gson = new Gson();
-        return gson.fromJson(str, new TypeToken<List<CoachesDetail>>() {
+        return gson.fromJson(str, new TypeToken<CoachesDetail>() {
         }.getType());
     }
 }

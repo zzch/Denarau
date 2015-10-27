@@ -1,8 +1,11 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -54,12 +57,23 @@ public class CoachTutorialListActivity extends AppCompatActivity
         MyApplication.volleyGET(APIUrls.COACHES_URL + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
         {
             @Override
-            public void netSuccess(String response)
+            public void netSuccess(final String response)
             {
                 Coaches data = Coaches.instance(response);
-                List<Coaches> result = data.generateListInfo();
+                final List<Coaches> result = data.generateListInfo();
                 CoachListAdapter adapter = new CoachListAdapter(result,CoachTutorialListActivity.this);
                 coachTutorialListView.setAdapter(adapter);
+                coachTutorialListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                    {
+                        String uuid = result.get(position).getUuid();
+                        Intent intent = new Intent(CoachTutorialListActivity.this,CoachesDetailActivity.class);
+                        intent.putExtra("uuid",uuid);
+                        startActivity(intent);
+                    }
+                });
                 //setAdapter
             }
 

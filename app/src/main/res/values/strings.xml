@@ -22,4 +22,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_coaches_detail">CoachesDetailActivity</string>
+    <string name="title_activity_coach_tutorial_detail_courses">CoachTutorialDetailCoursesActivity
+    </string>
 </resources>

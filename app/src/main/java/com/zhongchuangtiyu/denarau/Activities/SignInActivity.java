@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -44,8 +46,8 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
     Button btnLogin;
     @Bind(R.id.loginVerificationCode)
     EditText loginVerificationCode;
-    @Bind(R.id.ValidateRlContainer)
-    RelativeLayout ValidateRlContainer;
+    @Bind(R.id.validateRlContainer)
+    RelativeLayout validateRlContainer;
     @Bind(R.id.welcomeCourseTextView)
     TextView welcomeCourseTextView;
     private CharSequence temp;//监听前的文本
@@ -63,7 +65,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
         setSupportActionBar(toolbar);
         welcomeTextView.setVisibility(View.GONE);
         welcomeCourseTextView.setVisibility(View.GONE);
-        ValidateRlContainer.setVisibility(View.GONE);
+        validateRlContainer.setVisibility(View.GONE);
         setListeners();
 
     }
@@ -103,15 +105,24 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             @Override
             public void netSuccess(String response)
             {
+                Animation translateAnimation1 = new TranslateAnimation(500f, welcomeCourseTextView.getTextScaleX(),welcomeCourseTextView.getScaleY(),welcomeCourseTextView.getScaleY());
+                translateAnimation1.setDuration(300);
+                Animation translateAnimation2 = new TranslateAnimation(500f, welcomeTextView.getTextScaleX(),welcomeTextView.getScaleY(),welcomeTextView.getScaleY());
+                translateAnimation2.setDuration(900);
+                Animation translateAnimation3 = new TranslateAnimation(500f, validateRlContainer.getScaleX(),validateRlContainer.getScaleY(),validateRlContainer.getScaleY());
+                translateAnimation3.setDuration(1000);
                 Xlog.d(response.toString());
                 Welcome welcome = Welcome.instance(response);
                 String welcomeMsg = welcome.getSentences().get(0);
                 String welcomeCourseMsg = welcome.getSentences().get(1);
                 welcomeTextView.setText(welcomeMsg);
                 welcomeCourseTextView.setText(welcomeCourseMsg);
+                welcomeTextView.startAnimation(translateAnimation2);
                 welcomeTextView.setVisibility(View.VISIBLE);
+                welcomeCourseTextView.startAnimation(translateAnimation1);
                 welcomeCourseTextView.setVisibility(View.VISIBLE);
-                ValidateRlContainer.setVisibility(View.VISIBLE);
+                validateRlContainer.startAnimation(translateAnimation3);
+                validateRlContainer.setVisibility(View.VISIBLE);
             }
 
             @Override
