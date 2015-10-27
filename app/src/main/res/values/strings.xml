@@ -25,4 +25,5 @@
     <string name="title_activity_coaches_detail">CoachesDetailActivity</string>
     <string name="title_activity_coach_tutorial_detail_courses">CoachTutorialDetailCoursesActivity
     </string>
+    <string name="title_activity_provisions">ProvisionsActivity</string>
 </resources>

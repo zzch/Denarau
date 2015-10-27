@@ -30,8 +30,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/validateRlContainer"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/welcomeCourseTextView">
+        android:layout_below="@+id/divider2">
 
         <Button
             android:layout_width="wrap_content"
@@ -64,6 +63,12 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:layout_marginTop="30dp"/>
+    <ImageView
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="43dp"
+        android:layout_below="@+id/welcomeTextView"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -72,8 +77,14 @@
         android:text="Large Text"
         android:id="@+id/welcomeCourseTextView"
         android:gravity="center_horizontal"
-        android:layout_marginTop="43dp"
-        android:layout_below="@+id/welcomeTextView"
+        android:layout_below="@+id/divider1"
         android:layout_alignStart="@+id/welcomeTextView"/>
+    <ImageView
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/welcomeCourseTextView"/>
+
 
 </RelativeLayout>

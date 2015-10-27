@@ -33,7 +33,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SignInActivity extends AppCompatActivity implements TextWatcher, View.OnClickListener
+public class SignInActivity extends AppCompatActivity implements TextWatcher,View.OnClickListener
 {
 
     @Bind(R.id.toolbar)
@@ -105,11 +105,11 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             @Override
             public void netSuccess(String response)
             {
-                Animation translateAnimation1 = new TranslateAnimation(500f, welcomeCourseTextView.getTextScaleX(),welcomeCourseTextView.getScaleY(),welcomeCourseTextView.getScaleY());
-                translateAnimation1.setDuration(300);
+                final Animation translateAnimation1 = new TranslateAnimation(500f, welcomeCourseTextView.getTextScaleX(),welcomeCourseTextView.getScaleY(),welcomeCourseTextView.getScaleY());
+                translateAnimation1.setDuration(1000);
                 Animation translateAnimation2 = new TranslateAnimation(500f, welcomeTextView.getTextScaleX(),welcomeTextView.getScaleY(),welcomeTextView.getScaleY());
-                translateAnimation2.setDuration(900);
-                Animation translateAnimation3 = new TranslateAnimation(500f, validateRlContainer.getScaleX(),validateRlContainer.getScaleY(),validateRlContainer.getScaleY());
+                translateAnimation2.setDuration(1000);
+                final Animation translateAnimation3 = new TranslateAnimation(500f, validateRlContainer.getScaleX(),validateRlContainer.getScaleY(),validateRlContainer.getScaleY());
                 translateAnimation3.setDuration(1000);
                 Xlog.d(response.toString());
                 Welcome welcome = Welcome.instance(response);
@@ -119,10 +119,50 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
                 welcomeCourseTextView.setText(welcomeCourseMsg);
                 welcomeTextView.startAnimation(translateAnimation2);
                 welcomeTextView.setVisibility(View.VISIBLE);
-                welcomeCourseTextView.startAnimation(translateAnimation1);
-                welcomeCourseTextView.setVisibility(View.VISIBLE);
-                validateRlContainer.startAnimation(translateAnimation3);
-                validateRlContainer.setVisibility(View.VISIBLE);
+                translateAnimation2.setAnimationListener(new Animation.AnimationListener()
+                {
+                    @Override
+                    public void onAnimationStart(Animation animation)
+                    {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation)
+                    {
+                        welcomeCourseTextView.startAnimation(translateAnimation1);
+                        welcomeCourseTextView.setVisibility(View.VISIBLE);
+                        translateAnimation1.setAnimationListener(new Animation.AnimationListener()
+                        {
+                            @Override
+                            public void onAnimationStart(Animation animation)
+                            {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation)
+                            {
+                                validateRlContainer.startAnimation(translateAnimation3);
+                                validateRlContainer.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation)
+                            {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation)
+                    {
+
+                    }
+                });
+
+
             }
 
             @Override
@@ -185,4 +225,5 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
         }
 
     }
+
 }

@@ -89,4 +89,5 @@ public class Provisions implements Serializable
         return gson.fromJson(str, new TypeToken<List<Provisions>>() {
         }.getType());
     }
+
 }
