@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.zhongchuangtiyu.denarau.Fragments.ProvisionFragments;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,13 +15,13 @@ import java.util.List;
  */
 public class ProvisionsFragmentAdapter extends FragmentPagerAdapter
 {
-    private List<Fragment> list;
+    private ArrayList<ProvisionFragments> list;
     public ProvisionsFragmentAdapter(FragmentManager fm)
     {
         super(fm);
     }
 
-    public ProvisionsFragmentAdapter(FragmentManager fm, List<Fragment> list)
+    public ProvisionsFragmentAdapter(FragmentManager fm, ArrayList<ProvisionFragments> list)
     {
         super(fm);
         this.list = list;

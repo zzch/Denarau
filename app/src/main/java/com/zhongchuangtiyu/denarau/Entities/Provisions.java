@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ public class Provisions implements Serializable
 
     private String name;
     private List<ProvisionsEntity> provisions;
+
 
     public void setName(String name)
     {
@@ -39,6 +41,7 @@ public class Provisions implements Serializable
     {
         return provisions;
     }
+
 
     public static class ProvisionsEntity
     {
@@ -82,12 +85,27 @@ public class Provisions implements Serializable
             return price;
         }
     }
-    public static List<Provisions> instance(String str)
+    public static List<Provision> instance(String str)
     {
 
         Gson gson = new Gson();
-        return gson.fromJson(str, new TypeToken<List<Provisions>>() {
+        List<Provisions> results = gson.fromJson(str, new TypeToken<List<Provisions>>() {
         }.getType());
+        List<Provision> res = new ArrayList<>();
+        for (Provisions prov : results )
+        {
+            for (ProvisionsEntity entity : prov.getProvisions())
+            {
+                Provision tmp = new Provision();
+                tmp.setType(prov.getName());
+                tmp.setPrice(entity.getPrice());
+                tmp.setImage(entity.getImage());
+                tmp.setName(entity.getName());
+                res.add(tmp);
+            }
+        }
+
+        return  res;
     }
 
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.zhongchuangtiyu.denarau.Entities.Provision;
 import com.zhongchuangtiyu.denarau.Entities.Provisions;
 import com.zhongchuangtiyu.denarau.R;
 
@@ -24,10 +25,10 @@ import butterknife.ButterKnife;
  */
 public class ProvisionsGridAdapter extends BaseAdapter
 {
-    private List<Provisions> list;
+    private List<Provision> list;
     private Context context;
     private ImageLoader imageLoader = ImageLoader.getInstance();
-    public ProvisionsGridAdapter(List<Provisions> list, Context context)
+    public ProvisionsGridAdapter(List<Provision> list, Context context)
     {
         this.list = list;
         this.context = context;
@@ -54,7 +55,7 @@ public class ProvisionsGridAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        Provisions provisions = list.get(position);
+        Provision provisions = list.get(position);
         View view;
         ViewHolder viewHolder;
         if (convertView == null)
@@ -68,9 +69,9 @@ public class ProvisionsGridAdapter extends BaseAdapter
             viewHolder = (ViewHolder) view.getTag();
         }
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-        imageLoader.displayImage(provisions.getProvisions().get(position).getImage(), viewHolder.foodImage);
-        viewHolder.foodName.setText(provisions.getProvisions().get(position).getName());
-        viewHolder.foodPrice.setText(provisions.getProvisions().get(position).getPrice());
+        imageLoader.displayImage(provisions.getImage(), viewHolder.foodImage);
+        viewHolder.foodName.setText(provisions.getName());
+        viewHolder.foodPrice.setText(provisions.getPrice());
         return view;
     }
 

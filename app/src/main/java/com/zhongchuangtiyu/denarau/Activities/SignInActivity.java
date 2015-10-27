@@ -106,11 +106,11 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher,Vie
             public void netSuccess(String response)
             {
                 final Animation translateAnimation1 = new TranslateAnimation(500f, welcomeCourseTextView.getTextScaleX(),welcomeCourseTextView.getScaleY(),welcomeCourseTextView.getScaleY());
-                translateAnimation1.setDuration(1000);
+                translateAnimation1.setDuration(500);
                 Animation translateAnimation2 = new TranslateAnimation(500f, welcomeTextView.getTextScaleX(),welcomeTextView.getScaleY(),welcomeTextView.getScaleY());
-                translateAnimation2.setDuration(1000);
+                translateAnimation2.setDuration(500);
                 final Animation translateAnimation3 = new TranslateAnimation(500f, validateRlContainer.getScaleX(),validateRlContainer.getScaleY(),validateRlContainer.getScaleY());
-                translateAnimation3.setDuration(1000);
+                translateAnimation3.setDuration(500);
                 Xlog.d(response.toString());
                 Welcome welcome = Welcome.instance(response);
                 String welcomeMsg = welcome.getSentences().get(0);

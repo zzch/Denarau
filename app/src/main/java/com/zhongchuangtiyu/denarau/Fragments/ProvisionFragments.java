@@ -9,11 +9,14 @@ import android.widget.GridView;
 
 import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Adapters.ProvisionsGridAdapter;
+import com.zhongchuangtiyu.denarau.Entities.Provision;
 import com.zhongchuangtiyu.denarau.Entities.Provisions;
+import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +28,14 @@ import java.util.Map;
 public class ProvisionFragments extends android.support.v4.app.Fragment
 {
     private String key = null;
+    private List<Provision> provs = null;
 
-
-    public static ProvisionFragments newInstance(String s){
+    public static ProvisionFragments newInstance(List<Provision> s){
         ProvisionFragments myFragment = new ProvisionFragments();
-        Bundle bundle = new Bundle();
-        bundle.putString("key", s);
-        myFragment.setArguments(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("key",(Serializable)s);
+//        myFragment.setArguments(bundle);
+        myFragment.setProvs(s);
         return myFragment;
     }
 
@@ -44,32 +48,45 @@ public class ProvisionFragments extends android.support.v4.app.Fragment
     }
     private GridView provisionsGridView;
     private ProvisionsGridAdapter adapter;
-    private List<Provisions> list;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = null;
-        Map<String, String> map = new HashMap<>();
-        String token = CacheUtils.getString(getActivity(),"token",null);
-        String club_uuid = CacheUtils.getString(getActivity(),"clubuuid",null);
-        MyApplication.volleyGET(APIUrls.PROVISIONS_URL + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
-        {
-            @Override
-            public void netSuccess(String response)
-            {
-                List<Provisions> data = Provisions.instance(response);
-                adapter = new ProvisionsGridAdapter(data,getActivity());
-                provisionsGridView.setAdapter(adapter);
-            }
-
-            @Override
-            public void netFail(VolleyError error)
-            {
-
-            }
-        });
+//        Map<String, String> map = new HashMap<>();
+//        String token = CacheUtils.getString(getActivity(),"token",null);
+//        String club_uuid = CacheUtils.getString(getActivity(),"clubuuid",null);
+//        MyApplication.volleyGET(APIUrls.PROVISIONS_URL + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
+//        {
+//            @Override
+//            public void netSuccess(String response)
+//            {
+//                List<Provision> data = Provisions.instance(response);
+//                adapter = new ProvisionsGridAdapter(data,getActivity());
+//                provisionsGridView.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void netFail(VolleyError error)
+//            {
+//
+//            }
+//        });
+        view = inflater.inflate(R.layout.provisions_grid_view, container, false);
+        provisionsGridView = (GridView) view.findViewById(R.id.provisionsGridView);
+        adapter = new ProvisionsGridAdapter(provs,getActivity());
+        provisionsGridView.setAdapter(adapter);
         return view;
+    }
+
+    public List<Provision> getProvs()
+    {
+        return provs;
+    }
+
+    public void setProvs(List<Provision> provs)
+    {
+        this.provs = provs;
     }
 }
