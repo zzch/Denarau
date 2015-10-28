@@ -17,7 +17,7 @@
             android:id="@+id/coachTutorialToolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#ff0000"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -28,15 +28,16 @@
                     android:layout_height="45dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
+                    android:background="@mipmap/icon_back_arrow"
                     android:id="@+id/coachTutorialTitleLeft"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="教学信息"
+                    android:text="教练"
                     android:id="@+id/textView"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@android:color/white"
                     android:layout_centerInParent="true"
                     android:textSize="25dp"/>
             </RelativeLayout>

@@ -6,9 +6,9 @@
         android:id="@+id/provisionsGridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:horizontalSpacing="20dp"
-        android:verticalSpacing="20dp"
-        android:layout_centerInParent="true"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:background="#e4e4e4"
         android:numColumns="2">
     </GridView>
 </LinearLayout>

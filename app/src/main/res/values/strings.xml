@@ -26,4 +26,6 @@
     <string name="title_activity_coach_tutorial_detail_courses">CoachTutorialDetailCoursesActivity
     </string>
     <string name="title_activity_provisions">ProvisionsActivity</string>
+    <string name="title_activity_personal_center">PersonalCenterActivity</string>
+    <string name="title_activity_edit_personal_info">EditPersonalInfoActivity</string>
 </resources>

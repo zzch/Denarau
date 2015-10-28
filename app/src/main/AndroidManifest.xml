@@ -21,11 +21,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.PositionOrderActivity"
@@ -70,7 +65,11 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.CoachesDetailActivity"
@@ -85,6 +84,16 @@
         <activity
             android:name=".Activities.ProvisionsActivity"
             android:label="@string/title_activity_provisions"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".Activities.PersonalCenterActivity"
+            android:label="@string/title_activity_personal_center"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".Activities.EditPersonalInfoActivity"
+            android:label="@string/title_activity_edit_personal_info"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>

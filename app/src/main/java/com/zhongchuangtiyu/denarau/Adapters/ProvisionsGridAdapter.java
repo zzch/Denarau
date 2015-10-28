@@ -71,7 +71,7 @@ public class ProvisionsGridAdapter extends BaseAdapter
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
         imageLoader.displayImage(provisions.getImage(), viewHolder.foodImage);
         viewHolder.foodName.setText(provisions.getName());
-        viewHolder.foodPrice.setText(provisions.getPrice());
+        viewHolder.foodPrice.setText("￥" + provisions.getPrice());
         return view;
     }
 

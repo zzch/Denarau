@@ -6,7 +6,7 @@
 
     <ImageView
         android:layout_width="100dp"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:id="@+id/headerCoachImage"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
@@ -34,7 +34,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/headerCoachIntro"
         android:layout_below="@+id/headerCoachType"
         android:layout_marginTop="10dp"

@@ -65,7 +65,7 @@ public class CoachDetailListAdapter extends BaseAdapter
             viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.coachDetailListItemTutorialType.setText(coachesDetail.getName());
-        viewHolder.coachDetailListItemTutorialPrice.setText(coachesDetail.getPrice());
+        viewHolder.coachDetailListItemTutorialPrice.setText(coachesDetail.getPrice() + "元");
         return view;
     }
 

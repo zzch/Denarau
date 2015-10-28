@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.zhongchuangtiyu.denarau.Activities.SignInActivity">
+    tools:context="com.zhongchuangtiyu.denarau.Activities.PersonalCenterActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
@@ -22,11 +22,20 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:background="@mipmap/icon_back_arrow"
+                    android:id="@+id/giveAdviceTitleLeft"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="登陆"
+                    android:text="个人中心"
                     android:id="@+id/textView"
                     android:textColor="@android:color/white"
                     android:layout_centerInParent="true"
@@ -36,6 +45,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_login"/>
+    <include layout="@layout/content_personal_center"/>
 
 </android.support.design.widget.CoordinatorLayout>

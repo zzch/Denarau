@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,11 +38,12 @@ public class CoachesDetailActivity extends AppCompatActivity
     TextView coachDetailName;
     @Bind(R.id.coachDetailType)
     TextView coachDetailType;
-    @Bind(R.id.coachDetailIntro)
-    TextView coachDetailIntro;
     @Bind(R.id.coachDetailListView)
     CustomListView coachDetailListView;
+    @Bind(R.id.coachDetailIntro)
+    WebView coachDetailIntro;
     private ImageLoader imageLoader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -74,9 +76,9 @@ public class CoachesDetailActivity extends AppCompatActivity
                 }
                 coachDetailName.setText(data.getName());
                 coachDetailType.setText(data.getTitle());
-                coachDetailIntro.setText(data.getDescription());
-                CoachDetailListAdapter adapter = new CoachDetailListAdapter(data.getCourses(),CoachesDetailActivity.this);
-                Xlog.d(data.getCourses()+"data.getCourses()--------------------------------------------------");
+                coachDetailIntro.loadData(data.getDescription(), "text/html", "UTF-8");
+                CoachDetailListAdapter adapter = new CoachDetailListAdapter(data.getCourses(), CoachesDetailActivity.this);
+                Xlog.d(data.getCourses() + "data.getCourses()--------------------------------------------------");
                 coachDetailListView.setAdapter(adapter);
                 SetListViewHeight.setListViewHeightBasedOnChildren(coachDetailListView);
                 coachDetailListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -85,10 +87,10 @@ public class CoachesDetailActivity extends AppCompatActivity
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                     {
                         String uuid = data.getCourses().get(position).getUuid();
-                        Intent intent1 = new Intent(CoachesDetailActivity.this,CoachTutorialDetailCoursesActivity.class);
-                        intent1.putExtra("token",token);
-                        intent1.putExtra("club_uuid",club_uuid);
-                        intent1.putExtra("uuid",uuid);
+                        Intent intent1 = new Intent(CoachesDetailActivity.this, CoachTutorialDetailCoursesActivity.class);
+                        intent1.putExtra("token", token);
+                        intent1.putExtra("club_uuid", club_uuid);
+                        intent1.putExtra("uuid", uuid);
                         startActivity(intent1);
                     }
                 });
