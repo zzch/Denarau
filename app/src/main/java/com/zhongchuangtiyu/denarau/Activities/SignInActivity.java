@@ -113,54 +113,61 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher,Vie
                 translateAnimation3.setDuration(500);
                 Xlog.d(response.toString());
                 Welcome welcome = Welcome.instance(response);
-                String welcomeMsg = welcome.getSentences().get(0);
-                String welcomeCourseMsg = welcome.getSentences().get(1);
-                welcomeTextView.setText(welcomeMsg);
-                welcomeCourseTextView.setText(welcomeCourseMsg);
-                welcomeTextView.startAnimation(translateAnimation2);
-                welcomeTextView.setVisibility(View.VISIBLE);
-                translateAnimation2.setAnimationListener(new Animation.AnimationListener()
+                if (welcome != null)
                 {
-                    @Override
-                    public void onAnimationStart(Animation animation)
-                    {
 
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation)
+                    String welcomeMsg = welcome.getSentences().get(0);
+                    String welcomeCourseMsg = welcome.getSentences().get(1);
+                    welcomeTextView.setText(welcomeMsg);
+                    welcomeCourseTextView.setText(welcomeCourseMsg);
+                    welcomeTextView.startAnimation(translateAnimation2);
+                    welcomeTextView.setVisibility(View.VISIBLE);
+                    translateAnimation2.setAnimationListener(new Animation.AnimationListener()
                     {
-                        welcomeCourseTextView.startAnimation(translateAnimation1);
-                        welcomeCourseTextView.setVisibility(View.VISIBLE);
-                        translateAnimation1.setAnimationListener(new Animation.AnimationListener()
+                        @Override
+                        public void onAnimationStart(Animation animation)
                         {
-                            @Override
-                            public void onAnimationStart(Animation animation)
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation)
+                        {
+                            welcomeCourseTextView.startAnimation(translateAnimation1);
+                            welcomeCourseTextView.setVisibility(View.VISIBLE);
+                            translateAnimation1.setAnimationListener(new Animation.AnimationListener()
                             {
+                                @Override
+                                public void onAnimationStart(Animation animation)
+                                {
 
-                            }
+                                }
 
-                            @Override
-                            public void onAnimationEnd(Animation animation)
-                            {
-                                validateRlContainer.startAnimation(translateAnimation3);
-                                validateRlContainer.setVisibility(View.VISIBLE);
-                            }
+                                @Override
+                                public void onAnimationEnd(Animation animation)
+                                {
+                                    validateRlContainer.startAnimation(translateAnimation3);
+                                    validateRlContainer.setVisibility(View.VISIBLE);
+                                }
 
-                            @Override
-                            public void onAnimationRepeat(Animation animation)
-                            {
+                                @Override
+                                public void onAnimationRepeat(Animation animation)
+                                {
 
-                            }
-                        });
-                    }
+                                }
+                            });
+                        }
 
-                    @Override
-                    public void onAnimationRepeat(Animation animation)
-                    {
+                        @Override
+                        public void onAnimationRepeat(Animation animation)
+                        {
 
-                    }
-                });
+                        }
+                    });
+                }else
+                {
+                    Toast.makeText(SignInActivity.this,"用户不存在，请重新输入手机号码",Toast.LENGTH_SHORT).show();
+                }
 
 
             }
@@ -169,7 +176,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher,Vie
             public void netFail(VolleyError error)
             {
                 Xlog.d(error.toString() + "---------------------------------------------");
-                Toast.makeText(SignInActivity.this, "用户不存在，请检查手机号码", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
             }
         });
     }

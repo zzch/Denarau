@@ -1,6 +1,7 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -125,21 +126,29 @@ public class ProvisionsActivity extends AppCompatActivity
                     button.setTextColor(Color.parseColor("#9a9b9b"));
                     button.setBackgroundColor(Color.parseColor("#292d2f"));
                     button.setViewPager(provisionsViewPager);
+                    button.setLinearLayout(buttonContainerLl);
                     button.setOnClickListener(new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View v)
                         {
                             provisionsViewPager.setCurrentItem(Integer.valueOf(v.getTag().toString()).intValue(), true);
+                            for (int i = 0; i < ((ProvButton) v).getLinearLayout().getChildCount(); i++)
+                            {
+                                LinearLayout buttonContainer = ((ProvButton) v).getLinearLayout();
+                                ((ProvButton)((LinearLayout) buttonContainer.getChildAt(i)).getChildAt(0)).setTextColor(Color.parseColor("#9a9b9b"));
+                            }
+                            ((ProvButton) v).setTextColor(Color.parseColor("#ffffff"));
                         }
                     });
                     buttonContainerLl.addView(linearLayoutBtnIn);
                     linearLayoutBtnIn.addView(button);
-                    buttonContainerLl.getChildAt(0).setBackgroundColor(Color.parseColor("#ffffff"));
                     ProvisionFragments fragment = ProvisionFragments.newInstance(provGroup.get(type));
                     list.add(fragment);
 
                 }
+                buttonContainerLl.getChildAt(0).setBackgroundColor(Color.parseColor("#ffffff"));
+                ((ProvButton)((LinearLayout)buttonContainerLl.getChildAt(0)).getChildAt(0)).setTextColor(Color.parseColor("#ffffff"));
                 provisionsViewPager.setAdapter(new ProvisionsFragmentAdapter(getSupportFragmentManager(), list));
                 provisionsViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
                 {
@@ -157,9 +166,11 @@ public class ProvisionsActivity extends AppCompatActivity
                         for (int i = 0; i < count; i++)
                         {
                             buttonContainerLl.getChildAt(i).setBackgroundColor(Color.parseColor("#292d2f"));
+                            ((ProvButton)((LinearLayout) buttonContainerLl.getChildAt(i)).getChildAt(0)).setTextColor(Color.parseColor("#9a9b9b"));
 
                         }
                         buttonContainerLl.getChildAt(position).setBackgroundColor(Color.parseColor("#ffffff"));
+                        ((ProvButton)((LinearLayout) buttonContainerLl.getChildAt(position)).getChildAt(0)).setTextColor(Color.parseColor("#ffffff"));
 
                     }
 

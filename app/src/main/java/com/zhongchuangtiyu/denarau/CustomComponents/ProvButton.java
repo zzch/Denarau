@@ -3,6 +3,7 @@ package com.zhongchuangtiyu.denarau.CustomComponents;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -16,6 +17,17 @@ public class ProvButton extends TextView
     }
 
     private ViewPager viewPager;
+    private LinearLayout linearLayout;
+
+    public LinearLayout getLinearLayout()
+    {
+        return linearLayout;
+    }
+
+    public void setLinearLayout(LinearLayout linearLayout)
+    {
+        this.linearLayout = linearLayout;
+    }
 
     public ViewPager getViewPager()
     {
