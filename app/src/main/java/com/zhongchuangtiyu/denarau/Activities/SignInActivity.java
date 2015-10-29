@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,10 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
     RelativeLayout signInWelcomeRl;
     @Bind(R.id.signInWelcomeCourseRl)
     RelativeLayout signInWelcomeCourseRl;
+    @Bind(R.id.dividerBelowWelcomRl)
+    ImageView dividerBelowWelcomRl;
+    @Bind(R.id.dividerBelowWelcomeCourserRl)
+    ImageView dividerBelowWelcomeCourserRl;
     private CharSequence temp;//监听前的文本
     private int editStart;//光标开始位置
     private int editEnd;//光标结束位置
@@ -69,6 +74,9 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
         setSupportActionBar(toolbar);
         signInWelcomeRl.setVisibility(View.GONE);
         signInWelcomeCourseRl.setVisibility(View.GONE);
+        dividerBelowWelcomRl.setVisibility(View.GONE);
+        dividerBelowWelcomeCourserRl.setVisibility(View.GONE);
+        validateRlContainer.setVisibility(View.GONE);
         setListeners();
 
     }
@@ -79,7 +87,245 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
         btnLogin.setOnClickListener(this);
     }
 
+    private void setDividerBelowWelcomRlAnimIn()
+    {
+        Animation dividerBelowWelcomRlAnimIn = new TranslateAnimation(500f, dividerBelowWelcomRl.getScaleX(), dividerBelowWelcomRl.getScaleY(), dividerBelowWelcomRl.getScaleY());
+        dividerBelowWelcomRlAnimIn.setDuration(400);
+        dividerBelowWelcomRl.startAnimation(dividerBelowWelcomRlAnimIn);
+        dividerBelowWelcomRl.setVisibility(View.VISIBLE);
+        dividerBelowWelcomRlAnimIn.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+                if (dividerBelowWelcomeCourserRl.getVisibility() == View.VISIBLE || signInWelcomeCourseRl.getVisibility() == View.VISIBLE)
+                {
+                    dividerBelowWelcomeCourserRl.setVisibility(View.GONE);
+                    signInWelcomeRl.setVisibility(View.GONE);
+                    signInWelcomeCourseRl.setVisibility(View.GONE);
+                    validateRlContainer.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                setSignInWelcomeRlAnimIn();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+    private void setDividerBelowWelcomRlAnimOut()
+    {
+        Animation dividerBelowWelcomRlAnimOut = new TranslateAnimation(dividerBelowWelcomRl.getScaleX(), 500f, dividerBelowWelcomRl.getScaleY(), dividerBelowWelcomRl.getScaleY());
+        dividerBelowWelcomRlAnimOut.setDuration(400);
+        dividerBelowWelcomRl.startAnimation(dividerBelowWelcomRlAnimOut);
+        dividerBelowWelcomRlAnimOut.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                dividerBelowWelcomRl.setVisibility(View.GONE);
+                if (signInWelcomeCourseRl.getVisibility() == View.VISIBLE)
+                {
+                    setSignInWelcomeCourseRlAnimout();
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+    private void setSignInWelcomeRlAnimIn()
+    {
+        Animation signInWelcomeRlAnimIn = new TranslateAnimation(500f, signInWelcomeRl.getScaleX(), signInWelcomeRl.getScaleY(), signInWelcomeRl.getScaleY());
+        signInWelcomeRlAnimIn.setDuration(400);
+        signInWelcomeRl.startAnimation(signInWelcomeRlAnimIn);
+        signInWelcomeRl.setVisibility(View.VISIBLE);
+        signInWelcomeRlAnimIn.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                if (!welcomeTextView.getText().equals("用户不存在"))
+                {
+                    setDividerBelowWelcomeCourserRlAnimIn();
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+    private void setSignInWelcomeRlAnimOut()
+    {
+        Animation signInWelcomeRlAnimOut = new TranslateAnimation(signInWelcomeRl.getScaleX(), 500f, signInWelcomeRl.getScaleY(), signInWelcomeRl.getScaleY());
+        signInWelcomeRlAnimOut.setDuration(400);
+        signInWelcomeRl.startAnimation(signInWelcomeRlAnimOut);
+        signInWelcomeRlAnimOut.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                signInWelcomeRl.setVisibility(View.GONE);
+                setDividerBelowWelcomRlAnimOut();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+
+
+    }
+    private void setDividerBelowWelcomeCourserRlAnimIn()
+    {
+        Animation dividerBelowWelcomeCourserRlAnimIn = new TranslateAnimation(500f, dividerBelowWelcomeCourserRl.getScaleX(), dividerBelowWelcomeCourserRl.getScaleY(), dividerBelowWelcomeCourserRl.getScaleY());
+        dividerBelowWelcomeCourserRlAnimIn.setDuration(400);
+        dividerBelowWelcomeCourserRl.startAnimation(dividerBelowWelcomeCourserRlAnimIn);
+        dividerBelowWelcomeCourserRl.setVisibility(View.VISIBLE);
+        dividerBelowWelcomeCourserRlAnimIn.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                setSignInWelcomeCourseRlAnimIn();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+    private void setDividerBelowWelcomeCourserRlAnimOut()
+    {
+        Animation dividerBelowWelcomeCourserRlAnimOut = new TranslateAnimation(dividerBelowWelcomeCourserRl.getScaleX(), 500f, dividerBelowWelcomeCourserRl.getScaleY(), dividerBelowWelcomeCourserRl.getScaleY());
+        dividerBelowWelcomeCourserRlAnimOut.setDuration(400);
+        dividerBelowWelcomeCourserRl.startAnimation(dividerBelowWelcomeCourserRlAnimOut);
+        dividerBelowWelcomeCourserRlAnimOut.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                dividerBelowWelcomeCourserRl.setVisibility(View.GONE);
+                setValidateRlContainerAnimout();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+    private void setSignInWelcomeCourseRlAnimIn()
+    {
+        Animation signInWelcomeCourseRlAnimIn = new TranslateAnimation(500f, signInWelcomeCourseRl.getScaleX(), signInWelcomeCourseRl.getScaleY(), signInWelcomeCourseRl.getScaleY());
+        signInWelcomeCourseRlAnimIn.setDuration(400);
+        signInWelcomeCourseRl.startAnimation(signInWelcomeCourseRlAnimIn);
+        signInWelcomeCourseRl.setVisibility(View.VISIBLE);
+        signInWelcomeCourseRlAnimIn.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                setValidateRlContainerAnimIn();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+    private void setSignInWelcomeCourseRlAnimout()
+    {
+        Animation signInWelcomeCourseRlAnimout = new TranslateAnimation(signInWelcomeCourseRl.getScaleX(), 500f, signInWelcomeCourseRl.getScaleY(), signInWelcomeCourseRl.getScaleY());
+        signInWelcomeCourseRlAnimout.setDuration(400);
+        signInWelcomeCourseRl.startAnimation(signInWelcomeCourseRlAnimout);
+        signInWelcomeCourseRlAnimout.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                signInWelcomeCourseRl.setVisibility(View.GONE);
+                setDividerBelowWelcomeCourserRlAnimOut();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+    private void setValidateRlContainerAnimIn()
+    {
+        Animation validateRlContainerAnimIn = new TranslateAnimation(500f, validateRlContainer.getScaleX(), validateRlContainer.getScaleY(), validateRlContainer.getScaleY());
+        validateRlContainerAnimIn.setDuration(400);
+        validateRlContainer.setVisibility(View.VISIBLE);
+        validateRlContainer.startAnimation(validateRlContainerAnimIn);
+    }
     @Override
+
     public void beforeTextChanged(CharSequence s, int start, int count, int after)
     {
 
@@ -90,13 +336,49 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
     {
 
     }
+    private void setValidateRlContainerAnimout()
+    {
+        Animation validateRlContainerAnimout = new TranslateAnimation( validateRlContainer.getScaleX(), 500f,  validateRlContainer.getScaleY(),  validateRlContainer.getScaleY());
+        validateRlContainerAnimout.setDuration(400);
+        validateRlContainer.startAnimation(validateRlContainerAnimout);
+        validateRlContainerAnimout.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                validateRlContainer.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
 
     @Override
     public void afterTextChanged(Editable s)
     {
-        if (ValidatePhoneNum.isMobileNO(loginPhoneNum.getText().toString()))
+        if (ValidatePhoneNum.isMobileNO(loginPhoneNum.getText().toString()) && dividerBelowWelcomeCourserRl.getVisibility() == View.VISIBLE)
+        {
+            dividerBelowWelcomeCourserRl.setVisibility(View.GONE);
+
+            sendAskForValidateCodeRequest();
+        }
+        else if (ValidatePhoneNum.isMobileNO(loginPhoneNum.getText().toString()) && dividerBelowWelcomeCourserRl.getVisibility() == View.GONE)
         {
             sendAskForValidateCodeRequest();
+        }
+        else if (loginPhoneNum.getText().toString().length() == 10 && signInWelcomeRl.getVisibility() == View.VISIBLE)
+        {
+            setSignInWelcomeRlAnimOut();
         }
     }
 
@@ -109,44 +391,25 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             public void netSuccess(String response)
             {
                 final Animation translateAnimation1 = new TranslateAnimation(500f, signInWelcomeCourseRl.getScaleX(), signInWelcomeCourseRl.getScaleY(), signInWelcomeCourseRl.getScaleY());
-                translateAnimation1.setDuration(500);
+                translateAnimation1.setDuration(400);
                 Animation translateAnimation2 = new TranslateAnimation(500f, signInWelcomeRl.getScaleX(), signInWelcomeRl.getScaleY(), signInWelcomeRl.getScaleY());
-                translateAnimation2.setDuration(500);
+                translateAnimation2.setDuration(400);
                 Xlog.d(response.toString());
                 Welcome welcome = Welcome.instance(response);
-                if (welcome != null)
+                String exceptionMsg = response.toString();
+                if (welcome != null && exceptionMsg.contains("20001"))
+                {
+                    welcomeTextView.setText("用户不存在");
+                    setDividerBelowWelcomRlAnimIn();
+                }
+                else if (welcome != null && !exceptionMsg.contains("20001"))
                 {
 
                     String welcomeMsg = welcome.getSentences().get(0);
                     String welcomeCourseMsg = welcome.getSentences().get(1);
                     welcomeTextView.setText(welcomeMsg);
                     welcomeCourseTextView.setText(welcomeCourseMsg);
-                    signInWelcomeRl.startAnimation(translateAnimation2);
-                    signInWelcomeRl.setVisibility(View.VISIBLE);
-                    translateAnimation2.setAnimationListener(new Animation.AnimationListener()
-                    {
-                        @Override
-                        public void onAnimationStart(Animation animation)
-                        {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation)
-                        {
-                            signInWelcomeRl.startAnimation(translateAnimation1);
-                            signInWelcomeCourseRl.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation)
-                        {
-
-                        }
-                    });
-                } else
-                {
-                    Toast.makeText(SignInActivity.this, "用户不存在，请重新输入手机号码", Toast.LENGTH_SHORT).show();
+                    setDividerBelowWelcomRlAnimIn();
                 }
 
 
