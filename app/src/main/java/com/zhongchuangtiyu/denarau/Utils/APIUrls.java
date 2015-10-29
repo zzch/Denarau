@@ -17,5 +17,8 @@ public class APIUrls
     public static String COACHES_DETAIL_URL = "http://123.57.210.52:80/api/v1/coaches/detail.json?";
     public static String COACHES_DETAIL_COURSES_URL = "http://123.57.210.52:80/api/v1/courses/detail.json?";
     public static String PROVISIONS_URL = "http://123.57.210.52:80/api/v1/provisions.json?";
+    public static String USERS_DETAIL = "http://123.57.210.52:80/api/v1/users/detail.json?token=";
+    public static String USERS_PORTRAIT = "http://123.57.210.52:80/api/v1/users/portrait.json";
+    public static String USERS_BIRTHDAY = "http://123.57.210.52:80/api/v1/users/birthday.json";
 
 }

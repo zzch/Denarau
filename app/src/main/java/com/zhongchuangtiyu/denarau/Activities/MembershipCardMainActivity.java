@@ -150,8 +150,8 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
     private void requestCardInfo()
     {
         Map<String, String> map = new HashMap<>();
-        String token = CacheUtils.getString(MembershipCardMainActivity.this, "token", "aa");
-        String club_uuid = CacheUtils.getString(MembershipCardMainActivity.this, "clubuuid", "aa");
+        String token = CacheUtils.getString(MembershipCardMainActivity.this, "token", null);
+        String club_uuid = CacheUtils.getString(MembershipCardMainActivity.this, "clubuuid", null);
 
         MyApplication.volleyGET(APIUrls.CLUBS_HOME_URL + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
         {

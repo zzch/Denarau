@@ -96,6 +96,8 @@
             android:label="@string/title_activity_edit_personal_info"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity android:name=".Utils.ClipImageActivity"/>
     </application>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

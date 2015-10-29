@@ -43,10 +43,10 @@ public class MyApplication extends Application
 
     public static void volleyGET(String url, final Map<String, String> map, final VolleyCallBack listener)
     {
-        String token = CacheUtils.getString(mcontext, "token","aa");
-        String club_uuid = CacheUtils.getString(mcontext, "clubuuid","aa");
-        map.put("token", token);
-        map.put("clubuuid", club_uuid);
+//        String token = CacheUtils.getString(mcontext, "token","aa");
+//        String club_uuid = CacheUtils.getString(mcontext, "clubuuid","aa");
+//        map.put("token", token);
+//        map.put("clubuuid", club_uuid);
         final Map<String, String> finalMap = map;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>()
@@ -78,12 +78,47 @@ public class MyApplication extends Application
     }
     public static void volleyPOST(String url, final Map<String, String> map, final VolleyCallBack listener)
     {
-        String token = CacheUtils.getString(mcontext, "token","aa");
-        String club_uuid = CacheUtils.getString(mcontext, "clubuuid","aa");
-        map.put("token", token);
-        map.put("clubuuid",club_uuid);
+//        String token = CacheUtils.getString(mcontext, "token","aa");
+//        String club_uuid = CacheUtils.getString(mcontext, "clubuuid","aa");
+//        map.put("token", token);
+//        map.put("clubuuid",club_uuid);
         final Map<String, String> finalMap = map;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        Xlog.d(response);
+                        listener.netSuccess(response);
+                    }
+                }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                listener.netFail(error);
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                return map;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(60000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(stringRequest);
+    }
+    public static void volleyPUT(String url, final Map<String, String> map, final VolleyCallBack listener)
+    {
+//        String token = CacheUtils.getString(mcontext, "token","aa");
+//        String club_uuid = CacheUtils.getString(mcontext, "clubuuid","aa");
+//        map.put("token", token);
+//        map.put("clubuuid",club_uuid);
+        final Map<String, String> finalMap = map;
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
                 new Response.Listener<String>()
                 {
                     @Override

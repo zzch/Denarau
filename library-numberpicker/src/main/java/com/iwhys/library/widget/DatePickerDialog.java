@@ -3,6 +3,7 @@ package com.iwhys.library.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -82,10 +83,13 @@ public class DatePickerDialog extends BaseDialog {
         day = (NumberPicker)findViewById(R.id.day);
         selected = (TextView)findViewById(R.id.selected);
         setSelect();
-        findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                if (onSelectListener != null) {
+            public void onClick(View v)
+            {
+                if (onSelectListener != null)
+                {
                     onSelectListener.onSelect(new int[]{yearValue, monthValue, dayValue}, selected.getText().toString().trim());
                 }
                 dismiss();

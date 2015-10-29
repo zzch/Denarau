@@ -21,8 +21,8 @@ public class UsersDetail implements Serializable
 
     private String name;
     private String gender;
-    private Object portrait;
-    private int birthday;
+    private String portrait;
+    private String birthday;
 
     public void setName(String name)
     {
@@ -34,12 +34,12 @@ public class UsersDetail implements Serializable
         this.gender = gender;
     }
 
-    public void setPortrait(Object portrait)
+    public void setPortrait(String portrait)
     {
         this.portrait = portrait;
     }
 
-    public void setBirthday(int birthday)
+    public void setBirthday(String birthday)
     {
         this.birthday = birthday;
     }
@@ -54,20 +54,20 @@ public class UsersDetail implements Serializable
         return gender;
     }
 
-    public Object getPortrait()
+    public String getPortrait()
     {
         return portrait;
     }
 
-    public int getBirthday()
+    public String getBirthday()
     {
         return birthday;
     }
-    public static List<UsersDetail> instance(String str)
+    public static UsersDetail instance(String str)
     {
 
         Gson gson = new Gson();
-        return gson.fromJson(str, new TypeToken<List<UsersDetail>>() {
+        return gson.fromJson(str, new TypeToken<UsersDetail>() {
         }.getType());
     }
 }

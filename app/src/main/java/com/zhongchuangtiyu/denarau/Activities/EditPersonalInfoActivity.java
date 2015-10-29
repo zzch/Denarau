@@ -1,8 +1,11 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -12,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +23,26 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.iwhys.library.widget.DatePickerDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.zhongchuangtiyu.denarau.Entities.UsersDetail;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.ClipImageActivity;
+import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,9 +65,10 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
     @Bind(R.id.editPersonalInfoBirthRl)
     RelativeLayout editPersonalInfoBirthRl;
     private Button btnSelectFromGallery, btnTakePicture,btnCancel;
-    private static final int IMAGE_REQUEST_CODE = 0;
-    private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int RESIZE_REQUEST_CODE = 2;
+    private final int START_ALBUM_REQUESTCODE = 1;
+    private final int CAMERA_WITH_DATA = 2;
+    private final int CROP_RESULT_CODE = 3;
+    public static final String TMP_PATH = "clip_temp.jpg";
     private Dialog dialog;
     private static final String IMAGE_FILE_NAME = "header.jpg";
     @Override
@@ -70,7 +86,42 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
 
     private void setData()
     {
+        Map<String, String> map = new HashMap<>();
+        String token = CacheUtils.getString(EditPersonalInfoActivity.this, "token", null);
+        Xlog.d(token + "token----------------------------------------------");
+        MyApplication.volleyGET(APIUrls.USERS_DETAIL + token, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+                UsersDetail data = UsersDetail.instance(response);
+                Xlog.d(data.toString() + "data.toString()-----------------------------------------------");
+                if (data.getPortrait() != null) ;
+                {
+                    Bitmap photo = BitmapFactory.decodeFile(data.getPortrait());
+                    personalInfoImageToEdit.setImageBitmap(photo);
+                }
+                if (data.getName() != null && !data.getName().equals(""))
+                {
+                    editPersonalInfoNameToRequest.setText(data.getName());
+                }
+                if (data.getGender() != null && !data.getGender().equals(""))
+                {
+                    editPersonalInfoGenderToRequest.setText(data.getGender());
+                }
+                if (data.getBirthday() != null && !data.getBirthday().equals(""))
+                {
+                    String setBirthDay = data.getBirthday().substring(0, 4) + "年" + data.getBirthday().substring(4, 6) + "月" + data.getBirthday().subSequence(6, 8) + "日";
+                    editPersonalInfoBirthToSet.setText(setBirthDay);
+                }
+            }
 
+            @Override
+            public void netFail(VolleyError error)
+            {
+
+            }
+        });
     }
     private void setListeners()
     {
@@ -93,6 +144,7 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
                     public void onSelect(int[] values, String displayName) {
                         editPersonalInfoBirthToSet.setText(displayName);
                         editPersonalInfoBirthRl.setTag(values);
+                        uploadBirthDay();
                     }
                 }).show();
                 break;
@@ -131,86 +183,120 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
                 });
                 break;
             case R.id.btnSelectFromGallery:
-                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, IMAGE_REQUEST_CODE);
+                startAlbum();
                 break;
             case R.id.btnTakePicture:
-                if (isSdcardExisting()) {
-                    Intent cameraIntent = new Intent(
-                            "android.media.action.IMAGE_CAPTURE");
-                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, getImageUri());
-                    cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-                } else {
-                    Toast.makeText(v.getContext(), "请插入sd卡", Toast.LENGTH_LONG)
-                            .show();
-                }
+                startCapture();
                 break;
         }
-
     }
+
+    private void uploadBirthDay()
+    {
+        String birthDay = editPersonalInfoBirthToSet.getText().toString();
+        String birthDayToUpload = birthDay.substring(0,4) + birthDay.substring(5,7) + birthDay.substring(8, 10);
+        Xlog.d(birthDayToUpload + "birthDayToUpload---------------------------------------");
+        Map<String, String> map = new HashMap<>();
+        String token = CacheUtils.getString(EditPersonalInfoActivity.this,"token",null);
+        map.put("token",token);
+        map.put("birthday",birthDayToUpload);
+        MyApplication.volleyPUT(APIUrls.USERS_BIRTHDAY, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+                Toast.makeText(EditPersonalInfoActivity.this, "生日上传成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void netFail(VolleyError error)
+            {
+                Toast.makeText(EditPersonalInfoActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // String result = null;
         if (resultCode != RESULT_OK) {
             return;
-        } else {
-            switch (requestCode) {
-                case IMAGE_REQUEST_CODE:
-                    resizeImage(data.getData());
-                    break;
-                case CAMERA_REQUEST_CODE:
-                    if (isSdcardExisting()) {
-                        resizeImage(getImageUri());
-                    } else {
-                        Toast.makeText(EditPersonalInfoActivity.this, "未找到存储卡，无法存储照片！",
-                                Toast.LENGTH_LONG).show();
-                    }
-                    break;
+        }
 
-                case RESIZE_REQUEST_CODE:
-                    if (data != null) {
-                        showResizeImage(data);
-                    }
-                    break;
+        switch (requestCode) {
+            case CROP_RESULT_CODE:
+                String path = data.getStringExtra(ClipImageActivity.RESULT_PATH);
+                Bitmap photo = BitmapFactory.decodeFile(path);
+                personalInfoImageToEdit.setImageBitmap(photo);
+
+                dialog.dismiss();
+                break;
+            case START_ALBUM_REQUESTCODE:
+                startCropImageActivity(getFilePath(data.getData()));
+                break;
+            case CAMERA_WITH_DATA:
+                // 照相机程序返回的,再次调用图片剪辑程序去修剪图片
+                startCropImageActivity(Environment.getExternalStorageDirectory()
+                        + "/" + TMP_PATH);
+                break;
+        }
+    }
+
+    // 裁剪图片的Activity
+    private void startCropImageActivity(String path) {
+        ClipImageActivity.startActivity(this, path, CROP_RESULT_CODE);
+    }
+
+    private void startAlbum() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+            intent.setType("image/*");
+            startActivityForResult(intent, START_ALBUM_REQUESTCODE);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+            try {
+                Intent intent = new Intent(Intent.ACTION_PICK, null);
+                intent.setDataAndType(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, START_ALBUM_REQUESTCODE);
+            } catch (Exception e2) {
+                // TODO: handle exception
+                e.printStackTrace();
             }
         }
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-    private boolean isSdcardExisting() {
-        final String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public void resizeImage(Uri uri) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 200);
-        intent.putExtra("outputY", 200);
-        intent.putExtra("return-data", true);
-        startActivityForResult(intent, RESIZE_REQUEST_CODE);
     }
 
-    private void showResizeImage(Intent data) {
-        Bundle extras = data.getExtras();
-        if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
-            Drawable drawable = new BitmapDrawable(photo);
-            personalInfoImageToEdit.setImageDrawable(drawable);
-            dialog.dismiss();
+    private void startCapture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
+                Environment.getExternalStorageDirectory(), TMP_PATH)));
+        startActivityForResult(intent, CAMERA_WITH_DATA);
+    }
+
+    /**
+     * 通过uri获取文件路径
+     *
+     * @param mUri
+     * @return
+     */
+    public String getFilePath(Uri mUri) {
+        try {
+            if (mUri.getScheme().equals("file")) {
+                return mUri.getPath();
+            } else {
+                return getFilePathByUri(mUri);
+            }
+        } catch (FileNotFoundException ex) {
+            return null;
         }
     }
 
-    private Uri getImageUri() {
-        return Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
-                IMAGE_FILE_NAME));
+    // 获取文件路径通过url
+    private String getFilePathByUri(Uri mUri) throws FileNotFoundException {
+        Cursor cursor = getContentResolver()
+                .query(mUri, null, null, null, null);
+        cursor.moveToFirst();
+        return cursor.getString(1);
     }
+
 }
