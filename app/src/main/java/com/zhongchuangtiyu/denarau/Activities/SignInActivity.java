@@ -2,6 +2,7 @@ package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -22,6 +23,7 @@ import com.zhongchuangtiyu.denarau.Entities.Welcome;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.ValidatePhoneNum;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
@@ -59,11 +61,13 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
     ImageView dividerBelowWelcomRl;
     @Bind(R.id.dividerBelowWelcomeCourserRl)
     ImageView dividerBelowWelcomeCourserRl;
+    @Bind(R.id.resendValidateCode)
+    Button resendValidateCode;
     private CharSequence temp;//监听前的文本
     private int editStart;//光标开始位置
     private int editEnd;//光标结束位置
     private final int charMaxNum = 10;
-
+    private TimeCount time = new TimeCount(60000,1000);
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -73,10 +77,11 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         signInWelcomeRl.setVisibility(View.GONE);
-        signInWelcomeCourseRl.setVisibility(View.GONE);
         dividerBelowWelcomRl.setVisibility(View.GONE);
+        signInWelcomeCourseRl.setVisibility(View.GONE);
         dividerBelowWelcomeCourserRl.setVisibility(View.GONE);
         validateRlContainer.setVisibility(View.GONE);
+        btnLogin.setVisibility(View.GONE);
         setListeners();
 
     }
@@ -85,6 +90,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
     {
         loginPhoneNum.addTextChangedListener(this);
         btnLogin.setOnClickListener(this);
+        resendValidateCode.setOnClickListener(this);
     }
 
     private void setDividerBelowWelcomRlAnimIn()
@@ -98,12 +104,13 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             @Override
             public void onAnimationStart(Animation animation)
             {
-                if (dividerBelowWelcomeCourserRl.getVisibility() == View.VISIBLE || signInWelcomeCourseRl.getVisibility() == View.VISIBLE)
+                if (dividerBelowWelcomeCourserRl.getVisibility() == View.VISIBLE || signInWelcomeCourseRl.getVisibility() == View.VISIBLE || validateRlContainer.getVisibility() == View.VISIBLE)
                 {
                     dividerBelowWelcomeCourserRl.setVisibility(View.GONE);
                     signInWelcomeRl.setVisibility(View.GONE);
                     signInWelcomeCourseRl.setVisibility(View.GONE);
                     validateRlContainer.setVisibility(View.GONE);
+                    btnLogin.setVisibility(View.GONE);
                 }
             }
 
@@ -120,10 +127,11 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             }
         });
     }
+
     private void setDividerBelowWelcomRlAnimOut()
     {
         Animation dividerBelowWelcomRlAnimOut = new TranslateAnimation(dividerBelowWelcomRl.getScaleX(), 500f, dividerBelowWelcomRl.getScaleY(), dividerBelowWelcomRl.getScaleY());
-        dividerBelowWelcomRlAnimOut.setDuration(400);
+        dividerBelowWelcomRlAnimOut.setDuration(200);
         dividerBelowWelcomRl.startAnimation(dividerBelowWelcomRlAnimOut);
         dividerBelowWelcomRlAnimOut.setAnimationListener(new Animation.AnimationListener()
         {
@@ -150,6 +158,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             }
         });
     }
+
     private void setSignInWelcomeRlAnimIn()
     {
         Animation signInWelcomeRlAnimIn = new TranslateAnimation(500f, signInWelcomeRl.getScaleX(), signInWelcomeRl.getScaleY(), signInWelcomeRl.getScaleY());
@@ -180,17 +189,19 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             }
         });
     }
+
     private void setSignInWelcomeRlAnimOut()
     {
         Animation signInWelcomeRlAnimOut = new TranslateAnimation(signInWelcomeRl.getScaleX(), 500f, signInWelcomeRl.getScaleY(), signInWelcomeRl.getScaleY());
-        signInWelcomeRlAnimOut.setDuration(400);
+        signInWelcomeRlAnimOut.setDuration(200);
         signInWelcomeRl.startAnimation(signInWelcomeRlAnimOut);
         signInWelcomeRlAnimOut.setAnimationListener(new Animation.AnimationListener()
         {
             @Override
             public void onAnimationStart(Animation animation)
             {
-
+                validateRlContainer.setVisibility(View.GONE);
+                btnLogin.setVisibility(View.GONE);
             }
 
             @Override
@@ -209,6 +220,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
 
 
     }
+
     private void setDividerBelowWelcomeCourserRlAnimIn()
     {
         Animation dividerBelowWelcomeCourserRlAnimIn = new TranslateAnimation(500f, dividerBelowWelcomeCourserRl.getScaleX(), dividerBelowWelcomeCourserRl.getScaleY(), dividerBelowWelcomeCourserRl.getScaleY());
@@ -236,10 +248,11 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             }
         });
     }
+
     private void setDividerBelowWelcomeCourserRlAnimOut()
     {
         Animation dividerBelowWelcomeCourserRlAnimOut = new TranslateAnimation(dividerBelowWelcomeCourserRl.getScaleX(), 500f, dividerBelowWelcomeCourserRl.getScaleY(), dividerBelowWelcomeCourserRl.getScaleY());
-        dividerBelowWelcomeCourserRlAnimOut.setDuration(400);
+        dividerBelowWelcomeCourserRlAnimOut.setDuration(200);
         dividerBelowWelcomeCourserRl.startAnimation(dividerBelowWelcomeCourserRlAnimOut);
         dividerBelowWelcomeCourserRlAnimOut.setAnimationListener(new Animation.AnimationListener()
         {
@@ -253,7 +266,6 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             public void onAnimationEnd(Animation animation)
             {
                 dividerBelowWelcomeCourserRl.setVisibility(View.GONE);
-                setValidateRlContainerAnimout();
             }
 
             @Override
@@ -263,6 +275,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             }
         });
     }
+
     private void setSignInWelcomeCourseRlAnimIn()
     {
         Animation signInWelcomeCourseRlAnimIn = new TranslateAnimation(500f, signInWelcomeCourseRl.getScaleX(), signInWelcomeCourseRl.getScaleY(), signInWelcomeCourseRl.getScaleY());
@@ -290,10 +303,11 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             }
         });
     }
+
     private void setSignInWelcomeCourseRlAnimout()
     {
         Animation signInWelcomeCourseRlAnimout = new TranslateAnimation(signInWelcomeCourseRl.getScaleX(), 500f, signInWelcomeCourseRl.getScaleY(), signInWelcomeCourseRl.getScaleY());
-        signInWelcomeCourseRlAnimout.setDuration(400);
+        signInWelcomeCourseRlAnimout.setDuration(200);
         signInWelcomeCourseRl.startAnimation(signInWelcomeCourseRlAnimout);
         signInWelcomeCourseRlAnimout.setAnimationListener(new Animation.AnimationListener()
         {
@@ -317,28 +331,38 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             }
         });
     }
+
     private void setValidateRlContainerAnimIn()
     {
         Animation validateRlContainerAnimIn = new TranslateAnimation(500f, validateRlContainer.getScaleX(), validateRlContainer.getScaleY(), validateRlContainer.getScaleY());
-        validateRlContainerAnimIn.setDuration(400);
+        validateRlContainerAnimIn.setDuration(350);
         validateRlContainer.setVisibility(View.VISIBLE);
         validateRlContainer.startAnimation(validateRlContainerAnimIn);
-    }
-    @Override
+        time.start();
+        validateRlContainerAnimIn.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
 
-    public void beforeTextChanged(CharSequence s, int start, int count, int after)
-    {
+            }
 
-    }
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                setBtnLoginAnimIn();
+            }
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count)
-    {
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
 
+            }
+        });
     }
     private void setValidateRlContainerAnimout()
     {
-        Animation validateRlContainerAnimout = new TranslateAnimation( validateRlContainer.getScaleX(), 500f,  validateRlContainer.getScaleY(),  validateRlContainer.getScaleY());
+        Animation validateRlContainerAnimout = new TranslateAnimation(validateRlContainer.getScaleX(), 500f, validateRlContainer.getScaleY(), validateRlContainer.getScaleY());
         validateRlContainerAnimout.setDuration(400);
         validateRlContainer.startAnimation(validateRlContainerAnimout);
         validateRlContainerAnimout.setAnimationListener(new Animation.AnimationListener()
@@ -352,7 +376,9 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             @Override
             public void onAnimationEnd(Animation animation)
             {
+                setBtnLoginAnimOut();
                 validateRlContainer.setVisibility(View.GONE);
+                time.onFinish();
             }
 
             @Override
@@ -362,7 +388,51 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             }
         });
     }
+    private void setBtnLoginAnimIn()
+    {
+        Animation btnLoginAnimIn = new TranslateAnimation(500f, btnLogin.getScaleX(), btnLogin.getScaleY(), btnLogin.getScaleY());
+        btnLoginAnimIn.setDuration(350);
+        btnLogin.startAnimation(btnLoginAnimIn);
+        btnLogin.setVisibility(View.VISIBLE);
+    }
+    private void setBtnLoginAnimOut()
+    {
+        Animation btnLoginAnimOut = new TranslateAnimation(btnLogin.getScaleX(), 500f, btnLogin.getScaleY(), btnLogin.getScaleY());
+        btnLoginAnimOut.setDuration(350);
+        btnLogin.startAnimation(btnLoginAnimOut);
+        btnLoginAnimOut.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
 
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                btnLogin.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+    @Override
+
+    public void beforeTextChanged(CharSequence s, int start, int count, int after)
+    {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count)
+    {
+
+    }
     @Override
     public void afterTextChanged(Editable s)
     {
@@ -371,16 +441,15 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             dividerBelowWelcomeCourserRl.setVisibility(View.GONE);
 
             sendAskForValidateCodeRequest();
-        }
-        else if (ValidatePhoneNum.isMobileNO(loginPhoneNum.getText().toString()) && dividerBelowWelcomeCourserRl.getVisibility() == View.GONE)
+        } else if (ValidatePhoneNum.isMobileNO(loginPhoneNum.getText().toString()) && dividerBelowWelcomeCourserRl.getVisibility() == View.GONE)
         {
             sendAskForValidateCodeRequest();
-        }
-        else if (loginPhoneNum.getText().toString().length() == 10 && signInWelcomeRl.getVisibility() == View.VISIBLE)
+        } else if (loginPhoneNum.getText().toString().length() == 10 && signInWelcomeRl.getVisibility() == View.VISIBLE)
         {
             setSignInWelcomeRlAnimOut();
         }
     }
+
 
     private void sendAskForValidateCodeRequest()
     {
@@ -390,10 +459,6 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             @Override
             public void netSuccess(String response)
             {
-                final Animation translateAnimation1 = new TranslateAnimation(500f, signInWelcomeCourseRl.getScaleX(), signInWelcomeCourseRl.getScaleY(), signInWelcomeCourseRl.getScaleY());
-                translateAnimation1.setDuration(400);
-                Animation translateAnimation2 = new TranslateAnimation(500f, signInWelcomeRl.getScaleX(), signInWelcomeRl.getScaleY(), signInWelcomeRl.getScaleY());
-                translateAnimation2.setDuration(400);
                 Xlog.d(response.toString());
                 Welcome welcome = Welcome.instance(response);
                 String exceptionMsg = response.toString();
@@ -401,8 +466,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
                 {
                     welcomeTextView.setText("用户不存在");
                     setDividerBelowWelcomRlAnimIn();
-                }
-                else if (welcome != null && !exceptionMsg.contains("20001"))
+                } else if (welcome != null && !exceptionMsg.contains("20001"))
                 {
 
                     String welcomeMsg = welcome.getSentences().get(0);
@@ -418,12 +482,28 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             @Override
             public void netFail(VolleyError error)
             {
-                Xlog.d(error.toString() + "---------------------------------------------");
-                Toast.makeText(SignInActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                CustomToast.showToast(SignInActivity.this, "网络连接失败");
             }
         });
     }
+    private void resendValidateCodeRequest()
+    {
+        Map<String, String> map = new HashMap<>();
+        MyApplication.volleyGET(APIUrls.WELCOME_URL + loginPhoneNum.getText().toString(), map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+                CustomToast.showToast(SignInActivity.this, "验证码已发送");
+            }
 
+            @Override
+            public void netFail(VolleyError error)
+            {
+                CustomToast.showToast(SignInActivity.this, "网络连接失败");
+            }
+        });
+    }
     private void sendSignInRequest()
     {
         Map<String, String> validate = new HashMap<>();
@@ -438,7 +518,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
                 Sign_In data = Sign_In.instance(response);
                 if (data.getException_code() == 20003)
                 {
-                    Toast.makeText(SignInActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
+                    CustomToast.showToast(SignInActivity.this, "验证码错误");
                 } else
                 {
                     String name = data.getUser().getName();
@@ -457,8 +537,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             @Override
             public void netFail(VolleyError error)
             {
-                Xlog.d(error.toString() + "---------------------------------------------");
-                Toast.makeText(SignInActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                CustomToast.showToast(SignInActivity.this, "网络连接失败");
             }
         });
     }
@@ -469,12 +548,46 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
         switch (v.getId())
         {
             case R.id.btnLogin:
-                sendSignInRequest();
+                if(String.valueOf(loginVerificationCode.getText()).trim().equals(""))
+                {
+                    CustomToast.showToast(SignInActivity.this,"验证码不能为空");
+                }
+                else if (loginVerificationCode.getText().length() < 4 && loginVerificationCode.getText().length() > 0)
+                {
+                    CustomToast.showToast(SignInActivity.this,"请输入完整验证码");
+                }
+                else
+                {
+                    sendSignInRequest();
+                }
                 break;
+            case R.id.resendValidateCode:
+                time.start();
+                resendValidateCodeRequest();
             default:
                 break;
         }
 
     }
+    class TimeCount extends CountDownTimer
+    {
+        public TimeCount(long millisInFuture, long countDownInterval)
+        {
+            super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
+        }
 
+        @Override
+        public void onFinish()
+        {//计时完毕时触发
+            resendValidateCode.setText("重新验证");
+            resendValidateCode.setClickable(true);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished)
+        {//计时过程显示
+            resendValidateCode.setClickable(false);
+            resendValidateCode.setText(millisUntilFinished / 1000 + "秒");
+        }
+    }
 }

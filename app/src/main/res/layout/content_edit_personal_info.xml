@@ -140,7 +140,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
             android:id="@+id/editPersonalInfoBirthToSet"
             android:layout_alignTop="@+id/textView21"
             android:layout_toStartOf="@+id/imageView16"

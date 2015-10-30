@@ -26,6 +26,7 @@
         android:layout_marginTop="120dp"
         android:id="@+id/signInPhoneNumberRl">
         <EditText
+            android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="phone"
@@ -100,6 +101,17 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="87dp"/>
+
+        <ImageView
+            android:src="@mipmap/denglu_xinxi_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView22"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignBottom="@+id/welcomeCourseTextView"
+            android:layout_marginLeft="60dp"
+            android:layout_marginBottom="4dp"/>
     </RelativeLayout>
 
     <ImageView
@@ -120,13 +132,15 @@
         android:layout_marginTop="315dp">
 
         <EditText
+            android:background="@null"
+            android:layout_centerVertical="true"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
             android:ems="10"
             android:id="@+id/loginVerificationCode"
             android:hint="请输入验证码"
-            android:maxLength="6"
+            android:maxLength="4"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/imageView19"
             android:layout_marginLeft="10dp"/>
@@ -139,11 +153,29 @@
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="60dp"/>
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:text="重新发送"
+            android:background="@mipmap/denglu_yanzhen"
+            android:id="@+id/resendValidateCode"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/loginVerificationCode"
+            android:layout_marginTop="20dp"/>
+        <ImageView
+            android:layout_width="145dp"
+            android:layout_height="1dp"
+            android:background="#ff0000"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="37dp"/>
     </RelativeLayout>
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:text="登录"
         android:textColor="#ffffff"
         android:textSize="20sp"
@@ -151,8 +183,18 @@
         android:id="@+id/btnLogin"
         android:layout_alignParentEnd="false"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="385dp"
+        android:layout_marginTop="400dp"
         android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="1dp"
+        android:id="@+id/imageView21"
+        android:layout_below="@+id/signInPhoneNumberRl"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="60dp"
+        android:background="#ff0000"/>
+
 
 
 </RelativeLayout>
