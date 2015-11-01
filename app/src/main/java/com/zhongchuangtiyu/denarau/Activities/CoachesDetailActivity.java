@@ -19,6 +19,7 @@ import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomListView;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.SetListViewHeight;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
@@ -69,31 +70,39 @@ public class CoachesDetailActivity extends AppCompatActivity
             @Override
             public void netSuccess(String response)
             {
-                final CoachesDetail data = CoachesDetail.instance(response);
-                if (data.getPortrait() != null)
+                if (response.contains("10002"))
                 {
-                    imageLoader.displayImage(data.getPortrait().toString(), coachDetailImage);
-                }
-                coachDetailName.setText(data.getName());
-                coachDetailType.setText(data.getTitle());
-                coachDetailIntro.loadData(data.getDescription(), "text/html", "UTF-8");
-                CoachDetailListAdapter adapter = new CoachDetailListAdapter(data.getCourses(), CoachesDetailActivity.this);
-                Xlog.d(data.getCourses() + "data.getCourses()--------------------------------------------------");
-                coachDetailListView.setAdapter(adapter);
-                SetListViewHeight.setListViewHeightBasedOnChildren(coachDetailListView);
-                coachDetailListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                    CustomToast.showToast(CoachesDetailActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(CoachesDetailActivity.this,SignInActivity.class));
+                    finish();
+                }else
                 {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                    final CoachesDetail data = CoachesDetail.instance(response);
+                    if (data.getPortrait() != null)
                     {
-                        String uuid = data.getCourses().get(position).getUuid();
-                        Intent intent1 = new Intent(CoachesDetailActivity.this, CoachTutorialDetailCoursesActivity.class);
-                        intent1.putExtra("token", token);
-                        intent1.putExtra("club_uuid", club_uuid);
-                        intent1.putExtra("uuid", uuid);
-                        startActivity(intent1);
+                        imageLoader.displayImage(data.getPortrait().toString(), coachDetailImage);
                     }
-                });
+                    coachDetailName.setText(data.getName());
+                    coachDetailType.setText(data.getTitle());
+                    coachDetailIntro.loadData(data.getDescription(), "text/html", "UTF-8");
+                    CoachDetailListAdapter adapter = new CoachDetailListAdapter(data.getCourses(), CoachesDetailActivity.this);
+                    Xlog.d(data.getCourses() + "data.getCourses()--------------------------------------------------");
+                    coachDetailListView.setAdapter(adapter);
+                    SetListViewHeight.setListViewHeightBasedOnChildren(coachDetailListView);
+                    coachDetailListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                    {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                        {
+                            String uuid = data.getCourses().get(position).getUuid();
+                            Intent intent1 = new Intent(CoachesDetailActivity.this, CoachTutorialDetailCoursesActivity.class);
+                            intent1.putExtra("token", token);
+                            intent1.putExtra("club_uuid", club_uuid);
+                            intent1.putExtra("uuid", uuid);
+                            startActivity(intent1);
+                        }
+                    });
+                }
             }
 
             @Override

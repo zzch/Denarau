@@ -28,6 +28,7 @@ import com.zhongchuangtiyu.denarau.Entities.ClubsHome;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
@@ -131,7 +132,7 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
                 if (position != 0)
                 {
                     isSelected = false;
-                }else
+                } else
                 {
                     isSelected = true;
                 }
@@ -159,46 +160,52 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
             @Override
             public void netSuccess(String response)
             {
-
-                final ClubsHome data = ClubsHome.instance(response);
-                pagerViews = new ArrayList<View>();
-                int dataSize = data.getMembers().size();
-                for (int i = 0; i < dataSize; i++)
+                if (response.contains("10002"))
                 {
-                    view = LayoutInflater.from(MembershipCardMainActivity.this).inflate(R.layout.membership_viewpager_item, null);
-                    ImageView membershipViewPagerCourseImage = (ImageView) view.findViewById(R.id.membershipViewPagerCourseImage);
-                    TextView membershipViewPagerCourseName = (TextView) view.findViewById(R.id.membershipViewPagerCourseName);
-                    TextView membershipViewPagerCardType = (TextView) view.findViewById(R.id.membershipViewPagerCardType);
-                    TextView membershipViewPagerCardBalance = (TextView) view.findViewById(R.id.membershipViewPagerCardBalance);
-                    TextView membershipViewPagerCardNumber = (TextView) view.findViewById(R.id.membershipViewPagerCardNumber);
-                    RelativeLayout membershipCardViewPagerRoot = (RelativeLayout) view.findViewById(R.id.membershipCardViewPagerRoot);
-                    imageLoader.displayImage(data.getClub().getLogo(), membershipViewPagerCourseImage);
-                    membershipViewPagerCourseName.setText(data.getClub().getName());
-                    membershipViewPagerCardType.setText(data.getMembers().get(i).getCard().getName());
-                    membershipViewPagerCardBalance.setText(data.getMembers().get(i).getBalance());
-                    membershipViewPagerCardNumber.setText(data.getMembers().get(i).getNumber());
-                    GradientDrawable myGrad = (GradientDrawable) membershipCardViewPagerRoot.getBackground();
-                    myGrad.setColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
-                    pagerViews.add(view);
-                    adapter = new MembershipCardViewpagerAdapter(pagerViews, MembershipCardMainActivity.this);
-                    membershipCardViewPager.setAdapter(adapter);
-                    final int finalI = i;
-                    membershipCardViewPagerRoot.setOnClickListener(new View.OnClickListener()
+                    CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
+                    finish();
+                } else
+                {
+                    final ClubsHome data = ClubsHome.instance(response);
+                    pagerViews = new ArrayList<View>();
+                    int dataSize = data.getMembers().size();
+                    for (int i = 0; i < dataSize; i++)
                     {
-                        @Override
-                        public void onClick(View v)
+                        view = LayoutInflater.from(MembershipCardMainActivity.this).inflate(R.layout.membership_viewpager_item, null);
+                        ImageView membershipViewPagerCourseImage = (ImageView) view.findViewById(R.id.membershipViewPagerCourseImage);
+                        TextView membershipViewPagerCourseName = (TextView) view.findViewById(R.id.membershipViewPagerCourseName);
+                        TextView membershipViewPagerCardType = (TextView) view.findViewById(R.id.membershipViewPagerCardType);
+                        TextView membershipViewPagerCardBalance = (TextView) view.findViewById(R.id.membershipViewPagerCardBalance);
+                        TextView membershipViewPagerCardNumber = (TextView) view.findViewById(R.id.membershipViewPagerCardNumber);
+                        RelativeLayout membershipCardViewPagerRoot = (RelativeLayout) view.findViewById(R.id.membershipCardViewPagerRoot);
+                        imageLoader.displayImage(data.getClub().getLogo(), membershipViewPagerCourseImage);
+                        membershipViewPagerCourseName.setText(data.getClub().getName());
+                        membershipViewPagerCardType.setText(data.getMembers().get(i).getCard().getName());
+                        membershipViewPagerCardBalance.setText(data.getMembers().get(i).getBalance());
+                        membershipViewPagerCardNumber.setText(data.getMembers().get(i).getNumber());
+                        GradientDrawable myGrad = (GradientDrawable) membershipCardViewPagerRoot.getBackground();
+                        myGrad.setColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
+                        pagerViews.add(view);
+                        adapter = new MembershipCardViewpagerAdapter(pagerViews, MembershipCardMainActivity.this);
+                        membershipCardViewPager.setAdapter(adapter);
+                        final int finalI = i;
+                        membershipCardViewPagerRoot.setOnClickListener(new View.OnClickListener()
                         {
-                            Toast.makeText(MembershipCardMainActivity.this, data.getMembers().get(finalI).getCard().getName(), Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onClick(View v)
+                            {
+                                Toast.makeText(MembershipCardMainActivity.this, data.getMembers().get(finalI).getCard().getName(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        adapter = new MembershipCardViewpagerAdapter(pagerViews, MembershipCardMainActivity.this);
+                        if (dataSize > 1)
+                        {
+                            initIndicators();
                         }
-                    });
-                    adapter = new MembershipCardViewpagerAdapter(pagerViews, MembershipCardMainActivity.this);
-                    if (dataSize > 1)
-                    {
-                        initIndicators();
                     }
+                    membershipCardViewPager.setAdapter(adapter);
                 }
-                membershipCardViewPager.setAdapter(adapter);
-
             }
 
             @Override

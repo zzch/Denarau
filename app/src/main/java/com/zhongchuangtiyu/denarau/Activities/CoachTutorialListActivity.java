@@ -18,6 +18,7 @@ import com.zhongchuangtiyu.denarau.Entities.Coaches;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 
 import java.util.ArrayList;
@@ -59,21 +60,29 @@ public class CoachTutorialListActivity extends AppCompatActivity
             @Override
             public void netSuccess(final String response)
             {
-                Coaches data = Coaches.instance(response);
-                final List<Coaches> result = data.generateListInfo();
-                CoachListAdapter adapter = new CoachListAdapter(result,CoachTutorialListActivity.this);
-                coachTutorialListView.setAdapter(adapter);
-                coachTutorialListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                if (response.contains("10002"))
                 {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                    CustomToast.showToast(CoachTutorialListActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(CoachTutorialListActivity.this,SignInActivity.class));
+                    finish();
+                }else
+                {
+                    Coaches data = Coaches.instance(response);
+                    final List<Coaches> result = data.generateListInfo();
+                    CoachListAdapter adapter = new CoachListAdapter(result, CoachTutorialListActivity.this);
+                    coachTutorialListView.setAdapter(adapter);
+                    coachTutorialListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
-                        String uuid = result.get(position).getUuid();
-                        Intent intent = new Intent(CoachTutorialListActivity.this,CoachesDetailActivity.class);
-                        intent.putExtra("uuid",uuid);
-                        startActivity(intent);
-                    }
-                });
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                        {
+                            String uuid = result.get(position).getUuid();
+                            Intent intent = new Intent(CoachTutorialListActivity.this, CoachesDetailActivity.class);
+                            intent.putExtra("uuid", uuid);
+                            startActivity(intent);
+                        }
+                    });
+                }
                 //setAdapter
             }
 

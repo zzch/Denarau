@@ -19,7 +19,7 @@ import java.util.Calendar;
  */
 public class DatePickerDialog extends BaseDialog {
 
-    public final static int YEAR_MAX = 2009, YEAR_MIN = 1970;
+    public final static int YEAR_MAX = 2015, YEAR_MIN = 1950;
     public final static int MONTH_MAX = 12, MONTH_MIN = 1;
     public final static int DAY_MIN = 1;
 

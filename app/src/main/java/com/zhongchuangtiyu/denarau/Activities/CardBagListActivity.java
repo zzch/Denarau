@@ -58,25 +58,33 @@ public class CardBagListActivity extends AppCompatActivity
             @Override
             public void netSuccess(String response)
             {
-                final List<ClubsMembership> data = ClubsMembership.instance(response);
-                CardbagListAdapter adapter = new CardbagListAdapter(data,CardBagListActivity.this);
-                cardBagListView.setAdapter(adapter);
-                cardBagListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                if (response.contains("10002"))
                 {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                    CustomToast.showToast(CardBagListActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(CardBagListActivity.this,SignInActivity.class));
+                    finish();
+                }else
+                {
+                    final List<ClubsMembership> data = ClubsMembership.instance(response);
+                    CardbagListAdapter adapter = new CardbagListAdapter(data, CardBagListActivity.this);
+                    cardBagListView.setAdapter(adapter);
+                    cardBagListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
-                        ClubsMembership clubsMembership = data.get(position);
-                        String club_uuid = clubsMembership.getUuid();
-                        String token = CacheUtils.getString(CardBagListActivity.this,"token","aa");
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                        {
+                            ClubsMembership clubsMembership = data.get(position);
+                            String club_uuid = clubsMembership.getUuid();
+                            String token = CacheUtils.getString(CardBagListActivity.this, "token", "aa");
 
-                        CacheUtils.putString(CardBagListActivity.this,"clubuuid",club_uuid);
-                        Xlog.d(token + " token-----------------------------------");
-                        Xlog.d(club_uuid + "-----------------------------------");
-                        startActivity(new Intent(CardBagListActivity.this, MembershipCardMainActivity.class));
-                        finish();
-                    }
-                });
+                            CacheUtils.putString(CardBagListActivity.this, "clubuuid", club_uuid);
+                            Xlog.d(token + " token-----------------------------------");
+                            Xlog.d(club_uuid + "-----------------------------------");
+                            startActivity(new Intent(CardBagListActivity.this, MembershipCardMainActivity.class));
+                            finish();
+                        }
+                    });
+                }
             }
 
             @Override

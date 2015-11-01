@@ -28,19 +28,31 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Cache;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.iwhys.library.widget.DatePickerDialog;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhongchuangtiyu.denarau.Entities.UsersDetail;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.ClipImageActivity;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
+import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,6 +83,8 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
     public static final String TMP_PATH = "clip_temp.jpg";
     private Dialog dialog;
     private static final String IMAGE_FILE_NAME = "header.jpg";
+    private String path;
+    private com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -96,14 +110,23 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
             {
                 UsersDetail data = UsersDetail.instance(response);
                 Xlog.d(data.toString() + "data.toString()-----------------------------------------------");
-                if (data.getPortrait() != null) ;
+                String cachedPortrait = CacheUtils.getString(EditPersonalInfoActivity.this, "setPortrait", null);
+                if (cachedPortrait != null)
                 {
-                    Bitmap photo = BitmapFactory.decodeFile(data.getPortrait());
-                    personalInfoImageToEdit.setImageBitmap(photo);
+                    Bitmap photo1 = BitmapFactory.decodeFile(cachedPortrait);
+                    personalInfoImageToEdit.setImageBitmap(photo1);
+                }
+                else if (data.getPortrait() != null && cachedPortrait == null) ;
+                {
+                    imageLoader.init(ImageLoaderConfiguration.createDefault(EditPersonalInfoActivity.this));
+                    String portraitUrl = data.getPortrait();
+                    imageLoader.displayImage(portraitUrl, personalInfoImageToEdit);
                 }
                 if (data.getName() != null && !data.getName().equals(""))
                 {
-                    editPersonalInfoNameToRequest.setText(data.getName());
+                    String setName = data.getName();
+                    CacheUtils.putString(EditPersonalInfoActivity.this, "setName", setName);
+                    editPersonalInfoNameToRequest.setText(setName);
                 }
                 if (data.getGender() != null && !data.getGender().equals(""))
                 {
@@ -111,7 +134,7 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
                 }
                 if (data.getBirthday() != null && !data.getBirthday().equals(""))
                 {
-                    String setBirthDay = data.getBirthday().substring(0, 4) + "年" + data.getBirthday().substring(4, 6) + "月" + data.getBirthday().subSequence(6, 8) + "日";
+                    String setBirthDay = DateUtils.getDateToString(Long.valueOf(data.getBirthday()) * 1000);
                     editPersonalInfoBirthToSet.setText(setBirthDay);
                 }
             }
@@ -191,10 +214,43 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
         }
     }
 
+    private void uploadPortrait()
+    {
+        RequestParams params = new RequestParams();
+        String token = CacheUtils.getString(EditPersonalInfoActivity.this, "token", null);
+        params.addBodyParameter("token", token);
+        params.addBodyParameter("portrait", new File(path));
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.PUT, APIUrls.USERS_PORTRAIT, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isUploading) {
+                if (isUploading) {
+                } else {
+                }
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                CustomToast.showToast(EditPersonalInfoActivity.this, "头像上传成功");
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                CustomToast.showToast(EditPersonalInfoActivity.this,"头像上传失败");
+            }
+        });
+
+    }
+
     private void uploadBirthDay()
     {
         String birthDay = editPersonalInfoBirthToSet.getText().toString();
-        String birthDayToUpload = birthDay.substring(0,4) + birthDay.substring(5,7) + birthDay.substring(8, 10);
+        String birthDayToUpload = String.valueOf(DateUtils.getStringToDate(birthDay)/1000);
         Xlog.d(birthDayToUpload + "birthDayToUpload---------------------------------------");
         Map<String, String> map = new HashMap<>();
         String token = CacheUtils.getString(EditPersonalInfoActivity.this,"token",null);
@@ -225,10 +281,11 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
 
         switch (requestCode) {
             case CROP_RESULT_CODE:
-                String path = data.getStringExtra(ClipImageActivity.RESULT_PATH);
+                path = data.getStringExtra(ClipImageActivity.RESULT_PATH);
                 Bitmap photo = BitmapFactory.decodeFile(path);
+                CacheUtils.putString(EditPersonalInfoActivity.this, "setPortrait", path);
                 personalInfoImageToEdit.setImageBitmap(photo);
-
+                uploadPortrait();
                 dialog.dismiss();
                 break;
             case START_ALBUM_REQUESTCODE:

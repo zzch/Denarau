@@ -1,6 +1,7 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -25,6 +26,7 @@ import com.zhongchuangtiyu.denarau.Fragments.ProvisionFragments;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
@@ -86,100 +88,108 @@ public class ProvisionsActivity extends AppCompatActivity
             @Override
             public void netSuccess(String response)
             {
-                List<Provision> data = Provisions.instance(response);
-                Map<String, List<Provision>> provGroup = new HashMap<String, List<Provision>>();
-                for (Provision prov : data)
+                if (response.contains("10002"))
                 {
-                    if (provGroup.containsKey(prov.getType()))
+                    CustomToast.showToast(ProvisionsActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(ProvisionsActivity.this,SignInActivity.class));
+                    finish();
+                }else
+                {
+                    List<Provision> data = Provisions.instance(response);
+                    Map<String, List<Provision>> provGroup = new HashMap<String, List<Provision>>();
+                    for (Provision prov : data)
                     {
-                        List<Provision> tmp = provGroup.get(prov.getType());
-                        tmp.add(prov);
-                    } else
-                    {
-                        List<Provision> tmp = new ArrayList<Provision>();
-                        tmp.add(prov);
-                        provGroup.put(prov.getType(), tmp);
+                        if (provGroup.containsKey(prov.getType()))
+                        {
+                            List<Provision> tmp = provGroup.get(prov.getType());
+                            tmp.add(prov);
+                        } else
+                        {
+                            List<Provision> tmp = new ArrayList<Provision>();
+                            tmp.add(prov);
+                            provGroup.put(prov.getType(), tmp);
+                        }
                     }
-                }
 
-                int index = 0;
-                for (String type : provGroup.keySet())
-                {
-                    WindowManager wm = (WindowManager) ProvisionsActivity.this
-                            .getSystemService(Context.WINDOW_SERVICE);
-                    int width = wm.getDefaultDisplay().getWidth();
-                    Xlog.d(String.valueOf(width) + "width-----------------------------------");
-                    button = new ProvButton(ProvisionsActivity.this);
-                    linearLayoutBtnIn = new LinearLayout(ProvisionsActivity.this);
-                    button.setText(type);
-                    button.setTag(index++);
-                    button.setTextSize(20);
-                    button.setHeight(80);
+                    int index = 0;
+                    for (String type : provGroup.keySet())
+                    {
+                        WindowManager wm = (WindowManager) ProvisionsActivity.this
+                                .getSystemService(Context.WINDOW_SERVICE);
+                        int width = wm.getDefaultDisplay().getWidth();
+                        Xlog.d(String.valueOf(width) + "width-----------------------------------");
+                        button = new ProvButton(ProvisionsActivity.this);
+                        linearLayoutBtnIn = new LinearLayout(ProvisionsActivity.this);
+                        button.setText(type);
+                        button.setTag(index++);
+                        button.setTextSize(20);
+                        button.setHeight(80);
 
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width / 4, LinearLayout.LayoutParams.MATCH_PARENT);
-                    LinearLayout.LayoutParams lpll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                    lpll.setMargins(10, 3, 10, 3);
-                    linearLayoutBtnIn.setLayoutParams(lpll);
-                    lp.setMargins(0, 0, 0, 6);
-                    button.setLayoutParams(lp);
-                    button.setGravity(Gravity.CENTER);
-                    button.setTextColor(Color.parseColor("#9a9b9b"));
-                    button.setBackgroundColor(Color.parseColor("#292d2f"));
-                    button.setViewPager(provisionsViewPager);
-                    button.setLinearLayout(buttonContainerLl);
-                    button.setOnClickListener(new View.OnClickListener()
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width / 4, LinearLayout.LayoutParams.MATCH_PARENT);
+                        LinearLayout.LayoutParams lpll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                        lpll.setMargins(10, 3, 10, 3);
+                        linearLayoutBtnIn.setLayoutParams(lpll);
+                        lp.setMargins(0, 0, 0, 6);
+                        button.setLayoutParams(lp);
+                        button.setGravity(Gravity.CENTER);
+                        button.setTextColor(Color.parseColor("#9a9b9b"));
+                        button.setBackgroundColor(Color.parseColor("#292d2f"));
+                        button.setViewPager(provisionsViewPager);
+                        button.setLinearLayout(buttonContainerLl);
+                        button.setOnClickListener(new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                provisionsViewPager.setCurrentItem(Integer.valueOf(v.getTag().toString()).intValue(), true);
+                                for (int i = 0; i < ((ProvButton) v).getLinearLayout().getChildCount(); i++)
+                                {
+                                    LinearLayout buttonContainer = ((ProvButton) v).getLinearLayout();
+                                    ((ProvButton) ((LinearLayout) buttonContainer.getChildAt(i)).getChildAt(0)).setTextColor(Color.parseColor("#9a9b9b"));
+                                }
+                                ((ProvButton) v).setTextColor(Color.parseColor("#ffffff"));
+                            }
+                        });
+                        buttonContainerLl.addView(linearLayoutBtnIn);
+                        linearLayoutBtnIn.addView(button);
+                        ProvisionFragments fragment = ProvisionFragments.newInstance(provGroup.get(type));
+                        list.add(fragment);
+
+                    }
+                    buttonContainerLl.getChildAt(0).setBackgroundColor(Color.parseColor("#ffffff"));
+                    ((ProvButton) ((LinearLayout) buttonContainerLl.getChildAt(0)).getChildAt(0)).setTextColor(Color.parseColor("#ffffff"));
+                    provisionsViewPager.setAdapter(new ProvisionsFragmentAdapter(getSupportFragmentManager(), list));
+                    provisionsViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
                     {
                         @Override
-                        public void onClick(View v)
+                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
                         {
-                            provisionsViewPager.setCurrentItem(Integer.valueOf(v.getTag().toString()).intValue(), true);
-                            for (int i = 0; i < ((ProvButton) v).getLinearLayout().getChildCount(); i++)
+
+
+                        }
+
+                        @Override
+                        public void onPageSelected(int position)
+                        {
+                            int count = buttonContainerLl.getChildCount();
+                            for (int i = 0; i < count; i++)
                             {
-                                LinearLayout buttonContainer = ((ProvButton) v).getLinearLayout();
-                                ((ProvButton)((LinearLayout) buttonContainer.getChildAt(i)).getChildAt(0)).setTextColor(Color.parseColor("#9a9b9b"));
+                                buttonContainerLl.getChildAt(i).setBackgroundColor(Color.parseColor("#292d2f"));
+                                ((ProvButton) ((LinearLayout) buttonContainerLl.getChildAt(i)).getChildAt(0)).setTextColor(Color.parseColor("#9a9b9b"));
+
                             }
-                            ((ProvButton) v).setTextColor(Color.parseColor("#ffffff"));
+                            buttonContainerLl.getChildAt(position).setBackgroundColor(Color.parseColor("#ffffff"));
+                            ((ProvButton) ((LinearLayout) buttonContainerLl.getChildAt(position)).getChildAt(0)).setTextColor(Color.parseColor("#ffffff"));
+
+                        }
+
+                        @Override
+                        public void onPageScrollStateChanged(int state)
+                        {
+
                         }
                     });
-                    buttonContainerLl.addView(linearLayoutBtnIn);
-                    linearLayoutBtnIn.addView(button);
-                    ProvisionFragments fragment = ProvisionFragments.newInstance(provGroup.get(type));
-                    list.add(fragment);
-
                 }
-                buttonContainerLl.getChildAt(0).setBackgroundColor(Color.parseColor("#ffffff"));
-                ((ProvButton)((LinearLayout)buttonContainerLl.getChildAt(0)).getChildAt(0)).setTextColor(Color.parseColor("#ffffff"));
-                provisionsViewPager.setAdapter(new ProvisionsFragmentAdapter(getSupportFragmentManager(), list));
-                provisionsViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
-                {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
-                    {
-
-
-                    }
-
-                    @Override
-                    public void onPageSelected(int position)
-                    {
-                        int count = buttonContainerLl.getChildCount();
-                        for (int i = 0; i < count; i++)
-                        {
-                            buttonContainerLl.getChildAt(i).setBackgroundColor(Color.parseColor("#292d2f"));
-                            ((ProvButton)((LinearLayout) buttonContainerLl.getChildAt(i)).getChildAt(0)).setTextColor(Color.parseColor("#9a9b9b"));
-
-                        }
-                        buttonContainerLl.getChildAt(position).setBackgroundColor(Color.parseColor("#ffffff"));
-                        ((ProvButton)((LinearLayout) buttonContainerLl.getChildAt(position)).getChildAt(0)).setTextColor(Color.parseColor("#ffffff"));
-
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state)
-                    {
-
-                    }
-                });
             }
 
             @Override

@@ -1,6 +1,8 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,8 +11,21 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.zhongchuangtiyu.denarau.Entities.UsersDetail;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
+import com.zhongchuangtiyu.denarau.Utils.DateUtils;
+import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,7 +49,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
     RelativeLayout positionOrderRl;
     @Bind(R.id.quitLoginRl)
     RelativeLayout quitLoginRl;
-
+    private ImageLoader imageLoader = ImageLoader.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -43,8 +58,14 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        initData();
         setListeners();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        initData();
     }
 
     private void setListeners()
@@ -58,7 +79,48 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
 
     private void initData()
     {
+        Map<String, String> map = new HashMap<>();
+        String token = CacheUtils.getString(PersonalCenterActivity.this, "token", null);
+        Xlog.d(token + "token----------------------------------------------");
+        MyApplication.volleyGET(APIUrls.USERS_DETAIL + token, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+                if (response.contains("10002"))
+                {
+                    CustomToast.showToast(PersonalCenterActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(PersonalCenterActivity.this,SignInActivity.class));
+                    finish();
+                }else
+                {
+                    UsersDetail data = UsersDetail.instance(response);
+                    String cachedPortrait = CacheUtils.getString(PersonalCenterActivity.this, "setPortrait", null);
+                    if (cachedPortrait != null)
+                    {
+                        Bitmap photo1 = BitmapFactory.decodeFile(cachedPortrait);
+                        personalImage.setImageBitmap(photo1);
+                    } else if (data.getPortrait() != null && cachedPortrait == null) ;
+                    {
+                        imageLoader.init(ImageLoaderConfiguration.createDefault(PersonalCenterActivity.this));
+                        String portraitUrl = data.getPortrait();
+                        imageLoader.displayImage(portraitUrl, personalImage);
+                    }
+                    if (data.getName() != null && !data.getName().equals(""))
+                    {
+                        String setName = data.getName();
+                        CacheUtils.putString(PersonalCenterActivity.this, "setName", setName);
+                        personalInfoName.setText(setName);
+                    }
+                }
+            }
 
+            @Override
+            public void netFail(VolleyError error)
+            {
+
+            }
+        });
     }
 
     @Override

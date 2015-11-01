@@ -1,6 +1,7 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -69,21 +70,29 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void netSuccess(String response)
             {
-                builder = new AlertDialog.Builder(FeedBackActivity.this);
-                builder.setTitle("发送成功");
-                builder.setMessage("我们已经收到您的反馈");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
-                { //设置确定按钮
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss(); //关闭dialog
-                        Toast.makeText(FeedBackActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setCancelable(false);
-                builder.create();
-                builder.show();
+                if (response.contains("10002"))
+                {
+                    CustomToast.showToast(FeedBackActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(FeedBackActivity.this,SignInActivity.class));
+                    finish();
+                }else
+                {
+                    builder = new AlertDialog.Builder(FeedBackActivity.this);
+                    builder.setTitle("发送成功");
+                    builder.setMessage("我们已经收到您的反馈");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+                    { //设置确定按钮
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            dialog.dismiss(); //关闭dialog
+                            Toast.makeText(FeedBackActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setCancelable(false);
+                    builder.create();
+                    builder.show();
+                }
             }
 
             @Override

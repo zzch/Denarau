@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Entities.Courses;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 
 import java.util.HashMap;
@@ -55,12 +56,19 @@ public class CoachTutorialDetailCoursesActivity extends AppCompatActivity
             @Override
             public void netSuccess(String response)
             {
-                Courses data = Courses.instance(response);
-                coachDetailCourseName.setText(data.getName());
-                coachDetailValidMonth.setText(String.valueOf(data.getValid_months()) + "个月");
-                tutorialType.setText("1对" + String.valueOf(data.getMaximum_students()));
-                coachTutorialDetailCourseDesc.setText(data.getDescription());
-
+                if (response.contains("10002"))
+                {
+                    CustomToast.showToast(CoachTutorialDetailCoursesActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(CoachTutorialDetailCoursesActivity.this,SignInActivity.class));
+                    finish();
+                }else
+                {
+                    Courses data = Courses.instance(response);
+                    coachDetailCourseName.setText(data.getName());
+                    coachDetailValidMonth.setText(String.valueOf(data.getValid_months()) + "个月");
+                    tutorialType.setText("1对" + String.valueOf(data.getMaximum_students()));
+                    coachTutorialDetailCourseDesc.setText(data.getDescription());
+                }
             }
 
             @Override
