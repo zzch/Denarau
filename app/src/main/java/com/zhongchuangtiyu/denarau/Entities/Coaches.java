@@ -26,7 +26,8 @@ public class Coaches implements Serializable
     private Object portrait;
     private String gender;
     private String title;
-
+    private String starting_price;
+    private String description;
     public final static String FEATURED = "featured";
     public final static String NORMAL = "normal";
 
@@ -84,6 +85,25 @@ public class Coaches implements Serializable
         return title;
     }
 
+    public String getStarting_price()
+    {
+        return starting_price;
+    }
+
+    public void setStarting_price(String starting_price)
+    {
+        this.starting_price = starting_price;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
 
     public void setFeatured(List<FeaturedEntity> featured)
     {
@@ -119,6 +139,8 @@ public class Coaches implements Serializable
                 tmp.setPortrait(entity.getPortrait());
                 tmp.setTitle(entity.getTitle());
                 tmp.setUuid(entity.getUuid());
+                tmp.setStarting_price(entity.getStarting_price());
+                tmp.setDescription(entity.getDescription());
                 tmp.setCoachType(Coaches.FEATURED);
                 result.add(tmp);
             }
@@ -135,6 +157,8 @@ public class Coaches implements Serializable
                 tmp.setTitle(entity.getTitle());
                 tmp.setUuid(entity.getUuid());
                 tmp.setCoachType(Coaches.NORMAL);
+                tmp.setStarting_price(entity.getStarting_price());
+                tmp.setDescription(entity.getDescription());
                 result.add(tmp);
             }
         }
@@ -156,10 +180,11 @@ public class Coaches implements Serializable
 
         private String uuid;
         private String name;
-        private Object portrait;
+        private String portrait;
         private String gender;
         private String title;
-
+        private String starting_price;
+        private String description;
         public void setUuid(String uuid)
         {
             this.uuid = uuid;
@@ -170,7 +195,7 @@ public class Coaches implements Serializable
             this.name = name;
         }
 
-        public void setPortrait(Object portrait)
+        public void setPortrait(String portrait)
         {
             this.portrait = portrait;
         }
@@ -195,7 +220,7 @@ public class Coaches implements Serializable
             return name;
         }
 
-        public Object getPortrait()
+        public String getPortrait()
         {
             return portrait;
         }
@@ -208,6 +233,26 @@ public class Coaches implements Serializable
         public String getTitle()
         {
             return title;
+        }
+
+        public String getStarting_price()
+        {
+            return starting_price;
+        }
+
+        public void setStarting_price(String starting_price)
+        {
+            this.starting_price = starting_price;
+        }
+
+        public String getDescription()
+        {
+            return description;
+        }
+
+        public void setDescription(String description)
+        {
+            this.description = description;
         }
     }
 
@@ -223,9 +268,31 @@ public class Coaches implements Serializable
 
         private String uuid;
         private String name;
-        private Object portrait;
+        private String portrait;
         private String gender;
         private String title;
+        private String starting_price;
+        private String description;
+
+        public String getStarting_price()
+        {
+            return starting_price;
+        }
+
+        public void setStarting_price(String starting_price)
+        {
+            this.starting_price = starting_price;
+        }
+
+        public String getDescription()
+        {
+            return description;
+        }
+
+        public void setDescription(String description)
+        {
+            this.description = description;
+        }
 
         public void setUuid(String uuid)
         {

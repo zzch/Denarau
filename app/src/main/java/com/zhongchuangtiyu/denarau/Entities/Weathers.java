@@ -16,7 +16,7 @@ public class Weathers implements Serializable
      * date : 1445212800
      * day_of_week : 1
      * content : 多云
-     * day_code : 4
+     * code : 4
      * maximum_temperature : 23
      * minimum_temperature : 11
      * probability_of_precipitation : 0%
@@ -26,7 +26,7 @@ public class Weathers implements Serializable
     private int date;
     private int day_of_week;
     private String content;
-    private int day_code;
+    private int code;
     private int maximum_temperature;
     private int minimum_temperature;
     private String probability_of_precipitation;
@@ -47,9 +47,9 @@ public class Weathers implements Serializable
         this.content = content;
     }
 
-    public void setDay_code(int day_code)
+    public void setCode(int code)
     {
-        this.day_code = day_code;
+        this.code = code;
     }
 
     public void setMaximum_temperature(int maximum_temperature)
@@ -87,9 +87,9 @@ public class Weathers implements Serializable
         return content;
     }
 
-    public int getDay_code()
+    public int getCode()
     {
-        return day_code;
+        return code;
     }
 
     public int getMaximum_temperature()

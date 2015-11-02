@@ -38,7 +38,7 @@
     <style name="DateNumberPicker" parent="CommonNumberPicker">
         <item name="android:descendantFocusability">blocksDescendants</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_height">100dp</item>
         <item name="solidColor">#e0e0e0</item>
         <item name="selectionDividerColor">#ff664b49</item>
         <item name="selectionDividerHeight">0dp</item>

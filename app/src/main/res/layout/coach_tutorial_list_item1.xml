@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text="王海洋"
         android:id="@+id/headerCoachName"
         android:layout_alignTop="@+id/headerCoachImage"
         android:layout_toEndOf="@+id/headerCoachImage"/>
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="总教练"
         android:id="@+id/headerCoachType"
         android:layout_below="@+id/headerCoachName"
         android:layout_toEndOf="@+id/headerCoachImage"
@@ -40,4 +40,24 @@
         android:layout_alignBottom="@+id/headerCoachImage"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/headerCoachType"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="课程起售价:"
+        android:id="@+id/textView25"
+        android:layout_alignTop="@+id/headerCoachName"
+        android:layout_alignEnd="@+id/headerCoachIntro"
+        android:layout_marginRight="5dp"/>
+
+    <TextView
+        android:textColor="#ff0000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/headerCoachPrice"
+        android:layout_alignTop="@+id/headerCoachType"
+        android:layout_alignEnd="@+id/headerCoachIntro"/>
 </RelativeLayout>

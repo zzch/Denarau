@@ -32,10 +32,22 @@
         android:layout_marginTop="10dp"/>
 
     <TextView
+        android:textColor="#ff0000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/listCoachPrice"
+        android:layout_marginRight="5dp"
+        android:text="1000"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/textView26"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="起"
+        android:id="@+id/textView26"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"/>
 </RelativeLayout>

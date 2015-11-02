@@ -109,7 +109,8 @@ public class CoachListAdapter extends BaseAdapter
             }
             featuredViewHolder.headerCoachName.setText(list.get(position).getName());
             featuredViewHolder.headerCoachType.setText(list.get(position).getTitle());
-//            featuredViewHolder.headerCoachIntro.setText(coaches.getFeatured().get(position).get);
+            featuredViewHolder.headerCoachIntro.setText(list.get(position).getDescription());
+            featuredViewHolder.headerCoachPrice.setText(list.get(position).getStarting_price());
         } else if (currentType == TYPE_NORMAL)
         {
             if (convertView == null)
@@ -129,7 +130,7 @@ public class CoachListAdapter extends BaseAdapter
             }
             normalViewHolder.listCoachName.setText(list.get(position).getName());
             normalViewHolder.listCoachType.setText(list.get(position).getTitle());
-//            normalViewHolder.listCoachPrice.setText(coaches.getNormal().get(position).get);
+            normalViewHolder.listCoachPrice.setText(list.get(position).getStarting_price());
         }
         return convertView;
     }
@@ -150,6 +151,9 @@ public class CoachListAdapter extends BaseAdapter
         TextView headerCoachType;
         @Bind(R.id.headerCoachIntro)
         TextView headerCoachIntro;
+        @Bind(R.id.headerCoachPrice)
+        TextView headerCoachPrice;
+
 
         FeaturedViewHolder(View view)
         {

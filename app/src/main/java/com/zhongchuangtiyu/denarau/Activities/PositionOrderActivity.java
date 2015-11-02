@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.iwhys.library.NumberPicker;
 import com.iwhys.library.UnitNumberPicker;
+import com.zhongchuangtiyu.denarau.Demos.MyCustomDialog;
 import com.zhongchuangtiyu.denarau.Entities.Weathers;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
@@ -25,11 +26,8 @@ import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,21 +60,20 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
     @Bind(R.id.btnTheDayAfterTomorrow)
     Button btnTheDayAfterTomorrow;
     @Bind(R.id.btnOrder)
-    Button btnOrder;
-    @Bind(R.id.positionOrderButtonRl)
-    RelativeLayout positionOrderButtonRl;
+    RelativeLayout btnOrder;
     @Bind(R.id.positionOrderWind)
     TextView positionOrderWind;
     @Bind(R.id.relativeLayout2)
     RelativeLayout relativeLayout2;
     @Bind(R.id.textView2)
     TextView textView2;
-    @Bind(R.id.clock)
-    UnitNumberPicker clock;
     @Bind(R.id.probabilityOfPrecipitation)
     TextView probabilityOfPrecipitation;
+    @Bind(R.id.showOrderTimeTv)
+    TextView showOrderTimeTv;
+    @Bind(R.id.btnOrderRlDialog)
+    RelativeLayout btnOrderRlDialog;
     private int i;
-    private String[] data = {"09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00"};
     private String selectedValue = "09:00";
     private AlertDialog.Builder builder;
     private String formatedDate;
@@ -90,28 +87,11 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.positionOrderToolBar);
         setSupportActionBar(toolbar);
+        btnToday.setSelected(true);
         requestData();
         setListeners();
-        initCustomTimePicker();
     }
 
-
-    private void initCustomTimePicker()
-    {
-
-        clock.setDisplayedValues(data);
-        clock.setMinValue(0);
-        clock.setMaxValue(data.length - 1);
-        clock.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
-        {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
-            {
-                selectedValue = data[newVal];
-                Xlog.d(selectedValue + "selectedValue------------------------------------------");
-            }
-        });
-    }
 
     private void setListeners()
     {
@@ -120,17 +100,17 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         btnTheDayAfterTomorrow.setOnClickListener(this);
         btnOrder.setOnClickListener(this);
         positionOrderTitleLeft.setOnClickListener(this);
+        btnOrderRlDialog.setOnClickListener(this);
     }
 
     private void requestData()
     {
-        initCustomTimePicker();
         Xlog.d(selectedValue + "--------------------------------------------currentOne");
         Map<String, String> map = new HashMap<>();
         String token = CacheUtils.getString(PositionOrderActivity.this, "token", "aa");
         String club_uuid = CacheUtils.getString(PositionOrderActivity.this, "clubuuid", "aa");
         map.put("token", token);
-        map.put("clubuuid",club_uuid);
+        map.put("clubuuid", club_uuid);
         MyApplication.volleyGET(APIUrls.WEATHER_URL + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
         {
             @Override
@@ -139,18 +119,20 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(PositionOrderActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(PositionOrderActivity.this,SignInActivity.class));
+                    startActivity(new Intent(PositionOrderActivity.this, SignInActivity.class));
                     finish();
-                }else
+                } else
                 {
                     List<Weathers> data = Weathers.instance(response);
+                    if (data.size() == 3)
+                    {
                     int date = data.get(i).getDate();
                     int btnTodayDate = data.get(0).getDate();
                     int btnTomorrowDate = data.get(1).getDate();
                     int btnTheDayAfterTomorrowDate = data.get(2).getDate();
                     int day_of_week = data.get(i).getDay_of_week();
                     String content = data.get(i).getContent();
-                    int day_code = data.get(i).getDay_code();
+                    int code = data.get(i).getCode();
                     int maximum_temperature = data.get(i).getMaximum_temperature();
                     String probability_of_precipitation = data.get(i).getProbability_of_precipitation();
                     String wind = data.get(i).getWind();
@@ -174,11 +156,37 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                     combinedTimeStamp = date + hour * 3600 + minute * 60;
 
                     positionOrderDate.setText(formatedDate);
-                    positionOrderTemperature.setText(String.valueOf(maximum_temperature) + "℃");
+                    positionOrderTemperature.setText(String.valueOf(maximum_temperature) + "°");
                     positionOrderWeatherTv.setText(content);
                     positionOrderWind.setText(wind);
                     probabilityOfPrecipitation.setText("降水概率" + " " + probability_of_precipitation);
-
+                    switch (code)
+                    {
+                        case 1:
+                            weatherImageView.setImageResource(R.mipmap.oneicon);
+                            break;
+                        case 2:
+                            weatherImageView.setImageResource(R.mipmap.twoicon);
+                            break;
+                        case 3:
+                            weatherImageView.setImageResource(R.mipmap.threeicon);
+                            break;
+                        case 4:
+                            weatherImageView.setImageResource(R.mipmap.fouricon);
+                            break;
+                        case 5:
+                            weatherImageView.setImageResource(R.mipmap.fiveicon);
+                            break;
+                        case 6:
+                            weatherImageView.setImageResource(R.mipmap.sixicon);
+                            break;
+                        case 7:
+                            weatherImageView.setImageResource(R.mipmap.sevenicon);
+                            break;
+                        case 8:
+                            weatherImageView.setImageResource(R.mipmap.eighticon);
+                            break;
+                    }
                     Date now = new Date();
                     SimpleDateFormat nowFormatter = new SimpleDateFormat("MM-dd");
                     String nowDate = nowFormatter.format(now);
@@ -193,6 +201,7 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                         btnToday.setText("明天" + btnDay1);
                         btnTomorrow.setText("后天" + btnDay2);
                         btnTheDayAfterTomorrow.setText("大后天" + btnDay3);
+                    }
                     }
                 }
             }
@@ -239,7 +248,7 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
             @Override
             public void netFail(VolleyError error)
             {
-                Toast.makeText(PositionOrderActivity.this,"预定失败，请检查网络连接或稍后再试",Toast.LENGTH_SHORT).show();
+                Toast.makeText(PositionOrderActivity.this, "预定失败，请检查网络连接或稍后再试", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -252,21 +261,50 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
         {
             case R.id.btnToday:
                 i = 0;
+                btnToday.setSelected(true);
+                btnTomorrow.setSelected(false);
+                btnTheDayAfterTomorrow.setSelected(false);
                 requestData();
                 break;
             case R.id.btnTomorrow:
                 i = 1;
+                btnTomorrow.setSelected(true);
+                btnTheDayAfterTomorrow.setSelected(false);
+                btnToday.setSelected(false);
                 requestData();
                 break;
             case R.id.btnTheDayAfterTomorrow:
                 i = 2;
+                btnTheDayAfterTomorrow.setSelected(true);
+                btnToday.setSelected(false);
+                btnTomorrow.setSelected(false);
                 requestData();
                 break;
             case R.id.btnOrder:
-                sendOrderRequest();
+                String isOrderTimeChoosen = showOrderTimeTv.getText().toString();
+                if (isOrderTimeChoosen.contains("预约时间"))
+                {
+                    CustomToast.showToast(PositionOrderActivity.this,"请选择预约时间");
+                }
+                else
+                {
+                    sendOrderRequest();
+                }
                 break;
             case R.id.positionOrderTitleLeft:
                 finish();
+                break;
+            case R.id.btnOrderRlDialog:
+                MyCustomDialog dialog = new MyCustomDialog(PositionOrderActivity.this, "请选择预约时间", new MyCustomDialog.OnCustomDialogListener()
+                {
+                    @Override
+                    public void back(String time)
+                    {
+                        showOrderTimeTv.setText(time);
+                        selectedValue = time;
+                    }
+                });
+                dialog.show();
                 break;
             default:
                 break;

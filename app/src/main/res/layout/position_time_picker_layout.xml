@@ -7,4 +7,16 @@
         style="@style/DateNumberPicker"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"/>
+
+    <Button
+        android:background="@mipmap/denglu_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:textSize="20sp"
+        android:text="确定"
+        android:id="@+id/btnConfirm"
+        android:layout_below="@+id/clock"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"/>
 </RelativeLayout>

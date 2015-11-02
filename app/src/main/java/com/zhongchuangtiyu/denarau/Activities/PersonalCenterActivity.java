@@ -33,8 +33,8 @@ import butterknife.ButterKnife;
 public class PersonalCenterActivity extends AppCompatActivity implements View.OnClickListener
 {
 
-    @Bind(R.id.giveAdviceTitleLeft)
-    ImageButton giveAdviceTitleLeft;
+    @Bind(R.id.personalCenterTitleLeft)
+    ImageButton personalCenterTitleLeft;
     @Bind(R.id.personalImage)
     RoundedImageView personalImage;
     @Bind(R.id.personalInfoName)
@@ -75,6 +75,7 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
         myConsumeRl.setOnClickListener(this);
         positionOrderRl.setOnClickListener(this);
         quitLoginRl.setOnClickListener(this);
+        personalCenterTitleLeft.setOnClickListener(this);
     }
 
     private void initData()
@@ -130,6 +131,9 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
         {
             case R.id.personalCenterInfoRl:
                 startActivity(new Intent(PersonalCenterActivity.this,EditPersonalInfoActivity.class));
+                break;
+            case R.id.personalCenterTitleLeft:
+                finish();
                 break;
         }
     }

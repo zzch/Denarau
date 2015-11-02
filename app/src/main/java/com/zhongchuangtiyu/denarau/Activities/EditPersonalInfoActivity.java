@@ -130,7 +130,14 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
                 }
                 if (data.getGender() != null && !data.getGender().equals(""))
                 {
-                    editPersonalInfoGenderToRequest.setText(data.getGender());
+                    String gender = data.getGender();
+                    if (gender.equals("male"))
+                    {
+                        editPersonalInfoGenderToRequest.setText("男");
+                    }else if (gender.equals("female"))
+                    {
+                        editPersonalInfoGenderToRequest.setText("女");
+                    }
                 }
                 if (data.getBirthday() != null && !data.getBirthday().equals(""))
                 {
@@ -150,6 +157,7 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
     {
         editPersonalInfoImageRl.setOnClickListener(this);
         editPersonalInfoBirthRl.setOnClickListener(this);
+        editPersonalInfoTitleLeft.setOnClickListener(this);
     }
 
     @Override
@@ -210,6 +218,9 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
                 break;
             case R.id.btnTakePicture:
                 startCapture();
+                break;
+            case R.id.editPersonalInfoTitleLeft:
+                finish();
                 break;
         }
     }
