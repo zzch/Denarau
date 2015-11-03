@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -390,8 +391,8 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
     }
     private void setBtnLoginAnimIn()
     {
-        Animation btnLoginAnimIn = new TranslateAnimation(500f, btnLogin.getScaleX(), btnLogin.getScaleY(), btnLogin.getScaleY());
-        btnLoginAnimIn.setDuration(350);
+        Animation btnLoginAnimIn = new AlphaAnimation(0,1);
+        btnLoginAnimIn.setDuration(500);
         btnLogin.startAnimation(btnLoginAnimIn);
         btnLogin.setVisibility(View.VISIBLE);
     }

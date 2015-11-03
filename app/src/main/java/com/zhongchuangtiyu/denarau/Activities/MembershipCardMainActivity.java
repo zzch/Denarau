@@ -6,12 +6,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhongchuangtiyu.denarau.Adapters.MembershipCardViewpagerAdapter;
+import com.zhongchuangtiyu.denarau.Entities.Announcements;
 import com.zhongchuangtiyu.denarau.Entities.ClubsHome;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
@@ -37,6 +42,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,10 +61,6 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
     ViewPager membershipCardViewPager;
     @Bind(R.id.membershipCardNoticeInfo)
     TextView membershipCardNoticeInfo;
-    @Bind(R.id.trumpetImageView)
-    ImageView trumpetImageView;
-    @Bind(R.id.moreInfoImageButton)
-    ImageButton moreInfoImageButton;
     @Bind(R.id.btnOrderPositon)
     RelativeLayout btnOrderPositon;
     @Bind(R.id.btnCoachTurorial)
@@ -70,8 +73,6 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
     RelativeLayout btnFoodService;
     @Bind(R.id.btnGiveAdvice)
     RelativeLayout btnGiveAdvice;
-    @Bind(R.id.relativeLayout)
-    RelativeLayout relativeLayout;
     @Bind(R.id.indicatorLinearLayout)
     LinearLayout indicatorLinearLayout;
     private List<View> pagerViews;
@@ -80,6 +81,40 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
     private ImageLoader imageLoader = ImageLoader.getInstance();
     private Button mPreSelectedBt;
     private boolean isSelected = true;
+    private final List<String> list = new ArrayList<String>();
+    private int j = 0;
+    private Timer timer;
+
+    final Handler handler = new Handler()
+    {
+        public void handleMessage(Message msg)
+        {
+            switch (msg.what)
+            {
+                case 1:
+                    if (j < list.size()-1)
+                    {
+                        j++;
+                    }else if (j == list.size() -1)
+                    {
+                        j = 0;
+                    }
+                    setAnnouncementOutAnimation();
+                    Xlog.d(String.valueOf(j) + "j--------------------------------------");
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+
+    TimerTask task = new TimerTask(){
+        public void run() {
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -90,7 +125,91 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
         imageLoader.init(ImageLoaderConfiguration.createDefault(MembershipCardMainActivity.this));
         membershipCardViewPager.setPageMargin(20);
         setSupportActionBar(membershipCardMainToolbar);
+        sendAnnoucementsRequest();
+        timer = new Timer(true);
+        timer.schedule(task, 1000, 4000);
         setListeners();
+    }
+    private void sendAnnoucementsRequest()
+    {
+        Map map = new HashMap();
+        String token = CacheUtils.getString(MembershipCardMainActivity.this, "token", null);
+        String club_uuid = CacheUtils.getString(MembershipCardMainActivity.this, "clubuuid", null);
+
+        MyApplication.volleyGET(APIUrls.ANNOUNCEMENTS + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+                List<Announcements> data = Announcements.instance(response);
+                for (int i = 0; i < data.size(); i++)
+                {
+                    String text = data.get(i).getTitle();
+                    list.add(text);
+                }
+                membershipCardNoticeInfo.setText(data.get(0).getTitle());
+                Xlog.d(list.toString() + "list------------------------------------");
+            }
+
+            @Override
+            public void netFail(VolleyError error)
+            {
+                CustomToast.showToast(MembershipCardMainActivity.this, "网络连接失败，请检查网络连接");
+            }
+        });
+    }
+
+    private void setAnnouncementOutAnimation()
+    {
+        Animation announcementOutAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY(), -50f);
+        announcementOutAnimation.setDuration(500);
+        membershipCardNoticeInfo.startAnimation(announcementOutAnimation);
+        announcementOutAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                setAnnouncementInAnimation();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+    private void setAnnouncementInAnimation()
+    {
+        Animation announcementInAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY() + 55f, membershipCardNoticeInfo.getScaleY());
+        announcementInAnimation.setDuration(500);
+        membershipCardNoticeInfo.startAnimation(announcementInAnimation);
+        announcementInAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+                membershipCardNoticeInfo.setText(list.get(j));
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
     }
     private void initIndicators()
     {
@@ -211,7 +330,7 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
             @Override
             public void netFail(VolleyError error)
             {
-
+                CustomToast.showToast(MembershipCardMainActivity.this, "网络连接失败，请检查网络连接");
             }
         });
     }
@@ -239,6 +358,7 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
         btnFoodService.setOnClickListener(this);
         membershipCardMainTitleLeft.setOnClickListener(this);
         btnMemberStore.setOnClickListener(this);
+        membershipCardNoticeInfo.setOnClickListener(this);
     }
 
     @Override
@@ -266,6 +386,10 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
                 break;
             case R.id.btnMemberStore:
                 startActivity(new Intent(MembershipCardMainActivity.this, PromotionsActivity.class));
+                break;
+            case R.id.membershipCardNoticeInfo:
+                startActivity(new Intent(MembershipCardMainActivity.this, AnnouncementsListActivity.class));
+                break;
         }
     }
 }

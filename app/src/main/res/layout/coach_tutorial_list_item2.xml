@@ -39,15 +39,16 @@
         android:id="@+id/listCoachPrice"
         android:layout_marginRight="5dp"
         android:text="1000"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/textView26"/>
+        android:layout_alignTop="@+id/listCoachType"
+        android:layout_alignEnd="@+id/textView22"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="起"
-        android:id="@+id/textView26"
-        android:layout_centerVertical="true"
+        android:text="课程起售价："
+        android:id="@+id/textView22"
+        android:layout_alignBottom="@+id/listCoachName"
         android:layout_alignParentEnd="true"/>
+
 </RelativeLayout>

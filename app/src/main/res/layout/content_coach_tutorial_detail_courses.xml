@@ -91,64 +91,15 @@
             android:layout_marginTop="10dp"/>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:background="#ffffff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout3"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/relativeLayout4"
-        android:layout_marginTop="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="课程特色："
-            android:id="@+id/textView14"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
+        <WebView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/coachTutorialDetailCourseDesc"
-            android:layout_below="@+id/textView14"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"/>
-    </RelativeLayout>
+            android:layout_below="@+id/relativeLayout3"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/content_coach_tutorial_detail_webView"
+            android:layout_marginTop="20dp">
 
-    <RelativeLayout
-        android:background="#ffffff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="适合人群："
-            android:id="@+id/textView16"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/coachTutorialDetailCourseFit"
-            android:layout_below="@+id/textView16"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"/>
-    </RelativeLayout>
+        </WebView>
     </RelativeLayout>
 </ScrollView>
 </RelativeLayout>

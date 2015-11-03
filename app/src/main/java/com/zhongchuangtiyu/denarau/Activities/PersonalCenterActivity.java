@@ -135,6 +135,14 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
             case R.id.personalCenterTitleLeft:
                 finish();
                 break;
+            case R.id.quitLoginRl:
+                CacheUtils.putString(PersonalCenterActivity.this, "token", null);
+                CacheUtils.putString(PersonalCenterActivity.this, "clubuuid", null);
+                startActivity(new Intent(PersonalCenterActivity.this, SignInActivity.class));
+                finish();
+                break;
+            default:
+                break;
         }
     }
 }

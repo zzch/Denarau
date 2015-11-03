@@ -80,6 +80,7 @@ public class CoachTutorialListActivity extends AppCompatActivity
                             Intent intent = new Intent(CoachTutorialListActivity.this, CoachesDetailActivity.class);
                             intent.putExtra("uuid", uuid);
                             startActivity(intent);
+                            CustomToast.showToast(CoachTutorialListActivity.this, String.valueOf(position));
                         }
                     });
                 }

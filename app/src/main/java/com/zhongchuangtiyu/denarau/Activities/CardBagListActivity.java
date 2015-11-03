@@ -75,7 +75,7 @@ public class CardBagListActivity extends AppCompatActivity
                             ClubsMembership clubsMembership = data.get(position);
                             String club_uuid = clubsMembership.getUuid();
                             String token = CacheUtils.getString(CardBagListActivity.this, "token", "aa");
-
+                            Xlog.d(String.valueOf(position) + " position-----------------------------------");
                             CacheUtils.putString(CardBagListActivity.this, "clubuuid", club_uuid);
                             Xlog.d(token + " token-----------------------------------");
                             Xlog.d(club_uuid + "-----------------------------------");

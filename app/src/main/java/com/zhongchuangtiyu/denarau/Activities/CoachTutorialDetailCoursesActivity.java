@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -28,10 +29,9 @@ public class CoachTutorialDetailCoursesActivity extends AppCompatActivity
     TextView coachDetailValidMonth;
     @Bind(R.id.tutorialType)
     TextView tutorialType;
-    @Bind(R.id.coachTutorialDetailCourseDesc)
-    TextView coachTutorialDetailCourseDesc;
-    @Bind(R.id.coachTutorialDetailCourseFit)
-    TextView coachTutorialDetailCourseFit;
+    @Bind(R.id.content_coach_tutorial_detail_webView)
+    WebView contentCoachTutorialDetailWebView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,15 +59,15 @@ public class CoachTutorialDetailCoursesActivity extends AppCompatActivity
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(CoachTutorialDetailCoursesActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(CoachTutorialDetailCoursesActivity.this,SignInActivity.class));
+                    startActivity(new Intent(CoachTutorialDetailCoursesActivity.this, SignInActivity.class));
                     finish();
-                }else
+                } else
                 {
                     Courses data = Courses.instance(response);
                     coachDetailCourseName.setText(data.getName());
                     coachDetailValidMonth.setText(String.valueOf(data.getValid_months()) + "个月");
                     tutorialType.setText("1对" + String.valueOf(data.getMaximum_students()));
-                    coachTutorialDetailCourseDesc.setText(data.getDescription());
+                    contentCoachTutorialDetailWebView.loadData(data.getDescription(), "text/html", "UTF-8");
                 }
             }
 
