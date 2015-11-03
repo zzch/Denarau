@@ -12,6 +12,7 @@ public class APIUrls
     public static String RESERVATION_URL = "http://123.57.210.52:80/api/v1/reservations.json";
     public static String FEEDBACKS_URL = "http://123.57.210.52:80/api/v1/feedbacks.json";
     public static String ANNOUNCEMENTS_DETAIL_URL = "http://123.57.210.52:80/api/v1/announcements/detail.json?";
+    public static String ANNOUNCEMENTS = "http://123.57.210.52:80/api/v1/announcements.json?";
     public static String CLUBS_HOME_URL = "http://123.57.210.52:80/api/v1/clubs/home.json?";
     public static String COACHES_URL = "http://123.57.210.52:80/api/v1/coaches.json?";
     public static String COACHES_DETAIL_URL = "http://123.57.210.52:80/api/v1/coaches/detail.json?";
@@ -20,5 +21,7 @@ public class APIUrls
     public static String USERS_DETAIL = "http://123.57.210.52:80/api/v1/users/detail.json?token=";
     public static String USERS_PORTRAIT = "http://123.57.210.52:80/api/v1/users/portrait.json";
     public static String USERS_BIRTHDAY = "http://123.57.210.52:80/api/v1/users/birthday.json";
+    public static String PROMOTIONS = "http://123.57.210.52:80/api/v1/promotions.json?";
+    public static String PROMOTIONS_DETAIL = "http://123.57.210.52:80/api/v1/promotions/detail.json?";
 
 }

@@ -2,12 +2,29 @@ package com.zhongchuangtiyu.denarau.Demos;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.zhongchuangtiyu.denarau.Entities.Announcements;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,90 +35,138 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class Test extends Activity
 {
-    @Bind(R.id.view7)
-    CircleImageView view7;
-    @Bind(R.id.textView9)
-    TextView textView9;
-    @Bind(R.id.button)
+
     Button button;
-    @Bind(R.id.button2)
-    Button button2;
-    @Bind(R.id.textView22)
-    TextView textView22;
-    @Bind(R.id.imageView3)
-    ImageView imageView3;
-    @Bind(R.id.button3)
-    Button button3;
-    private int i = 0;
+    TextView textView;
+    private final List<String> list = new ArrayList<String>();
+    private int j = 0;
+    private Timer timer;
+
+
+    final Handler handler = new Handler()
+    {
+        public void handleMessage(Message msg)
+        {
+            switch (msg.what)
+            {
+                case 1:
+                    if (j < list.size()-1)
+                    {
+                        j++;
+                    }else if (j == list.size() -1)
+                    {
+                        j = 0;
+                    }
+                    setAnnouncementOutAnimation();
+                    Xlog.d(String.valueOf(j) + "j--------------------------------------");
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+
+    TimerTask task = new TimerTask(){
+        public void run() {
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testlayout);
-        ButterKnife.bind(this);
-        button2.setOnClickListener(new View.OnClickListener()
+        button = (Button) findViewById(R.id.button);
+        textView = (TextView) findViewById(R.id.textView50);
+        sendRequest();
+        timer = new Timer(true);
+        timer.schedule(task,1000, 4000);
+
+    }
+
+
+
+
+    private void sendRequest()
+    {
+        Map map = new HashMap();
+
+        MyApplication.volleyGET(APIUrls.ANNOUNCEMENTS + "token=" + "test" + "&" + "club_uuid=" + "test", map, new MyApplication.VolleyCallBack()
         {
             @Override
-            public void onClick(View v)
+            public void netSuccess(String response)
             {
-                MyCustomDialog dialog = new MyCustomDialog(Test.this, "预约时间", new MyCustomDialog.OnCustomDialogListener()
+                List<Announcements> data = Announcements.instance(response);
+                for (int i = 0; i < data.size(); i++)
                 {
-                    @Override
-                    public void back(String name)
-                    {
-                        textView22.setText(name);
-                    }
-                });
-                dialog.show();
+                    String text = data.get(i).getTitle();
+                    list.add(text);
+                }
+                textView.setText(data.get(0).getTitle());
+                Xlog.d(list.toString() + "list------------------------------------");
+            }
+
+            @Override
+            public void netFail(VolleyError error)
+            {
+
             }
         });
-        button3.setOnClickListener(new View.OnClickListener()
+    }
+
+    private void setAnnouncementOutAnimation()
+    {
+        Animation announcementOutAnimation = new TranslateAnimation(textView.getScaleX(), textView.getScaleX(), textView.getScaleY(), -50f);
+        announcementOutAnimation.setDuration(500);
+        textView.startAnimation(announcementOutAnimation);
+        announcementOutAnimation.setAnimationListener(new Animation.AnimationListener()
         {
             @Override
-            public void onClick(View v)
+            public void onAnimationStart(Animation animation)
             {
-                i++;
-                setImage();
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                setAnnouncementInAnimation();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
             }
         });
     }
-
-    private void setImage()
+    private void setAnnouncementInAnimation()
     {
-        switch (i)
+        Animation announcementInAnimation = new TranslateAnimation(textView.getScaleX(), textView.getScaleX(), textView.getScaleY()+50f, textView.getScaleY());
+        announcementInAnimation.setDuration(500);
+        textView.startAnimation(announcementInAnimation);
+        announcementInAnimation.setAnimationListener(new Animation.AnimationListener()
         {
-            case 1:
-                imageView3.setImageResource(R.mipmap.oneicon);
-                break;
-            case 2:
-                imageView3.setImageResource(R.mipmap.twoicon);
-                break;
-            case 3:
-                imageView3.setImageResource(R.mipmap.threeicon);
-                break;
-            case 4:
-                imageView3.setImageResource(R.mipmap.fouricon);
-                break;
-            case 5:
-                imageView3.setImageResource(R.mipmap.fiveicon);
-                break;
-            case 6:
-                imageView3.setImageResource(R.mipmap.sixicon);
-                break;
-            case 7:
-                imageView3.setImageResource(R.mipmap.sevenicon);
-                break;
-            case 8:
-                imageView3.setImageResource(R.mipmap.eighticon);
-                break;
-            default:
-                break;
-        }
-    }
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+                textView.setText(list.get(j));
+            }
 
-    private void customDialog()
-    {
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
 
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
     }
 
 }

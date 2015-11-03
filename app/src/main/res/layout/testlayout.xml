@@ -2,66 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"><![CDATA[
              >
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="62dp"
-        android:layout_height="62dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="3dp"
-        android:layout_centerHorizontal="true"
-        app:civ_border_color="#00fbff"
-        app:civ_border_width="2dp"
-        android:src="#000000"
-        android:id="@+id/view7"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Large Text"
-        android:id="@+id/textView9"
-        android:layout_below="@+id/view7"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="85dp"/>
+
+
+
+
+
+
+    ]]>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/button"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="126dp"/>
+        android:layout_marginTop="50dp"/>
 
-    <Button
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="dialog"
-        android:id="@+id/button2"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView22"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button3"
-        android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/view7"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView50"
+            android:maxLines="2"
+            android:scrollbars="vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:singleLine="false" />
+    </RelativeLayout>
 </RelativeLayout>

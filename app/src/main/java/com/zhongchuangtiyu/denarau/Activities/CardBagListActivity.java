@@ -48,7 +48,6 @@ public class CardBagListActivity extends AppCompatActivity
         sendCardbagRequest();
     }
 
-
     private void sendCardbagRequest()
     {
         Map<String, String> map = new HashMap<>();

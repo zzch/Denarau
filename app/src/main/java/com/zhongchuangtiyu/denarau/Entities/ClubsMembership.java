@@ -52,7 +52,8 @@ public class ClubsMembership implements Serializable
         return logo;
     }
 
-    public static List<ClubsMembership> instance(String str){
+    public static List<ClubsMembership> instance(String str)
+    {
 
         Gson gson = new Gson();
         return gson.fromJson(str, new TypeToken<List<ClubsMembership>>() {

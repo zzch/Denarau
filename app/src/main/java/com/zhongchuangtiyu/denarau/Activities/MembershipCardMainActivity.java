@@ -62,8 +62,8 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
     RelativeLayout btnOrderPositon;
     @Bind(R.id.btnCoachTurorial)
     RelativeLayout btnCoachTurorial;
-    @Bind(R.id.btnMeberStore)
-    RelativeLayout btnMeberStore;
+    @Bind(R.id.btnMemberStore)
+    RelativeLayout btnMemberStore;
     @Bind(R.id.btnCostHistory)
     RelativeLayout btnCostHistory;
     @Bind(R.id.btnFoodService)
@@ -238,6 +238,7 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
         btnCoachTurorial.setOnClickListener(this);
         btnFoodService.setOnClickListener(this);
         membershipCardMainTitleLeft.setOnClickListener(this);
+        btnMemberStore.setOnClickListener(this);
     }
 
     @Override
@@ -255,14 +256,16 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
                 startActivity(new Intent(MembershipCardMainActivity.this, FeedBackActivity.class));
                 break;
             case R.id.btnCoachTurorial:
-                startActivity(new Intent(MembershipCardMainActivity.this,CoachTutorialListActivity.class));
+                startActivity(new Intent(MembershipCardMainActivity.this, CoachTutorialListActivity.class));
                 break;
             case R.id.btnFoodService:
-                startActivity(new Intent(MembershipCardMainActivity.this,ProvisionsActivity.class));
+                startActivity(new Intent(MembershipCardMainActivity.this, ProvisionsActivity.class));
                 break;
             case  R.id.membershipCardMainTitleLeft:
-                startActivity(new Intent(MembershipCardMainActivity.this,PersonalCenterActivity.class));
+                startActivity(new Intent(MembershipCardMainActivity.this, PersonalCenterActivity.class));
                 break;
+            case R.id.btnMemberStore:
+                startActivity(new Intent(MembershipCardMainActivity.this, PromotionsActivity.class));
         }
     }
 }
