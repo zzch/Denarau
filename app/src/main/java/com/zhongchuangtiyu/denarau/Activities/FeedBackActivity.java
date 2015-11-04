@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
@@ -26,7 +28,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class FeedBackActivity extends AppCompatActivity implements View.OnClickListener
+public class FeedBackActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.giveAdviceTitleLeft)
@@ -63,8 +65,8 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         String token = CacheUtils.getString(FeedBackActivity.this, "token", "aa");
         String club_uuid = CacheUtils.getString(FeedBackActivity.this, "clubuuid", "aa");
         map.put("content",feedBackText);
-        map.put("token",token);
-        map.put("club_uuid",club_uuid);
+        map.put("token", token);
+        map.put("club_uuid", club_uuid);
         MyApplication.volleyPOST(APIUrls.FEEDBACKS_URL, map, new MyApplication.VolleyCallBack()
         {
             @Override
@@ -73,9 +75,10 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(FeedBackActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(FeedBackActivity.this,SignInActivity.class));
+                    startActivity(new Intent(FeedBackActivity.this, SignInActivity.class));
                     finish();
-                }else
+                    ActivityCollector.finishAll();
+                } else
                 {
                     builder = new AlertDialog.Builder(FeedBackActivity.this);
                     builder.setTitle("发送成功");
@@ -98,7 +101,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void netFail(VolleyError error)
             {
-                Toast.makeText(FeedBackActivity.this,"数据发送失败，请检查网络连接或稍后再试",Toast.LENGTH_SHORT).show();
+                Toast.makeText(FeedBackActivity.this, "数据发送失败，请检查网络连接或稍后再试", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -137,5 +140,11 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
             default:
                 break;
         }
+    }
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

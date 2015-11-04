@@ -11,6 +11,8 @@ import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Entities.Courses;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 
@@ -20,7 +22,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CoachTutorialDetailCoursesActivity extends AppCompatActivity
+public class CoachTutorialDetailCoursesActivity extends BaseActivity
 {
 
     @Bind(R.id.coachDetailCourseName)
@@ -61,6 +63,7 @@ public class CoachTutorialDetailCoursesActivity extends AppCompatActivity
                     CustomToast.showToast(CoachTutorialDetailCoursesActivity.this, "登录失效，请重新登录");
                     startActivity(new Intent(CoachTutorialDetailCoursesActivity.this, SignInActivity.class));
                     finish();
+                    ActivityCollector.finishAll();
                 } else
                 {
                     Courses data = Courses.instance(response);
@@ -78,5 +81,10 @@ public class CoachTutorialDetailCoursesActivity extends AppCompatActivity
             }
         });
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

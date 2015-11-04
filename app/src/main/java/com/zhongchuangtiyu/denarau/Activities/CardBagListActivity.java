@@ -16,6 +16,8 @@ import com.zhongchuangtiyu.denarau.Adapters.CardbagListAdapter;
 import com.zhongchuangtiyu.denarau.Entities.ClubsMembership;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
@@ -28,7 +30,7 @@ import java.util.HashMap;
         import butterknife.Bind;
         import butterknife.ButterKnife;
 
-public class CardBagListActivity extends AppCompatActivity
+public class CardBagListActivity extends BaseActivity
 {
 
     @Bind(R.id.cardBagListTitleLeft)
@@ -60,9 +62,10 @@ public class CardBagListActivity extends AppCompatActivity
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(CardBagListActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(CardBagListActivity.this,SignInActivity.class));
+                    startActivity(new Intent(CardBagListActivity.this, SignInActivity.class));
                     finish();
-                }else
+                    ActivityCollector.finishAll();
+                } else
                 {
                     final List<ClubsMembership> data = ClubsMembership.instance(response);
                     CardbagListAdapter adapter = new CardbagListAdapter(data, CardBagListActivity.this);
@@ -89,8 +92,14 @@ public class CardBagListActivity extends AppCompatActivity
             @Override
             public void netFail(VolleyError error)
             {
-                Toast.makeText(CardBagListActivity.this,"无数据",Toast.LENGTH_SHORT).show();
+                Toast.makeText(CardBagListActivity.this, "无数据", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

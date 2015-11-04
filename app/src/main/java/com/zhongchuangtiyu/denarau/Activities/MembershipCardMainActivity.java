@@ -32,6 +32,8 @@ import com.zhongchuangtiyu.denarau.Entities.Announcements;
 import com.zhongchuangtiyu.denarau.Entities.ClubsHome;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
@@ -48,7 +50,7 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MembershipCardMainActivity extends AppCompatActivity implements View.OnClickListener
+public class MembershipCardMainActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.membershipCardMainTitleLeft)
@@ -161,7 +163,7 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
 
     private void setAnnouncementOutAnimation()
     {
-        Animation announcementOutAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY(), -50f);
+        Animation announcementOutAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY(), -40f);
         announcementOutAnimation.setDuration(500);
         membershipCardNoticeInfo.startAnimation(announcementOutAnimation);
         announcementOutAnimation.setAnimationListener(new Animation.AnimationListener()
@@ -284,6 +286,7 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
                     CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
                     startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
                     finish();
+                    ActivityCollector.finishAll();
                 } else
                 {
                     final ClubsHome data = ClubsHome.instance(response);
@@ -391,5 +394,11 @@ public class MembershipCardMainActivity extends AppCompatActivity implements Vie
                 startActivity(new Intent(MembershipCardMainActivity.this, AnnouncementsListActivity.class));
                 break;
         }
+    }
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

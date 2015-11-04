@@ -23,6 +23,8 @@ import com.zhongchuangtiyu.denarau.Entities.Sign_In;
 import com.zhongchuangtiyu.denarau.Entities.Welcome;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
@@ -35,7 +37,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SignInActivity extends AppCompatActivity implements TextWatcher, View.OnClickListener
+public class SignInActivity extends BaseActivity implements TextWatcher, View.OnClickListener
 {
 
     @Bind(R.id.toolbar)
@@ -590,5 +592,12 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher, Vi
             resendValidateCode.setClickable(false);
             resendValidateCode.setText(millisUntilFinished / 1000 + "秒");
         }
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

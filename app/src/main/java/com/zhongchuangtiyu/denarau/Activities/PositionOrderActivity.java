@@ -21,6 +21,8 @@ import com.zhongchuangtiyu.denarau.Demos.MyCustomDialog;
 import com.zhongchuangtiyu.denarau.Entities.Weathers;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
@@ -36,7 +38,7 @@ import java.util.TimeZone;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PositionOrderActivity extends AppCompatActivity implements View.OnClickListener
+public class PositionOrderActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.positionOrderTitleLeft)
@@ -121,87 +123,88 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                     CustomToast.showToast(PositionOrderActivity.this, "登录失效，请重新登录");
                     startActivity(new Intent(PositionOrderActivity.this, SignInActivity.class));
                     finish();
+                    ActivityCollector.finishAll();
                 } else
                 {
                     List<Weathers> data = Weathers.instance(response);
                     if (data.size() == 3)
                     {
-                    int date = data.get(i).getDate();
-                    int btnTodayDate = data.get(0).getDate();
-                    int btnTomorrowDate = data.get(1).getDate();
-                    int btnTheDayAfterTomorrowDate = data.get(2).getDate();
-                    int day_of_week = data.get(i).getDay_of_week();
-                    String content = data.get(i).getContent();
-                    int code = data.get(i).getCode();
-                    int maximum_temperature = data.get(i).getMaximum_temperature();
-                    String probability_of_precipitation = data.get(i).getProbability_of_precipitation();
-                    String wind = data.get(i).getWind();
-                    String formatDate = String.valueOf(date);
-                    String day1Date = String.valueOf(btnTodayDate);
-                    String day2Date = String.valueOf(btnTomorrowDate);
-                    String day3Date = String.valueOf(btnTheDayAfterTomorrowDate);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    SimpleDateFormat formatMMdd = new SimpleDateFormat("MM-dd");
-                    formatMMdd.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-                    String btnDay1 = formatMMdd.format(new Date(Long.parseLong(day1Date) * 1000));
-                    String btnDay2 = formatMMdd.format(new Date(Long.parseLong(day2Date) * 1000));
-                    String btnDay3 = formatMMdd.format(new Date(Long.parseLong(day3Date) * 1000));
-                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-                    formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
-                    String editedSelectedValue = selectedValue.replace(":", "");
-                    String startTwo = editedSelectedValue.substring(0, 2);
-                    String endTwo = editedSelectedValue.substring(2, 4);
-                    int hour = Integer.valueOf(startTwo);
-                    int minute = Integer.valueOf(endTwo);
-                    combinedTimeStamp = date + hour * 3600 + minute * 60;
+                        int date = data.get(i).getDate();
+                        int btnTodayDate = data.get(0).getDate();
+                        int btnTomorrowDate = data.get(1).getDate();
+                        int btnTheDayAfterTomorrowDate = data.get(2).getDate();
+                        int day_of_week = data.get(i).getDay_of_week();
+                        String content = data.get(i).getContent();
+                        int code = data.get(i).getCode();
+                        int maximum_temperature = data.get(i).getMaximum_temperature();
+                        String probability_of_precipitation = data.get(i).getProbability_of_precipitation();
+                        String wind = data.get(i).getWind();
+                        String formatDate = String.valueOf(date);
+                        String day1Date = String.valueOf(btnTodayDate);
+                        String day2Date = String.valueOf(btnTomorrowDate);
+                        String day3Date = String.valueOf(btnTheDayAfterTomorrowDate);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat formatMMdd = new SimpleDateFormat("MM-dd");
+                        formatMMdd.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+                        String btnDay1 = formatMMdd.format(new Date(Long.parseLong(day1Date) * 1000));
+                        String btnDay2 = formatMMdd.format(new Date(Long.parseLong(day2Date) * 1000));
+                        String btnDay3 = formatMMdd.format(new Date(Long.parseLong(day3Date) * 1000));
+                        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+                        formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
+                        String editedSelectedValue = selectedValue.replace(":", "");
+                        String startTwo = editedSelectedValue.substring(0, 2);
+                        String endTwo = editedSelectedValue.substring(2, 4);
+                        int hour = Integer.valueOf(startTwo);
+                        int minute = Integer.valueOf(endTwo);
+                        combinedTimeStamp = date + hour * 3600 + minute * 60;
 
-                    positionOrderDate.setText(formatedDate);
-                    positionOrderTemperature.setText(String.valueOf(maximum_temperature) + "°");
-                    positionOrderWeatherTv.setText(content);
-                    positionOrderWind.setText(wind);
-                    probabilityOfPrecipitation.setText("降水概率" + " " + probability_of_precipitation);
-                    switch (code)
-                    {
-                        case 1:
-                            weatherImageView.setImageResource(R.mipmap.oneicon);
-                            break;
-                        case 2:
-                            weatherImageView.setImageResource(R.mipmap.twoicon);
-                            break;
-                        case 3:
-                            weatherImageView.setImageResource(R.mipmap.threeicon);
-                            break;
-                        case 4:
-                            weatherImageView.setImageResource(R.mipmap.fouricon);
-                            break;
-                        case 5:
-                            weatherImageView.setImageResource(R.mipmap.fiveicon);
-                            break;
-                        case 6:
-                            weatherImageView.setImageResource(R.mipmap.sixicon);
-                            break;
-                        case 7:
-                            weatherImageView.setImageResource(R.mipmap.sevenicon);
-                            break;
-                        case 8:
-                            weatherImageView.setImageResource(R.mipmap.eighticon);
-                            break;
-                    }
-                    Date now = new Date();
-                    SimpleDateFormat nowFormatter = new SimpleDateFormat("MM-dd");
-                    String nowDate = nowFormatter.format(now);
-                    btnTheDayAfterTomorrow.setSingleLine(true);
-                    if (nowDate.equals(btnDay1))
-                    {
-                        btnToday.setText("今天" + btnDay1);
-                        btnTomorrow.setText("明天" + btnDay2);
-                        btnTheDayAfterTomorrow.setText("后天" + btnDay3);
-                    } else
-                    {
-                        btnToday.setText("明天" + btnDay1);
-                        btnTomorrow.setText("后天" + btnDay2);
-                        btnTheDayAfterTomorrow.setText("大后天" + btnDay3);
-                    }
+                        positionOrderDate.setText(formatedDate);
+                        positionOrderTemperature.setText(String.valueOf(maximum_temperature) + "°");
+                        positionOrderWeatherTv.setText(content);
+                        positionOrderWind.setText(wind);
+                        probabilityOfPrecipitation.setText("降水概率" + " " + probability_of_precipitation);
+                        switch (code)
+                        {
+                            case 1:
+                                weatherImageView.setImageResource(R.mipmap.oneicon);
+                                break;
+                            case 2:
+                                weatherImageView.setImageResource(R.mipmap.twoicon);
+                                break;
+                            case 3:
+                                weatherImageView.setImageResource(R.mipmap.threeicon);
+                                break;
+                            case 4:
+                                weatherImageView.setImageResource(R.mipmap.fouricon);
+                                break;
+                            case 5:
+                                weatherImageView.setImageResource(R.mipmap.fiveicon);
+                                break;
+                            case 6:
+                                weatherImageView.setImageResource(R.mipmap.sixicon);
+                                break;
+                            case 7:
+                                weatherImageView.setImageResource(R.mipmap.sevenicon);
+                                break;
+                            case 8:
+                                weatherImageView.setImageResource(R.mipmap.eighticon);
+                                break;
+                        }
+                        Date now = new Date();
+                        SimpleDateFormat nowFormatter = new SimpleDateFormat("MM-dd");
+                        String nowDate = nowFormatter.format(now);
+                        btnTheDayAfterTomorrow.setSingleLine(true);
+                        if (nowDate.equals(btnDay1))
+                        {
+                            btnToday.setText("今天" + btnDay1);
+                            btnTomorrow.setText("明天" + btnDay2);
+                            btnTheDayAfterTomorrow.setText("后天" + btnDay3);
+                        } else
+                        {
+                            btnToday.setText("明天" + btnDay1);
+                            btnTomorrow.setText("后天" + btnDay2);
+                            btnTheDayAfterTomorrow.setText("大后天" + btnDay3);
+                        }
                     }
                 }
             }
@@ -310,6 +313,10 @@ public class PositionOrderActivity extends AppCompatActivity implements View.OnC
                 break;
         }
     }
-
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

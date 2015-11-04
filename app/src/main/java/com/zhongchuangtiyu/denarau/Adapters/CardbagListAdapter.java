@@ -69,6 +69,8 @@ public class CardbagListAdapter extends BaseAdapter
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
         imageLoader.displayImage(clubsMembership.getLogo(),viewHolder.cardBagCourseImage);
         viewHolder.cardBagCourseName.setText(clubsMembership.getName());
+        viewHolder.cardBagListItemPhone.setText(clubsMembership.getPhone_number());
+        viewHolder.cardBagListLocation.setText(clubsMembership.getAddress());
         return view;
     }
 
@@ -84,6 +86,10 @@ public class CardbagListAdapter extends BaseAdapter
         ImageView cardBagCourseImage;
         @Bind(R.id.cardBagCourseName)
         TextView cardBagCourseName;
+        @Bind(R.id.cardBagListItemPhone)
+        TextView cardBagListItemPhone;
+        @Bind(R.id.cardBagListLocation)
+        TextView cardBagListLocation;
 
         ViewHolder(View view)
         {

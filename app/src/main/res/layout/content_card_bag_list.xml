@@ -5,11 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e7e7e7"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_card_bag_list"
     tools:context="com.zhongchuangtiyu.denarau.Activities.CardBagListActivity">
 
     <ListView
+        android:dividerHeight="5dp"
+        android:divider="#e7e7e7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cardBagListView"

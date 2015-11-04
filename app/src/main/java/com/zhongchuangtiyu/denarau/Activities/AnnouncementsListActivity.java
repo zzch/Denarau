@@ -10,6 +10,8 @@ import com.zhongchuangtiyu.denarau.Adapters.AnnouncementsListAdapter;
 import com.zhongchuangtiyu.denarau.Entities.Announcements;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 
@@ -20,7 +22,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AnnouncementsListActivity extends AppCompatActivity
+public class AnnouncementsListActivity extends BaseActivity
 {
 
     @Bind(R.id.announcementsListView)
@@ -59,5 +61,10 @@ public class AnnouncementsListActivity extends AppCompatActivity
             }
         });
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

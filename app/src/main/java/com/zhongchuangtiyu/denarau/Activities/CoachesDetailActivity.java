@@ -17,6 +17,8 @@ import com.zhongchuangtiyu.denarau.Adapters.CoachDetailListAdapter;
 import com.zhongchuangtiyu.denarau.Entities.CoachesDetail;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomListView;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
@@ -30,7 +32,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CoachesDetailActivity extends AppCompatActivity
+public class CoachesDetailActivity extends BaseActivity
 {
 
     @Bind(R.id.coachDetailImage)
@@ -73,9 +75,10 @@ public class CoachesDetailActivity extends AppCompatActivity
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(CoachesDetailActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(CoachesDetailActivity.this,SignInActivity.class));
+                    startActivity(new Intent(CoachesDetailActivity.this, SignInActivity.class));
                     finish();
-                }else
+                    ActivityCollector.finishAll();
+                } else
                 {
                     final CoachesDetail data = CoachesDetail.instance(response);
                     if (data.getPortrait() != null)
@@ -111,7 +114,11 @@ public class CoachesDetailActivity extends AppCompatActivity
 
             }
         });
-
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

@@ -6,13 +6,16 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MemberStoreActivity extends AppCompatActivity
+public class MemberStoreActivity extends BaseActivity
 {
 
     @Bind(R.id.memberStoreTitleLeft)
@@ -30,5 +33,10 @@ public class MemberStoreActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.memberStoreToolbar);
         setSupportActionBar(toolbar);
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

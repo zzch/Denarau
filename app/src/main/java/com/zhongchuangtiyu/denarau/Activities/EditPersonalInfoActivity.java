@@ -43,6 +43,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhongchuangtiyu.denarau.Entities.UsersDetail;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.ClipImageActivity;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
@@ -59,7 +61,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class EditPersonalInfoActivity extends AppCompatActivity implements View.OnClickListener
+public class EditPersonalInfoActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.editPersonalInfoTitleLeft)
@@ -115,8 +117,7 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
                 {
                     Bitmap photo1 = BitmapFactory.decodeFile(cachedPortrait);
                     personalInfoImageToEdit.setImageBitmap(photo1);
-                }
-                else if (data.getPortrait() != null && cachedPortrait == null) ;
+                } else if (data.getPortrait() != null && cachedPortrait == null) ;
                 {
                     imageLoader.init(ImageLoaderConfiguration.createDefault(EditPersonalInfoActivity.this));
                     String portraitUrl = data.getPortrait();
@@ -134,7 +135,7 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
                     if (gender.equals("male"))
                     {
                         editPersonalInfoGenderToRequest.setText("男");
-                    }else if (gender.equals("female"))
+                    } else if (gender.equals("female"))
                     {
                         editPersonalInfoGenderToRequest.setText("女");
                     }
@@ -265,8 +266,8 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
         Xlog.d(birthDayToUpload + "birthDayToUpload---------------------------------------");
         Map<String, String> map = new HashMap<>();
         String token = CacheUtils.getString(EditPersonalInfoActivity.this,"token",null);
-        map.put("token",token);
-        map.put("birthday",birthDayToUpload);
+        map.put("token", token);
+        map.put("birthday", birthDayToUpload);
         MyApplication.volleyPUT(APIUrls.USERS_BIRTHDAY, map, new MyApplication.VolleyCallBack()
         {
             @Override
@@ -366,5 +367,10 @@ public class EditPersonalInfoActivity extends AppCompatActivity implements View.
         cursor.moveToFirst();
         return cursor.getString(1);
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

@@ -18,6 +18,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhongchuangtiyu.denarau.Entities.UsersDetail;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.DateUtils;
@@ -30,7 +32,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PersonalCenterActivity extends AppCompatActivity implements View.OnClickListener
+public class PersonalCenterActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.personalCenterTitleLeft)
@@ -91,9 +93,10 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(PersonalCenterActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(PersonalCenterActivity.this,SignInActivity.class));
+                    startActivity(new Intent(PersonalCenterActivity.this, SignInActivity.class));
                     finish();
-                }else
+                    ActivityCollector.finishAll();
+                } else
                 {
                     UsersDetail data = UsersDetail.instance(response);
                     String cachedPortrait = CacheUtils.getString(PersonalCenterActivity.this, "setPortrait", null);
@@ -140,9 +143,16 @@ public class PersonalCenterActivity extends AppCompatActivity implements View.On
                 CacheUtils.putString(PersonalCenterActivity.this, "clubuuid", null);
                 startActivity(new Intent(PersonalCenterActivity.this, SignInActivity.class));
                 finish();
+                ActivityCollector.finishAll();
                 break;
             default:
                 break;
         }
+    }
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

@@ -8,8 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 
-public class BeforePostAdvice extends AppCompatActivity
+ public class BeforePostAdvice extends BaseActivity
 {
 
     @Override
@@ -19,7 +21,11 @@ public class BeforePostAdvice extends AppCompatActivity
         setContentView(R.layout.activity_before_post_advice);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

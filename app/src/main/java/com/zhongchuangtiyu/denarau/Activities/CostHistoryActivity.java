@@ -6,13 +6,16 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CostHistoryActivity extends AppCompatActivity
+public class CostHistoryActivity extends BaseActivity
 {
 
     @Bind(R.id.costHistoryTitleLeft)
@@ -30,5 +33,10 @@ public class CostHistoryActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.costHistoryToolbar);
         setSupportActionBar(toolbar);
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

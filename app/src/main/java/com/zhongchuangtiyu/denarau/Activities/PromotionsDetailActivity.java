@@ -11,6 +11,8 @@ import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Entities.PromotionsDetail;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
@@ -21,7 +23,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PromotionsDetailActivity extends AppCompatActivity
+public class PromotionsDetailActivity extends BaseActivity
 {
 
     @Bind(R.id.provitionsDetailTitleTv)
@@ -57,10 +59,11 @@ public class PromotionsDetailActivity extends AppCompatActivity
                     CustomToast.showToast(PromotionsDetailActivity.this, "登录失效，请重新登录");
                     startActivity(new Intent(PromotionsDetailActivity.this, SignInActivity.class));
                     finish();
+                    ActivityCollector.finishAll();
                 } else if (response.contains("数据未找到"))
                 {
-                    CustomToast.showToast(PromotionsDetailActivity.this, "登录失效，请重新登录");
-                }else
+                    CustomToast.showToast(PromotionsDetailActivity.this, "数据未找到");
+                } else
                 {
                     PromotionsDetail data = PromotionsDetail.instance(response);
                     String title = data.getTitle();
@@ -77,5 +80,10 @@ public class PromotionsDetailActivity extends AppCompatActivity
             }
         });
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

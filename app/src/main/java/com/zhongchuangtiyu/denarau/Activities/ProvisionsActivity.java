@@ -25,6 +25,8 @@ import com.zhongchuangtiyu.denarau.Entities.Provisions;
 import com.zhongchuangtiyu.denarau.Fragments.ProvisionFragments;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
@@ -38,7 +40,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ProvisionsActivity extends AppCompatActivity
+public class ProvisionsActivity extends BaseActivity
 {
 
     @Bind(R.id.buttonContainerLl)
@@ -91,9 +93,10 @@ public class ProvisionsActivity extends AppCompatActivity
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(ProvisionsActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(ProvisionsActivity.this,SignInActivity.class));
+                    startActivity(new Intent(ProvisionsActivity.this, SignInActivity.class));
                     finish();
-                }else
+                    ActivityCollector.finishAll();
+                } else
                 {
                     List<Provision> data = Provisions.instance(response);
                     Map<String, List<Provision>> provGroup = new HashMap<String, List<Provision>>();
@@ -199,6 +202,11 @@ public class ProvisionsActivity extends AppCompatActivity
             }
         });
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }
 

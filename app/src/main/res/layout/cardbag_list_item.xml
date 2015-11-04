@@ -1,25 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp">
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:background="#e7e7e7">
 
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:id="@+id/cardBagCourseImage"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_margin="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:background="@drawable/layout_border3"
+        android:id="@+id/cardBagListItemRl1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Large Text"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/cardBagCourseName"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/cardBagCourseImage"/>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/cardBagCourseImage"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Large Text"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/cardBagCourseName"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/cardBagCourseImage"
+            android:layout_marginTop="30dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/layout_border4"
+        android:layout_below="@id/cardBagListItemRl1"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:id="@+id/relativeLayout4">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:id="@+id/relativeLayout5">
+
+            <ImageView
+                android:background="@mipmap/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView30"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/cardBagListItemPhone"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView30"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout5"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:background="@mipmap/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView31"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginRight="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="dsafda"
+                android:id="@+id/cardBagListLocation"
+                android:maxLines="2"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView31"
+                android:layout_marginStart="20dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
 </RelativeLayout>
