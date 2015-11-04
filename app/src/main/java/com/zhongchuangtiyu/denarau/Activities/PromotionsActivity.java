@@ -25,7 +25,9 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 public class PromotionsActivity extends BaseActivity
 {
@@ -34,6 +36,8 @@ public class PromotionsActivity extends BaseActivity
     ImageButton promotionsTitleLeft;
     @Bind(R.id.promotionsListView)
     ListView promotionsListView;
+    @Bind(R.id.ptr)
+    PtrClassicFrameLayout ptr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,7 +53,27 @@ public class PromotionsActivity extends BaseActivity
 
     private void setListeners()
     {
+        ptr.setPtrHandler(new PtrHandler()
+        {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header)
+            {
+                return true;
+            }
 
+            @Override
+            public void onRefreshBegin(final PtrFrameLayout ptr)
+            {
+                ptr.postDelayed(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        sendProtionsRequest();
+                    }
+                }, 2000);
+            }
+        });
     }
 
     private void sendProtionsRequest()
@@ -85,6 +109,7 @@ public class PromotionsActivity extends BaseActivity
                         }
                     });
                     adapter.notifyDataSetChanged();
+                    ptr.refreshComplete();
                 }
             }
 
@@ -92,6 +117,7 @@ public class PromotionsActivity extends BaseActivity
             public void netFail(VolleyError error)
             {
                 CustomToast.showToast(PromotionsActivity.this, "刷新失败，请检查网络连接");
+                ptr.refreshComplete();
             }
         });
     }

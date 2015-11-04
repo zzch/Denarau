@@ -1,57 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-              android:layout_height="match_parent"><![CDATA[
-             >
-
-
-
-
-
-
-
-    ]]>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
-
-    <RelativeLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent">
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptr"
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent"
+        cube_ptr:ptr_duration_to_close="200"
+        cube_ptr:ptr_duration_to_close_header="1000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textView50"
-            android:maxLines="2"
-            android:scrollbars="vertical"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:singleLine="false" />
-    </RelativeLayout>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="I am a TextView"
+            android:textSize="30sp" />
 
-    <TextView
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:focusableInTouchMode="true"
-        android:scrollHorizontally="true"
-        android:text="这才是真正的文字跑马灯效果"
-        android:singleLine="true"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/textView9"
-        android:layout_below="@+id/button"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="71dp"/>
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+
+
+
+
+
+
+
+
+
+
+
 </RelativeLayout>

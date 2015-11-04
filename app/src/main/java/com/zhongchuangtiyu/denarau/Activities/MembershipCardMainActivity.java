@@ -9,11 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -39,7 +37,6 @@ import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,6 +74,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     RelativeLayout btnGiveAdvice;
     @Bind(R.id.indicatorLinearLayout)
     LinearLayout indicatorLinearLayout;
+    @Bind(R.id.membershipCardMainWeather)
+    TextView membershipCardMainWeather;
     private List<View> pagerViews;
     private MembershipCardViewpagerAdapter adapter;
     private View view;
@@ -94,10 +93,10 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             switch (msg.what)
             {
                 case 1:
-                    if (j < list.size()-1)
+                    if (j < list.size() - 1)
                     {
                         j++;
-                    }else if (j == list.size() -1)
+                    } else if (j == list.size() - 1)
                     {
                         j = 0;
                     }
@@ -110,13 +109,16 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     };
 
 
-    TimerTask task = new TimerTask(){
-        public void run() {
+    TimerTask task = new TimerTask()
+    {
+        public void run()
+        {
             Message message = new Message();
             message.what = 1;
             handler.sendMessage(message);
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -132,6 +134,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         timer.schedule(task, 1000, 4000);
         setListeners();
     }
+
     private void sendAnnoucementsRequest()
     {
         Map map = new HashMap();
@@ -187,6 +190,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             }
         });
     }
+
     private void setAnnouncementInAnimation()
     {
         Animation announcementInAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY() + 55f, membershipCardNoticeInfo.getScaleY());
@@ -213,11 +217,12 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             }
         });
     }
+
     private void initIndicators()
     {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_dot_normal);
         Button indicator = new Button(this);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(bitmap.getWidth(),bitmap.getHeight());
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(bitmap.getWidth(), bitmap.getHeight());
         layoutParams.setMargins(0, 0, 10, 0);
         indicator.setLayoutParams(layoutParams);
         indicatorLinearLayout.addView(indicator);
@@ -225,7 +230,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         if (isSelected)
         {
             button1.setBackgroundResource(R.mipmap.home_page_dot_select);
-        }else
+        } else
         {
             button1.setBackgroundResource(R.mipmap.icon_dot_normal);
         }
@@ -269,6 +274,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             }
         });
     }
+
     private void requestCardInfo()
     {
         Map<String, String> map = new HashMap<>();
@@ -326,6 +332,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                             initIndicators();
                         }
                     }
+                    membershipCardMainWeather.setText("今天：" + String.valueOf(data.getWeather().getMaximum_temperature()) + "℃");
+                    Xlog.d(data.getWeather().getMaximum_temperature() + "data.getWeatherEntity().getMaximum_temperature()------------------");
                     membershipCardViewPager.setAdapter(adapter);
                 }
             }
@@ -384,7 +392,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             case R.id.btnFoodService:
                 startActivity(new Intent(MembershipCardMainActivity.this, ProvisionsActivity.class));
                 break;
-            case  R.id.membershipCardMainTitleLeft:
+            case R.id.membershipCardMainTitleLeft:
                 startActivity(new Intent(MembershipCardMainActivity.this, PersonalCenterActivity.class));
                 break;
             case R.id.btnMemberStore:
@@ -395,6 +403,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 break;
         }
     }
+
     @Override
     protected void onDestroy()
     {
