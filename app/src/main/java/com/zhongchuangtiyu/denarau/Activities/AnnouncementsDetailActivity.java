@@ -1,0 +1,82 @@
+package com.zhongchuangtiyu.denarau.Activities;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.webkit.WebView;
+import android.widget.TextView;
+
+import com.android.volley.Cache;
+import com.android.volley.VolleyError;
+import com.zhongchuangtiyu.denarau.Entities.AnnouncementsDetail;
+import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
+import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class AnnouncementsDetailActivity extends AppCompatActivity
+{
+
+    @Bind(R.id.announcementsDetailTitleTv)
+    TextView announcementsDetailTitleTv;
+    @Bind(R.id.announcementsDetailWebView)
+    WebView announcementsDetailWebView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_announcements_detail);
+        ButterKnife.bind(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        sendAnnouncementsDetailRequest();
+    }
+
+    private void sendAnnouncementsDetailRequest()
+    {
+        Map<String, String> map = new HashMap<>();
+        String token = CacheUtils.getString(AnnouncementsDetailActivity.this, "token", null);
+        String club_uuid = CacheUtils.getString(AnnouncementsDetailActivity.this, "clubuuid", null);
+        Intent intent = getIntent();
+        String uuid = intent.getStringExtra("uuid");
+        MyApplication.volleyGET(APIUrls.ANNOUNCEMENTS_DETAIL_URL + "token=" + token + "&" + "club_uuid=" + club_uuid + "&" + "uuid=" + uuid, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+                AnnouncementsDetail data = AnnouncementsDetail.instance(response);
+                if (response.contains("10002"))
+                {
+                    CustomToast.showToast(AnnouncementsDetailActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(AnnouncementsDetailActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                } else if (response.contains("数据未找到"))
+                {
+                    CustomToast.showToast(AnnouncementsDetailActivity.this, "数据未找到");
+                }else
+                {
+                    announcementsDetailTitleTv.setText(data.getTitle());
+                    announcementsDetailWebView.loadData(data.getContent(), "text/html", "UTF-8");
+                }
+            }
+
+            @Override
+            public void netFail(VolleyError error)
+            {
+                CustomToast.showToast(AnnouncementsDetailActivity.this, "请检查网络连接");
+            }
+        });
+    }
+
+}

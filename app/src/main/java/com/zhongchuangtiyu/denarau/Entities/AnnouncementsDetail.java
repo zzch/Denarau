@@ -51,11 +51,11 @@ public class AnnouncementsDetail implements Serializable
     {
         return published_at;
     }
-    public static List<AnnouncementsDetail> instance(String str)
+    public static AnnouncementsDetail instance(String str)
     {
 
         Gson gson = new Gson();
-        return gson.fromJson(str, new TypeToken<List<AnnouncementsDetail>>() {
+        return gson.fromJson(str, new TypeToken<AnnouncementsDetail>() {
         }.getType());
     }
 }

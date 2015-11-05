@@ -29,7 +29,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:background="@mipmap/icon_back_arrow"
-                    android:id="@+id/coachTutorialTitleLeft"/>
+                    android:id="@+id/coachTutorialDetailTitleLeft"/>
 
                 <TextView
                     android:layout_width="wrap_content"

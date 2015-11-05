@@ -30,7 +30,7 @@ import java.util.HashMap;
         import butterknife.Bind;
         import butterknife.ButterKnife;
 
-public class CardBagListActivity extends BaseActivity
+public class CardBagListActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.cardBagListTitleLeft)
@@ -48,6 +48,12 @@ public class CardBagListActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.cardBagListToolbar);
         setSupportActionBar(toolbar);
         sendCardbagRequest();
+        setListeners();
+    }
+
+    private void setListeners()
+    {
+        cardBagListTitleLeft.setOnClickListener(this);
     }
 
     private void sendCardbagRequest()
@@ -101,5 +107,19 @@ public class CardBagListActivity extends BaseActivity
     {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.cardBagListTitleLeft:
+                finish();
+                ActivityCollector.removeActivity(this);
+                break;
+            default:
+                break;
+        }
     }
 }

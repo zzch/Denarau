@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -23,14 +25,15 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PromotionsDetailActivity extends BaseActivity
+public class PromotionsDetailActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.provitionsDetailTitleTv)
     TextView provitionsDetailTitleTv;
     @Bind(R.id.provitionsDetailWebView)
     WebView provitionsDetailWebView;
-
+    @Bind(R.id.promotionsDetailTitleLeft)
+    ImageButton promotionsDetailTitleLeft;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -39,7 +42,13 @@ public class PromotionsDetailActivity extends BaseActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setListeners();
         sendPromotionsDetailRequest();
+    }
+
+    private void setListeners()
+    {
+        promotionsDetailTitleLeft.setOnClickListener(this);
     }
 
     private void sendPromotionsDetailRequest()
@@ -85,5 +94,19 @@ public class PromotionsDetailActivity extends BaseActivity
     {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.promotionsDetailTitleLeft:
+                finish();
+                ActivityCollector.removeActivity(this);
+                break;
+            default:
+                break;
+        }
     }
 }

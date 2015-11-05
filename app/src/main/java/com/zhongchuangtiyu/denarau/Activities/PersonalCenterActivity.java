@@ -137,6 +137,10 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.personalCenterTitleLeft:
                 finish();
+                ActivityCollector.removeActivity(this);
+                break;
+            case R.id.positionOrderRl:
+                startActivity(new Intent(PersonalCenterActivity.this, ReservationsActivity.class));
                 break;
             case R.id.quitLoginRl:
                 CacheUtils.putString(PersonalCenterActivity.this, "token", null);

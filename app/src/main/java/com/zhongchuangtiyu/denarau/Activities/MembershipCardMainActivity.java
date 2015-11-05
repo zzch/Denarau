@@ -166,7 +166,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
 
     private void setAnnouncementOutAnimation()
     {
-        Animation announcementOutAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY(), -40f);
+        Animation announcementOutAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY(), -60f);
         announcementOutAnimation.setDuration(500);
         membershipCardNoticeInfo.startAnimation(announcementOutAnimation);
         announcementOutAnimation.setAnimationListener(new Animation.AnimationListener()
@@ -193,7 +193,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
 
     private void setAnnouncementInAnimation()
     {
-        Animation announcementInAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY() + 55f, membershipCardNoticeInfo.getScaleY());
+        Animation announcementInAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY() + 60f, membershipCardNoticeInfo.getScaleY());
         announcementInAnimation.setDuration(500);
         membershipCardNoticeInfo.startAnimation(announcementInAnimation);
         announcementInAnimation.setAnimationListener(new Animation.AnimationListener()

@@ -12,20 +12,63 @@ import java.util.List;
 public class Reservations implements Serializable
 {
 
+
     /**
-     * result : success
+     * name : 中创高尔夫
      */
 
-    private String result;
+    private ClubEntity club;
+    /**
+     * club : {"name":"中创高尔夫"}
+     * will_playing_at : 11111
+     * state : submitted
+     */
 
-    public void setResult(String result)
+    private long will_playing_at;
+    private String state;
+    public void setClub(ClubEntity club)
     {
-        this.result = result;
+        this.club = club;
     }
 
-    public String getResult()
+    public void setWill_playing_at(long will_playing_at)
     {
-        return result;
+        this.will_playing_at = will_playing_at;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
+    }
+
+    public ClubEntity getClub()
+    {
+        return club;
+    }
+
+    public long getWill_playing_at()
+    {
+        return will_playing_at;
+    }
+
+    public String getState()
+    {
+        return state;
+    }
+
+    public static class ClubEntity
+    {
+        private String name;
+
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
     }
     public static List<Reservations> instance(String str)
     {

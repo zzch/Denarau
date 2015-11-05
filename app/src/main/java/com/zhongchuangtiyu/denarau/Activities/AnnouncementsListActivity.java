@@ -1,18 +1,23 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Adapters.AnnouncementsListAdapter;
 import com.zhongchuangtiyu.denarau.Entities.Announcements;
+import com.zhongchuangtiyu.denarau.Entities.AnnouncementsDetail;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 
 import java.util.HashMap;
@@ -22,11 +27,13 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AnnouncementsListActivity extends BaseActivity
+public class AnnouncementsListActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.announcementsListView)
     ListView announcementsListView;
+    @Bind(R.id.announcementsListTitleLeft)
+    ImageButton announcementsListTitleLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,9 +56,29 @@ public class AnnouncementsListActivity extends BaseActivity
             @Override
             public void netSuccess(String response)
             {
-                List<Announcements> data = Announcements.instance(response);
-                AnnouncementsListAdapter adapter = new AnnouncementsListAdapter(AnnouncementsListActivity.this, data);
-                announcementsListView.setAdapter(adapter);
+                if (response.contains("10002"))
+                {
+                    CustomToast.showToast(AnnouncementsListActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(AnnouncementsListActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                } else
+                {
+                    final List<Announcements> data = Announcements.instance(response);
+                    AnnouncementsListAdapter adapter = new AnnouncementsListAdapter(AnnouncementsListActivity.this, data);
+                    announcementsListView.setAdapter(adapter);
+                    announcementsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                    {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                        {
+                            String uuid = data.get(position).getUuid();
+                            Intent intent = new Intent(AnnouncementsListActivity.this, AnnouncementsDetailActivity.class);
+                            intent.putExtra("uuid", uuid);
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -61,10 +88,17 @@ public class AnnouncementsListActivity extends BaseActivity
             }
         });
     }
+
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+
     }
 }

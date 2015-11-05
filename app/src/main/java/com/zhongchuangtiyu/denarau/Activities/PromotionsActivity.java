@@ -3,10 +3,13 @@ package com.zhongchuangtiyu.denarau.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Adapters.PromotionsListAdapter;
@@ -18,6 +21,7 @@ import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +30,11 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
-public class PromotionsActivity extends BaseActivity
+public class PromotionsActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.promotionsTitleLeft)
@@ -38,7 +43,8 @@ public class PromotionsActivity extends BaseActivity
     ListView promotionsListView;
     @Bind(R.id.ptr)
     PtrClassicFrameLayout ptr;
-
+    private int page = 0;
+    private int lastItem;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -47,18 +53,19 @@ public class PromotionsActivity extends BaseActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        sendProtionsRequest();
+//        sendProtionsRequest();
         setListeners();
     }
 
     private void setListeners()
     {
+        promotionsTitleLeft.setOnClickListener(this);
         ptr.setPtrHandler(new PtrHandler()
         {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header)
             {
-                return true;
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
             }
 
             @Override
@@ -71,9 +78,26 @@ public class PromotionsActivity extends BaseActivity
                     {
                         sendProtionsRequest();
                     }
-                }, 2000);
+                }, 1000);
             }
         });
+        ptr.setResistance(1.7f);
+        ptr.setRatioOfHeaderHeightToRefresh(1.2f);
+        ptr.setDurationToClose(200);
+        ptr.setDurationToCloseHeader(1000);
+        // default is false
+        ptr.setPullToRefresh(false);
+        // default is true
+        ptr.setKeepHeaderWhenRefresh(true);
+        ptr.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                ptr.autoRefresh();
+            }
+        }, 100);
+
     }
 
     private void sendProtionsRequest()
@@ -81,7 +105,8 @@ public class PromotionsActivity extends BaseActivity
         Map<String, String> map = new HashMap<>();
         final String token = CacheUtils.getString(PromotionsActivity.this, "token", null);
         String club_uuid = CacheUtils.getString(PromotionsActivity.this, "clubuuid", null);
-        MyApplication.volleyGET(APIUrls.PROMOTIONS + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
+        Xlog.d(String.valueOf(page) + "page------------------------------");
+        MyApplication.volleyGET(APIUrls.PROMOTIONS + "token=" + "test" + "&" + "club_uuid=" + "test" + "&" + "page=" + page, map, new MyApplication.VolleyCallBack()
         {
             @Override
             public void netSuccess(String response)
@@ -97,6 +122,7 @@ public class PromotionsActivity extends BaseActivity
                     final List<Promotions> data = Promotions.instance(response);
                     final PromotionsListAdapter adapter = new PromotionsListAdapter(data, PromotionsActivity.this);
                     promotionsListView.setAdapter(adapter);
+                    ptr.refreshComplete();
                     promotionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
                         @Override
@@ -108,8 +134,28 @@ public class PromotionsActivity extends BaseActivity
                             startActivity(intent);
                         }
                     });
-                    adapter.notifyDataSetChanged();
-                    ptr.refreshComplete();
+                    promotionsListView.setOnScrollListener(new AbsListView.OnScrollListener()
+                    {
+                        //AbsListView view 这个view对象就是listview
+                        @Override
+                        public void onScrollStateChanged(AbsListView view, int scrollState)
+                        {
+                            if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE)
+                            {
+                                if (view.getLastVisiblePosition() == view.getCount() - 1)
+                                {
+                                    page++;
+                                    sendProtionsRequest();
+                                }
+                            }
+                        }
+                        @Override
+                        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+                        {
+                            CustomToast.showToast(PromotionsActivity.this, String.valueOf(view.getCount()));
+                            lastItem = firstVisibleItem + visibleItemCount - 1 ;
+                        }
+                    });
                 }
             }
 
@@ -127,5 +173,19 @@ public class PromotionsActivity extends BaseActivity
     {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.promotionsTitleLeft:
+                finish();
+                ActivityCollector.removeActivity(this);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -222,6 +222,9 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.editPersonalInfoTitleLeft:
                 finish();
+                ActivityCollector.removeActivity(this);
+                break;
+            default:
                 break;
         }
     }

@@ -5,12 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_promotions"
-    tools:context="com.zhongchuangtiyu.denarau.Activities.PromotionsActivity">
-
+    tools:showIn="@layout/activity_reservations"
+    tools:context="com.zhongchuangtiyu.denarau.Activities.ReservationsActivity">
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
-        android:id="@+id/ptr"
+        android:id="@+id/reservationsFrame"
         xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,15 +26,14 @@
         cube_ptr:ptr_resistance="1.7">
 
         <ListView
-            android:id="@+id/promotionsListView"
+            android:id="@+id/reservationsListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#00000000"
-            android:dividerHeight="5dp"
+            android:divider="@null"
             android:fadingEdge="none"
             android:listSelector="@android:color/transparent"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:scrollbarStyle="outsideOverlay"
             android:choiceMode="singleChoice" />
 

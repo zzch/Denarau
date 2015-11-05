@@ -230,22 +230,24 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
             @Override
             public void netSuccess(String response)
             {
-                builder = new AlertDialog.Builder(PositionOrderActivity.this);
-                builder.setTitle("预定成功");
-                builder.setMessage("你已经成功预定" + formatedDate + " " + selectedValue + "的打位，可以在“个人中心”>“打位预约”中查看");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
-                { //设置确定按钮
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss(); //关闭dialog
-                        Toast.makeText(PositionOrderActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setCancelable(false);
-                builder.create();
-                builder.show();
-                Xlog.d(response + "response------------------------------------------");
+
+                    builder = new AlertDialog.Builder(PositionOrderActivity.this);
+                    builder.setTitle("预定成功");
+                    builder.setMessage("你已经成功预定" + formatedDate + " " + selectedValue + "的打位，可以在“个人中心”>“打位预约”中查看");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+                    { //设置确定按钮
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            dialog.dismiss(); //关闭dialog
+                            Toast.makeText(PositionOrderActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setCancelable(false);
+                    builder.create();
+                    builder.show();
+                    Xlog.d(response + "response------------------------------------------");
+
             }
 
             @Override
@@ -288,6 +290,9 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
                 if (isOrderTimeChoosen.contains("预约时间"))
                 {
                     CustomToast.showToast(PositionOrderActivity.this,"请选择预约时间");
+                }else if (formatedDate == null)
+                {
+                    CustomToast.showToast(PositionOrderActivity.this,"请选择预约日期");
                 }
                 else
                 {
@@ -296,6 +301,7 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.positionOrderTitleLeft:
                 finish();
+                ActivityCollector.removeActivity(this);
                 break;
             case R.id.btnOrderRlDialog:
                 MyCustomDialog dialog = new MyCustomDialog(PositionOrderActivity.this, "请选择预约时间", new MyCustomDialog.OnCustomDialogListener()

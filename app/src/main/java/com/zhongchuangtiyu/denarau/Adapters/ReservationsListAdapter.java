@@ -5,31 +5,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.zhongchuangtiyu.denarau.Entities.Promotions;
+import com.zhongchuangtiyu.denarau.Entities.Reservations;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+
 /**
- * 作者：WangMeng on 2015/11/3 14:15
+ * 作者：WangMeng on 2015/11/5 15:50
  * 邮箱：wangmeng.wiz@foxmail.com
  */
-public class PromotionsListAdapter extends BaseAdapter
+public class ReservationsListAdapter extends BaseAdapter
 {
-    private List<Promotions> list;
     private Context context;
-    private ImageLoader imageLoader = ImageLoader.getInstance();
-    public PromotionsListAdapter(List<Promotions> list, Context context)
+    private List<Reservations> list;
+
+    public ReservationsListAdapter(Context context, List<Reservations> list)
     {
-        this.list = list;
         this.context = context;
+        this.list = list;
     }
 
     @Override
@@ -53,12 +55,12 @@ public class PromotionsListAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        Promotions promotions = list.get(position);
+        Reservations reservations = list.get(position);
         View view;
         ViewHolder viewHolder;
         if (convertView == null)
         {
-            view = LayoutInflater.from(context).inflate(R.layout.promotions_list_item, null);
+            view = LayoutInflater.from(context).inflate(R.layout.reservations_list_item, null);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         }else
@@ -66,21 +68,31 @@ public class PromotionsListAdapter extends BaseAdapter
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
-        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-        imageLoader.displayImage(promotions.getImage(), viewHolder.promotionsListItemImage);
+        viewHolder.clubName.setText(reservations.getClub().getName());
+        viewHolder.state.setText(reservations.getState());
+        String beginDate = String.valueOf(reservations.getWill_playing_at()*1000);
+        Xlog.d(reservations.getWill_playing_at()*1000 + "reservations.getWill_playing_at()-----------------------------");
+        SimpleDateFormat sdf=new SimpleDateFormat("MM月dd号 HH:mm");
+
+        String sd = sdf.format(new Date(Long.parseLong(beginDate)));
+        viewHolder.willPlayingAt.setText(sd);
         return view;
     }
 
     /**
-     * This class contains all butterknife-injected Views & Layouts from layout file 'promotions_list_item.xml'
+     * This class contains all butterknife-injected Views & Layouts from layout file 'reservations_list_item.xml'
      * for easy to all layout elements.
      *
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder
     {
-        @Bind(R.id.promotionsListItemImage)
-        ImageView promotionsListItemImage;
+        @Bind(R.id.will_playing_at)
+        TextView willPlayingAt;
+        @Bind(R.id.clubName)
+        TextView clubName;
+        @Bind(R.id.state)
+        TextView state;
 
         ViewHolder(View view)
         {

@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -22,7 +24,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CoachTutorialDetailCoursesActivity extends BaseActivity
+public class CoachTutorialDetailCoursesActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.coachDetailCourseName)
@@ -33,6 +35,8 @@ public class CoachTutorialDetailCoursesActivity extends BaseActivity
     TextView tutorialType;
     @Bind(R.id.content_coach_tutorial_detail_webView)
     WebView contentCoachTutorialDetailWebView;
+    @Bind(R.id.coachTutorialDetailCourseTitleLeft)
+    ImageButton coachTutorialDetailCourseTitleLeft;
 
 
     @Override
@@ -43,7 +47,13 @@ public class CoachTutorialDetailCoursesActivity extends BaseActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setListeners();
         initData();
+    }
+
+    private void setListeners()
+    {
+        coachTutorialDetailCourseTitleLeft.setOnClickListener(this);
     }
 
     private void initData()
@@ -86,5 +96,19 @@ public class CoachTutorialDetailCoursesActivity extends BaseActivity
     {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.coachTutorialDetailCourseTitleLeft:
+                finish();
+                ActivityCollector.removeActivity(this);
+                break;
+            default:
+                break;
+        }
     }
 }

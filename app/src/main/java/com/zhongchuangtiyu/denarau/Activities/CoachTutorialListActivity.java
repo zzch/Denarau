@@ -31,7 +31,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CoachTutorialListActivity extends BaseActivity
+public class CoachTutorialListActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.coachTutorialTitleLeft)
@@ -50,6 +50,12 @@ public class CoachTutorialListActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.coachTutorialToolBar);
         setSupportActionBar(toolbar);
         sendCoachRequest();
+        setListeners();
+    }
+
+    private void setListeners()
+    {
+        coachTutorialTitleLeft.setOnClickListener(this);
     }
 
     private void sendCoachRequest()
@@ -102,5 +108,19 @@ public class CoachTutorialListActivity extends BaseActivity
     {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.coachTutorialTitleLeft:
+                finish();
+                ActivityCollector.removeActivity(this);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -2,11 +2,11 @@ package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +32,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CoachesDetailActivity extends BaseActivity
+public class CoachesDetailActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.coachDetailImage)
@@ -45,6 +45,8 @@ public class CoachesDetailActivity extends BaseActivity
     CustomListView coachDetailListView;
     @Bind(R.id.coachDetailIntro)
     WebView coachDetailIntro;
+    @Bind(R.id.coachTutorialDetailTitleLeft)
+    ImageButton coachTutorialDetailTitleLeft;
     private ImageLoader imageLoader;
 
     @Override
@@ -57,10 +59,16 @@ public class CoachesDetailActivity extends BaseActivity
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(CoachesDetailActivity.this));
         setSupportActionBar(toolbar);
-        sendCoachesDetailRequst();
+        sendCoachesDetailRequest();
+        setListeners();
     }
 
-    private void sendCoachesDetailRequst()
+    private void setListeners()
+    {
+        coachTutorialDetailTitleLeft.setOnClickListener(this);
+    }
+
+    private void sendCoachesDetailRequest()
     {
         Map<String, String> map = new HashMap<>();
         Intent intent = getIntent();
@@ -115,10 +123,25 @@ public class CoachesDetailActivity extends BaseActivity
             }
         });
     }
+
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.coachTutorialDetailTitleLeft:
+                finish();
+                ActivityCollector.removeActivity(this);
+                break;
+            default:
+                break;
+        }
     }
 }
