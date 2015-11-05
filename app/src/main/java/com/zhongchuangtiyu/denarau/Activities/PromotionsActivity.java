@@ -76,6 +76,7 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void run()
                     {
+                        page = 1;
                         sendProtionsRequest();
                     }
                 }, 1000);
@@ -97,7 +98,78 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
                 ptr.autoRefresh();
             }
         }, 100);
+        promotionsListView.setOnScrollListener(new AbsListView.OnScrollListener()
+        {
+            //AbsListView view 这个view对象就是listview
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState)
+            {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE)
+                {
+                    if (view.getLastVisiblePosition() == view.getCount() - 1)
+                    {
+                        page++;
+                        sendPartProtionsRequest();
+                    }
+                }
+            }
 
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+            {
+                CustomToast.showToast(PromotionsActivity.this, String.valueOf(view.getCount()));
+                lastItem = firstVisibleItem + visibleItemCount - 1;
+            }
+        });
+    }
+
+    private void sendPartProtionsRequest()
+    {
+        Map<String, String> map = new HashMap<>();
+        final String token = CacheUtils.getString(PromotionsActivity.this, "token", null);
+        String club_uuid = CacheUtils.getString(PromotionsActivity.this, "clubuuid", null);
+        Xlog.d(String.valueOf(page) + "page------------------------------");
+        MyApplication.volleyGET(APIUrls.PROMOTIONS + "token=" + "test" + "&" + "club_uuid=" + "test" + "&" + "page=" + page, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+                if (response.contains("10002"))
+                {
+                    CustomToast.showToast(PromotionsActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(PromotionsActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                } else
+                {
+                    final List<Promotions> data = Promotions.instance(response);
+                    PromotionsListAdapter adapter = (PromotionsListAdapter) promotionsListView.getAdapter();
+                    adapter.addData(data);
+//                    final PromotionsListAdapter adapter = new PromotionsListAdapter(data, PromotionsActivity.this);
+//                    promotionsListView.setAdapter(adapter);
+//                    ptr.refreshComplete();
+//                    promotionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                    {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//                        {
+//                            String uuid = data.get(position).getUuid();
+//                            Intent intent = new Intent(PromotionsActivity.this, PromotionsDetailActivity.class);
+//                            intent.putExtra("uuid", uuid);
+//                            startActivity(intent);
+//                        }
+//                    });
+
+                }
+            }
+
+            @Override
+            public void netFail(VolleyError error)
+            {
+                CustomToast.showToast(PromotionsActivity.this, "刷新失败，请检查网络连接");
+                ptr.refreshComplete();
+            }
+        });
     }
 
     private void sendProtionsRequest()
@@ -134,28 +206,7 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
                             startActivity(intent);
                         }
                     });
-                    promotionsListView.setOnScrollListener(new AbsListView.OnScrollListener()
-                    {
-                        //AbsListView view 这个view对象就是listview
-                        @Override
-                        public void onScrollStateChanged(AbsListView view, int scrollState)
-                        {
-                            if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE)
-                            {
-                                if (view.getLastVisiblePosition() == view.getCount() - 1)
-                                {
-                                    page++;
-                                    sendProtionsRequest();
-                                }
-                            }
-                        }
-                        @Override
-                        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-                        {
-                            CustomToast.showToast(PromotionsActivity.this, String.valueOf(view.getCount()));
-                            lastItem = firstVisibleItem + visibleItemCount - 1 ;
-                        }
-                    });
+
                 }
             }
 

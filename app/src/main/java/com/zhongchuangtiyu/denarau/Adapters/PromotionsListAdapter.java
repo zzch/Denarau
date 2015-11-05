@@ -50,6 +50,13 @@ public class PromotionsListAdapter extends BaseAdapter
         return 0;
     }
 
+    public void addData(List<Promotions> datas)
+    {
+        this.list.addAll(datas);
+        notifyDataSetChanged();
+    }
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
@@ -66,7 +73,10 @@ public class PromotionsListAdapter extends BaseAdapter
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
-        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
+        if (!imageLoader.isInited()) {
+            imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+        }
         imageLoader.displayImage(promotions.getImage(), viewHolder.promotionsListItemImage);
         return view;
     }
