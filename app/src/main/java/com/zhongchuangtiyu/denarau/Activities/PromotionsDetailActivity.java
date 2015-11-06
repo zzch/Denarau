@@ -44,6 +44,7 @@ public class PromotionsDetailActivity extends BaseActivity implements View.OnCli
         setSupportActionBar(toolbar);
         setListeners();
         sendPromotionsDetailRequest();
+        ActivityCollector.addActivity(this);
     }
 
     private void setListeners()
@@ -103,7 +104,6 @@ public class PromotionsDetailActivity extends BaseActivity implements View.OnCli
         {
             case R.id.promotionsDetailTitleLeft:
                 finish();
-                ActivityCollector.removeActivity(this);
                 break;
             default:
                 break;

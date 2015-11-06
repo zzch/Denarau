@@ -127,12 +127,13 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         ButterKnife.bind(this);
         membershipCardMainToolbar = (Toolbar) findViewById(R.id.membershipCardMainToolbar);
         imageLoader.init(ImageLoaderConfiguration.createDefault(MembershipCardMainActivity.this));
-        membershipCardViewPager.setPageMargin(20);
+        membershipCardViewPager.setPageMargin(30);
         setSupportActionBar(membershipCardMainToolbar);
         sendAnnoucementsRequest();
         timer = new Timer(true);
         timer.schedule(task, 1000, 4000);
         setListeners();
+        ActivityCollector.addActivity(this);
     }
 
     private void sendAnnoucementsRequest()
@@ -384,7 +385,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 startActivity(new Intent(MembershipCardMainActivity.this, PositionOrderActivity.class));
                 break;
             case R.id.btnGiveAdvice:
-                startActivity(new Intent(MembershipCardMainActivity.this, FeedBackActivity.class));
+                startActivity(new Intent(MembershipCardMainActivity.this, BeforePostAdvice.class));
                 break;
             case R.id.btnCoachTurorial:
                 startActivity(new Intent(MembershipCardMainActivity.this, CoachTutorialListActivity.class));
@@ -400,6 +401,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.membershipCardNoticeInfo:
                 startActivity(new Intent(MembershipCardMainActivity.this, AnnouncementsListActivity.class));
+                break;
+            default:
                 break;
         }
     }

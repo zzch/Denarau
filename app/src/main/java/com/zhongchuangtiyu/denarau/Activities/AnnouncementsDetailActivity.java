@@ -2,17 +2,18 @@ package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.android.volley.Cache;
 import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Entities.AnnouncementsDetail;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
@@ -23,9 +24,12 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AnnouncementsDetailActivity extends AppCompatActivity
+public class AnnouncementsDetailActivity extends BaseActivity implements View.OnClickListener
 {
 
+
+    @Bind(R.id.annoucementsDetailTitleLeft)
+    ImageButton annoucementsDetailTitleLeft;
     @Bind(R.id.announcementsDetailTitleTv)
     TextView announcementsDetailTitleTv;
     @Bind(R.id.announcementsDetailWebView)
@@ -40,6 +44,13 @@ public class AnnouncementsDetailActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         sendAnnouncementsDetailRequest();
+        setListeners();
+        ActivityCollector.addActivity(this);
+    }
+
+    private void setListeners()
+    {
+        annoucementsDetailTitleLeft.setOnClickListener(this);
     }
 
     private void sendAnnouncementsDetailRequest()
@@ -64,7 +75,7 @@ public class AnnouncementsDetailActivity extends AppCompatActivity
                 } else if (response.contains("数据未找到"))
                 {
                     CustomToast.showToast(AnnouncementsDetailActivity.this, "数据未找到");
-                }else
+                } else
                 {
                     announcementsDetailTitleTv.setText(data.getTitle());
                     announcementsDetailWebView.loadData(data.getContent(), "text/html", "UTF-8");
@@ -79,4 +90,23 @@ public class AnnouncementsDetailActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.annoucementsDetailTitleLeft:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
 }

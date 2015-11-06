@@ -34,4 +34,11 @@
     <string name="title_activity_announcements_list">AnnouncementsListActivity</string>
     <string name="title_activity_announcements_detail">AnnouncementsDetailActivity</string>
     <string name="title_activity_reservations">ReservationsActivity</string>
+
+    <integer-array name="google_colors">
+        <item>@color/red</item>
+        <item>@color/blue</item>
+        <item>@color/yellow</item>
+        <item>@color/green</item>
+    </integer-array>
 </resources>

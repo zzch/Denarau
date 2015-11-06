@@ -49,6 +49,7 @@ public class CardBagListActivity extends BaseActivity implements View.OnClickLis
         setSupportActionBar(toolbar);
         sendCardbagRequest();
         setListeners();
+        ActivityCollector.addActivity(this);
     }
 
     private void setListeners()
@@ -116,7 +117,6 @@ public class CardBagListActivity extends BaseActivity implements View.OnClickLis
         {
             case R.id.cardBagListTitleLeft:
                 finish();
-                ActivityCollector.removeActivity(this);
                 break;
             default:
                 break;

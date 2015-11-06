@@ -66,6 +66,7 @@ public class ProvisionsActivity extends BaseActivity
         setSupportActionBar(toolbar);
         sendProvisionsRequest();
         setListeners();
+        ActivityCollector.addActivity(this);
     }
 
     private void setListeners()

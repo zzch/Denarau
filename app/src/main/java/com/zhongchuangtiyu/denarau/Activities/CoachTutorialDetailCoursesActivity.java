@@ -49,6 +49,7 @@ public class CoachTutorialDetailCoursesActivity extends BaseActivity implements 
         setSupportActionBar(toolbar);
         setListeners();
         initData();
+        ActivityCollector.addActivity(this);
     }
 
     private void setListeners()
@@ -105,7 +106,6 @@ public class CoachTutorialDetailCoursesActivity extends BaseActivity implements 
         {
             case R.id.coachTutorialDetailCourseTitleLeft:
                 finish();
-                ActivityCollector.removeActivity(this);
                 break;
             default:
                 break;

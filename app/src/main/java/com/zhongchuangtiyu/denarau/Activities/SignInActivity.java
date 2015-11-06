@@ -512,6 +512,8 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         Map<String, String> validate = new HashMap<>();
         validate.put("phone", loginPhoneNum.getText().toString());
         validate.put("verification_code", loginVerificationCode.getText().toString());
+//        validate.put("latitude", "39.6888290000");
+//        validate.put("longitude","116.5195330000");
         MyApplication.volleyPOST(APIUrls.SIGN_IN_URL, validate, new MyApplication.VolleyCallBack()
         {
             @Override

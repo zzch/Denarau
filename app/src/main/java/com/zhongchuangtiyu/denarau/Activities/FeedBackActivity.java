@@ -49,6 +49,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
         Toolbar toolbar = (Toolbar) findViewById(R.id.giveAdviceToolbar);
         setSupportActionBar(toolbar);
         setListeners();
+        ActivityCollector.addActivity(this);
     }
 
     private void setListeners()
@@ -62,11 +63,14 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
     {
         String feedBackText = giveAdviceEditText.getText().toString();
         Map<String, String> map = new HashMap<>();
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("type");
         String token = CacheUtils.getString(FeedBackActivity.this, "token", "aa");
         String club_uuid = CacheUtils.getString(FeedBackActivity.this, "clubuuid", "aa");
         map.put("content",feedBackText);
         map.put("token", token);
         map.put("club_uuid", club_uuid);
+        map.put("type", type);
         MyApplication.volleyPOST(APIUrls.FEEDBACKS_URL, map, new MyApplication.VolleyCallBack()
         {
             @Override

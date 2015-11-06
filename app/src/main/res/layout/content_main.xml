@@ -91,8 +91,8 @@
         android:layout_alignParentTop="true"
         android:persistentDrawingCache="animation"
         android:layout_alignParentBottom="true"
-        android:layout_weight="12"
-        >
+        android:layout_weight="10"
+        android:layout_marginTop="5dp">
     </android.support.v4.view.ViewPager>
 
         <LinearLayout
@@ -137,8 +137,8 @@
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/shouye_yuyue_icon"
                 android:id="@+id/view"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginTop="10dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
                 android:id="@+id/textView3"
                 android:layout_alignParentBottom="true"
                 android:layout_alignEnd="@+id/view"
-                />
+                android:layout_marginBottom="10dp"/>
         </RelativeLayout>
 
         <ImageView
@@ -167,8 +167,8 @@
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/shouye_jiaolian_icon"
                 android:id="@+id/view2"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginTop="10dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
                 android:id="@+id/textView4"
                 android:layout_alignParentBottom="true"
                 android:layout_alignEnd="@+id/view2"
-                />
+                android:layout_marginBottom="10dp"/>
 
         </RelativeLayout>
 
@@ -198,8 +198,8 @@
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/shouye_shangcheng_icon"
                 android:id="@+id/view3"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginTop="10dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -208,7 +208,7 @@
                 android:id="@+id/textView5"
                 android:layout_alignParentBottom="true"
                 android:layout_alignEnd="@+id/view3"
-                />
+                android:layout_marginBottom="10dp"/>
         </RelativeLayout>
 
     </LinearLayout>
@@ -240,8 +240,8 @@
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/shouye_xiaofei_icon"
                 android:id="@+id/view4"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginTop="10dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -250,7 +250,7 @@
                 android:id="@+id/textView6"
                 android:layout_alignParentBottom="true"
                 android:layout_alignEnd="@+id/view4"
-                />
+                android:layout_marginBottom="10dp"/>
 
             <ImageView
                 android:background="#e2e2e2"
@@ -277,8 +277,8 @@
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/shouye_canyin_icon"
                 android:id="@+id/view5"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginTop="10dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -287,7 +287,7 @@
                 android:id="@+id/textView7"
                 android:layout_alignParentBottom="true"
                 android:layout_alignEnd="@+id/view5"
-                />
+                android:layout_marginBottom="10dp"/>
             <ImageView
                 android:background="#e2e2e2"
                 android:layout_width="match_parent"
@@ -313,8 +313,8 @@
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/shouye_yijian_icon"
                 android:id="@+id/view6"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginTop="10dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -323,7 +323,7 @@
                 android:id="@+id/textView8"
                 android:layout_alignParentBottom="true"
                 android:layout_alignEnd="@+id/view6"
-                />
+                android:layout_marginBottom="10dp"/>
             <ImageView
                 android:background="#e2e2e2"
                 android:layout_width="match_parent"

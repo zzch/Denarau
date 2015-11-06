@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#e6e6e6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -13,4 +14,234 @@
     tools:showIn="@layout/activity_before_post_advice"
     tools:context="com.zhongchuangtiyu.denarau.Activities.BeforePostAdvice">
 
+    <RelativeLayout
+        android:id="@+id/managerRL"
+        android:background="#e6e6e6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        >
+
+        <RelativeLayout
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:id="@+id/relativeLayout8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Manager"
+                android:id="@+id/textView9"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:background="#d1d1d1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/imageView33"
+            android:layout_below="@+id/relativeLayout8"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/imageView33"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/btnManager">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="总经理"
+                android:id="@+id/textView14"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:background="@mipmap/yjfk_iocn_zuo"
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView34"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_color="#e54a4b"
+            app:civ_border_width="1dp"
+            android:src="@mipmap/yjfk_zongjingli"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/imageView32"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/receptionRL"
+        android:background="#e6e6e6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/managerRL"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:id="@+id/relativeLayout9">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Reception"
+                android:id="@+id/textView10"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:background="#d1d1d1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/imageView36"
+            android:layout_below="@+id/relativeLayout9"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/imageView36"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/btnReception">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="前台"
+                android:id="@+id/textView15"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:background="@mipmap/yjfk_iocn_zuo"
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView40"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_color="#e54a4b"
+            app:civ_border_width="1dp"
+            android:src="@mipmap/yjfk_qiantai"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/imageView35"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/cateringRL"
+        android:background="#e6e6e6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/receptionRL"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:id="@+id/relativeLayout10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Catering"
+                android:id="@+id/textView11"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:background="#d1d1d1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/imageView39"
+            android:layout_below="@+id/relativeLayout10"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/imageView39"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/btnCatering">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="餐厅"
+                android:id="@+id/textView16"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:background="@mipmap/yjfk_iocn_zuo"
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView37"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_color="#e54a4b"
+            app:civ_border_width="1dp"
+            android:src="@mipmap/yjfk_iocn_canting"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/imageView38"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"/>
+    </RelativeLayout>
 </RelativeLayout>

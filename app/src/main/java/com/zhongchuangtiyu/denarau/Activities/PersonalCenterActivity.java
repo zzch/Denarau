@@ -61,6 +61,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setListeners();
+        ActivityCollector.addActivity(this);
     }
 
     @Override

@@ -92,6 +92,7 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
         btnToday.setSelected(true);
         requestData();
         setListeners();
+        ActivityCollector.addActivity(this);
     }
 
 
@@ -301,7 +302,6 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.positionOrderTitleLeft:
                 finish();
-                ActivityCollector.removeActivity(this);
                 break;
             case R.id.btnOrderRlDialog:
                 MyCustomDialog dialog = new MyCustomDialog(PositionOrderActivity.this, "请选择预约时间", new MyCustomDialog.OnCustomDialogListener()

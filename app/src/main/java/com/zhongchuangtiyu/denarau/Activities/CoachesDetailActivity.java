@@ -61,6 +61,7 @@ public class CoachesDetailActivity extends BaseActivity implements View.OnClickL
         setSupportActionBar(toolbar);
         sendCoachesDetailRequest();
         setListeners();
+        ActivityCollector.addActivity(this);
     }
 
     private void setListeners()
@@ -138,7 +139,6 @@ public class CoachesDetailActivity extends BaseActivity implements View.OnClickL
         {
             case R.id.coachTutorialDetailTitleLeft:
                 finish();
-                ActivityCollector.removeActivity(this);
                 break;
             default:
                 break;

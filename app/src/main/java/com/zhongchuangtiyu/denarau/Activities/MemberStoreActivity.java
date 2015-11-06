@@ -32,6 +32,7 @@ public class MemberStoreActivity extends BaseActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.memberStoreToolbar);
         setSupportActionBar(toolbar);
+        ActivityCollector.addActivity(this);
     }
     @Override
     protected void onDestroy()

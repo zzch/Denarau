@@ -19,6 +19,7 @@ import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,13 @@ public class AnnouncementsListActivity extends BaseActivity implements View.OnCl
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         sendAnnouncentsDetailRequest();
+        setListeners();
+        ActivityCollector.addActivity(this);
+    }
+
+    private void setListeners()
+    {
+        announcementsListTitleLeft.setOnClickListener(this);
     }
 
     private void sendAnnouncentsDetailRequest()
@@ -75,6 +83,7 @@ public class AnnouncementsListActivity extends BaseActivity implements View.OnCl
                             String uuid = data.get(position).getUuid();
                             Intent intent = new Intent(AnnouncementsListActivity.this, AnnouncementsDetailActivity.class);
                             intent.putExtra("uuid", uuid);
+                            Xlog.d(uuid + "uuid=====================================");
                             startActivity(intent);
                         }
                     });
@@ -99,6 +108,13 @@ public class AnnouncementsListActivity extends BaseActivity implements View.OnCl
     @Override
     public void onClick(View v)
     {
-
+        switch (v.getId())
+        {
+            case R.id.announcementsListTitleLeft:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 }

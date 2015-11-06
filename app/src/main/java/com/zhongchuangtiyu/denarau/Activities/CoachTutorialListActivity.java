@@ -51,6 +51,7 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
         setSupportActionBar(toolbar);
         sendCoachRequest();
         setListeners();
+        ActivityCollector.addActivity(this);
     }
 
     private void setListeners()
@@ -117,7 +118,6 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
         {
             case R.id.coachTutorialTitleLeft:
                 finish();
-                ActivityCollector.removeActivity(this);
                 break;
             default:
                 break;

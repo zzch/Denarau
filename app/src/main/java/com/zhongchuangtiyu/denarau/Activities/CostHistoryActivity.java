@@ -32,6 +32,7 @@ public class CostHistoryActivity extends BaseActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.costHistoryToolbar);
         setSupportActionBar(toolbar);
+        ActivityCollector.addActivity(this);
     }
     @Override
     protected void onDestroy()

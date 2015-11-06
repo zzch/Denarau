@@ -10,6 +10,7 @@
     tools:showIn="@layout/activity_give_advice">
 
     <EditText
+        android:background="@drawable/feedback_edittext_bg"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:id="@+id/giveAdviceEditText"
@@ -18,7 +19,8 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
         android:hint="请您说出您对球场的意见和建议，这条消息将直接发送到球场老板的手机上"
-        android:gravity="top"/>
+        android:gravity="top"
+        android:padding="10dp"/>
 
     <RelativeLayout
         android:id="@+id/giveAdviceLl"
@@ -27,17 +29,23 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="发送"
-            android:id="@+id/btnGiveAdviceSend"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/giveAdviceLl"
         />
+
+    <Button
+        android:background="@mipmap/yjfk_anniu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提交"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:id="@+id/btnGiveAdviceSend"
+        android:layout_below="@+id/giveAdviceEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+
 </RelativeLayout>

@@ -97,7 +97,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
         setSupportActionBar(toolbar);
         setData();
         setListeners();
-
+        ActivityCollector.addActivity(this);
     }
 
     private void setData()
@@ -222,7 +222,6 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.editPersonalInfoTitleLeft:
                 finish();
-                ActivityCollector.removeActivity(this);
                 break;
             default:
                 break;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
@@ -77,10 +78,13 @@ public class PromotionsListAdapter extends BaseAdapter
         if (!imageLoader.isInited()) {
             imageLoader.init(ImageLoaderConfiguration.createDefault(context));
         }
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        viewHolder.promotionsListItemImage.setMinimumWidth(wm.getDefaultDisplay().getWidth());
+        viewHolder.promotionsListItemImage.setMinimumHeight(wm.getDefaultDisplay().getWidth() / 3);
+        viewHolder.promotionsListItemImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageLoader.displayImage(promotions.getImage(), viewHolder.promotionsListItemImage);
         return view;
     }
-
     /**
      * This class contains all butterknife-injected Views & Layouts from layout file 'promotions_list_item.xml'
      * for easy to all layout elements.

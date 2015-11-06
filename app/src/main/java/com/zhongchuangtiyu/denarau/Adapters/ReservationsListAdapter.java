@@ -1,6 +1,7 @@
 package com.zhongchuangtiyu.denarau.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.zhongchuangtiyu.denarau.Utils.Xlog;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,7 +53,11 @@ public class ReservationsListAdapter extends BaseAdapter
     {
         return 0;
     }
-
+    public void addData(List<Reservations> datas)
+    {
+        this.list.addAll(datas);
+        notifyDataSetChanged();
+    }
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
@@ -69,11 +75,22 @@ public class ReservationsListAdapter extends BaseAdapter
             viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.clubName.setText(reservations.getClub().getName());
-        viewHolder.state.setText(reservations.getState());
+        if (reservations.getState().equals("submitted"))
+        {
+            viewHolder.state.setText("待确认");
+        }else if (reservations.getState().equals("confirmed"))
+        {
+            viewHolder.state.setText("已预约");
+            viewHolder.state.setTextColor(Color.parseColor("#e54a4b"));
+        }else if (reservations.getState().equals("finished"))
+        {
+            viewHolder.state.setText("已完成");
+        }
+//        viewHolder.state.setText(reservations.getState());
         String beginDate = String.valueOf(reservations.getWill_playing_at()*1000);
         Xlog.d(reservations.getWill_playing_at()*1000 + "reservations.getWill_playing_at()-----------------------------");
         SimpleDateFormat sdf=new SimpleDateFormat("MM月dd号 HH:mm");
-
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+1"));
         String sd = sdf.format(new Date(Long.parseLong(beginDate)));
         viewHolder.willPlayingAt.setText(sd);
         return view;
