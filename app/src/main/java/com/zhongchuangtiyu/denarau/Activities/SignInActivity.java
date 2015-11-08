@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -471,7 +472,13 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
                     setDividerBelowWelcomRlAnimIn();
                 } else if (welcome != null && !exceptionMsg.contains("20001"))
                 {
-
+                    if(getCurrentFocus()!=null)
+                    {
+                        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                                .hideSoftInputFromWindow(getCurrentFocus()
+                                                .getWindowToken(),
+                                        InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
                     String welcomeMsg = welcome.getSentences().get(0);
                     String welcomeCourseMsg = welcome.getSentences().get(1);
                     welcomeTextView.setText(welcomeMsg);

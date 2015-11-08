@@ -6,8 +6,9 @@
                 android:background="@drawable/layout_border1"
                 android:gravity="center">
 
-    <com.zhongchuangtiyu.denarau.Utils.XCRoundRectImageView
-        android:layout_width="150dp"
+    <ImageView
+        android:background="@drawable/layout_border2"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/foodImage"
         android:layout_alignParentTop="true"

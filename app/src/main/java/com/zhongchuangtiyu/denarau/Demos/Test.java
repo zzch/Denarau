@@ -44,6 +44,8 @@ public class Test extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testlayout);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView41);
+        imageView.setImageResource(R.mipmap.test);
         PtrClassicFrameLayout ptr = (PtrClassicFrameLayout) findViewById(R.id.ptr);
         ptr.setPtrHandler(new PtrHandler()
         {

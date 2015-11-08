@@ -65,11 +65,7 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.CoachesDetailActivity"
@@ -98,6 +94,11 @@
         </activity>
         <activity android:name=".Utils.ClipImageActivity" />
         <activity android:name=".Demos.Test" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.BeforePostAdvice"

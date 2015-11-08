@@ -60,6 +60,7 @@ public class MyCustomDialog extends Dialog
                 Xlog.d(selectedValue + "selectedValue------------------------------------------");
             }
         });
+        clock.setWrapSelectorWheel(false);
         Button clickBtn = (Button) findViewById(R.id.btnConfirm);
         clickBtn.setOnClickListener(clickListener);
     }
