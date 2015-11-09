@@ -86,7 +86,16 @@ public class PromotionsDetailActivity extends BaseActivity implements View.OnCli
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.showToast(PromotionsDetailActivity.this, "请检查网络连接");
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(PromotionsDetailActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(PromotionsDetailActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(PromotionsDetailActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

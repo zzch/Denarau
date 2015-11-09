@@ -123,7 +123,16 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
             @Override
             public void netFail(VolleyError error)
             {
-
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(PersonalCenterActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(PersonalCenterActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(PersonalCenterActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

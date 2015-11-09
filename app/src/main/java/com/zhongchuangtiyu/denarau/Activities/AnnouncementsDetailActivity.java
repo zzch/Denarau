@@ -85,7 +85,16 @@ public class AnnouncementsDetailActivity extends BaseActivity implements View.On
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.showToast(AnnouncementsDetailActivity.this, "请检查网络连接");
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(AnnouncementsDetailActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(AnnouncementsDetailActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(AnnouncementsDetailActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

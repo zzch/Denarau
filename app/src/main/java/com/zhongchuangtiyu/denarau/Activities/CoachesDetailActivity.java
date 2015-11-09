@@ -120,7 +120,16 @@ public class CoachesDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void netFail(VolleyError error)
             {
-
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(CoachesDetailActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(CoachesDetailActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(CoachesDetailActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

@@ -100,7 +100,16 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
             @Override
             public void netFail(VolleyError error)
             {
-                Toast.makeText(CoachTutorialListActivity.this, "无数据", Toast.LENGTH_SHORT).show();
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(CoachTutorialListActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(CoachTutorialListActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(CoachTutorialListActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

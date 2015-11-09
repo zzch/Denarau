@@ -492,7 +492,16 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.showToast(SignInActivity.this, "网络连接失败");
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(SignInActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(SignInActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(SignInActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

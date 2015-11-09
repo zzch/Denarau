@@ -93,7 +93,16 @@ public class AnnouncementsListActivity extends BaseActivity implements View.OnCl
             @Override
             public void netFail(VolleyError error)
             {
-
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(AnnouncementsListActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(AnnouncementsListActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(AnnouncementsListActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

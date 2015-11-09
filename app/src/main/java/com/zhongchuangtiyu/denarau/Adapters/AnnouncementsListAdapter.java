@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zhongchuangtiyu.denarau.Entities.Announcements;
 import com.zhongchuangtiyu.denarau.Entities.AnnouncementsDetail;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,6 +69,7 @@ public class AnnouncementsListAdapter extends BaseAdapter
             viewHolder = (ViewHolder) view.getTag();
         }
         String beginDate = String.valueOf(announcements.getPublished_at() * 1000);
+        Xlog.d(beginDate + "beginDate----------------------------------");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
         String sd = simpleDateFormat.format(new Date(Long.parseLong(beginDate)));
         viewHolder.announcementsItemDate.setText(sd);

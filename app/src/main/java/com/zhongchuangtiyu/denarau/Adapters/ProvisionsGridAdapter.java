@@ -8,8 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.zhongchuangtiyu.denarau.Entities.Provision;
 import com.zhongchuangtiyu.denarau.Entities.Provisions;
 import com.zhongchuangtiyu.denarau.R;
@@ -27,6 +29,7 @@ public class ProvisionsGridAdapter extends BaseAdapter
 {
     private List<Provision> list;
     private Context context;
+    private DisplayImageOptions options;
     private ImageLoader imageLoader = ImageLoader.getInstance();
     public ProvisionsGridAdapter(List<Provision> list, Context context)
     {
@@ -69,7 +72,10 @@ public class ProvisionsGridAdapter extends BaseAdapter
             viewHolder = (ViewHolder) view.getTag();
         }
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-        imageLoader.displayImage(provisions.getImage(), viewHolder.foodImage);
+        options = new DisplayImageOptions.Builder()
+                .displayer(new RoundedBitmapDisplayer(5))
+        .build();
+        imageLoader.displayImage(provisions.getImage(), viewHolder.foodImage, options);
         viewHolder.foodName.setText(provisions.getName());
         viewHolder.foodPrice.setText("￥" + provisions.getPrice());
         return view;

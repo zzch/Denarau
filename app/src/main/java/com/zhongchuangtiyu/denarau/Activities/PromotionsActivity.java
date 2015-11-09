@@ -168,8 +168,17 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.showToast(PromotionsActivity.this, "刷新失败，请检查网络连接");
-                ptr.refreshComplete();
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(PromotionsActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(PromotionsActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(PromotionsActivity.this, "网络连接失败，请检查网络连接");
+                    ptr.refreshComplete();
+                }
             }
         });
     }

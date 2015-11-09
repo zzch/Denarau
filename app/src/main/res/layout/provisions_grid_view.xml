@@ -5,12 +5,13 @@
               android:paddingLeft="10dp"
               android:paddingRight="10dp">
     <GridView
+        android:layout_marginTop="5dp"
         android:id="@+id/provisionsGridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:horizontalSpacing="10dp"
         android:verticalSpacing="10dp"
-        android:background="#e4e4e4"
+        android:background="#ffffff"
         android:numColumns="2">
     </GridView>
 </LinearLayout>

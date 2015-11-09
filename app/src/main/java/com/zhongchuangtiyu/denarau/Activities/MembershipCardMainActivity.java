@@ -129,7 +129,6 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         imageLoader.init(ImageLoaderConfiguration.createDefault(MembershipCardMainActivity.this));
         membershipCardViewPager.setPageMargin(30);
         setSupportActionBar(membershipCardMainToolbar);
-        sendAnnoucementsRequest();
         timer = new Timer(true);
         timer.schedule(task, 1000, 4000);
         setListeners();
@@ -147,20 +146,39 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             @Override
             public void netSuccess(String response)
             {
-                List<Announcements> data = Announcements.instance(response);
-                for (int i = 0; i < data.size(); i++)
+                if (response.contains("10002"))
                 {
-                    String text = data.get(i).getTitle();
-                    list.add(text);
+                    CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                } else
+                {
+                    List<Announcements> data = Announcements.instance(response);
+                    for (int i = 0; i < data.size(); i++)
+                    {
+                        String text = data.get(i).getTitle();
+                        list.add(text);
+                    }
+                    membershipCardNoticeInfo.setText(data.get(0).getTitle());
+                    Xlog.d(list.toString() + "list------------------------------------");
                 }
-                membershipCardNoticeInfo.setText(data.get(0).getTitle());
-                Xlog.d(list.toString() + "list------------------------------------");
             }
 
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.showToast(MembershipCardMainActivity.this, "网络连接失败，请检查网络连接");
+                Xlog.d(error.toString());
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(MembershipCardMainActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }
@@ -202,7 +220,11 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             @Override
             public void onAnimationStart(Animation animation)
             {
-                membershipCardNoticeInfo.setText(list.get(j));
+                if (list.size() != 0 && list.get(j) != null)
+                {
+                    membershipCardNoticeInfo.setText(list.get(j));
+                }
+
             }
 
             @Override
@@ -288,6 +310,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             @Override
             public void netSuccess(String response)
             {
+                Xlog.d(response + "response-----------------------------------");
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
@@ -342,6 +365,13 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             @Override
             public void netFail(VolleyError error)
             {
+                if (error.toString().equals("com.android.volley.AuthFailureErrorerror"))
+                {
+                    CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }
                 CustomToast.showToast(MembershipCardMainActivity.this, "网络连接失败，请检查网络连接");
             }
         });
@@ -359,6 +389,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     {
         super.onResume();
         requestCardInfo();
+        sendAnnoucementsRequest();
     }
 
     private void setListeners()

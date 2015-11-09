@@ -161,7 +161,16 @@ public class ReservationsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.showToast(ReservationsActivity.this, "刷新失败，请检查网络连接");
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(ReservationsActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(ReservationsActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(ReservationsActivity.this, "网络连接失败，请检查网络连接");
+                }
                 reservationsFrame.refreshComplete();
             }
         });

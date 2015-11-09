@@ -213,7 +213,16 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
             @Override
             public void netFail(VolleyError error)
             {
-
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(PositionOrderActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(PositionOrderActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(PositionOrderActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

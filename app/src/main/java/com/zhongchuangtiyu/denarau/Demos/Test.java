@@ -1,6 +1,7 @@
 package com.zhongchuangtiyu.denarau.Demos;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,6 +48,9 @@ public class Test extends Activity
         ImageView imageView = (ImageView) findViewById(R.id.imageView41);
         imageView.setImageResource(R.mipmap.test);
         PtrClassicFrameLayout ptr = (PtrClassicFrameLayout) findViewById(R.id.ptr);
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("头像上传中");
+        progressDialog.show();
         ptr.setPtrHandler(new PtrHandler()
         {
             @Override

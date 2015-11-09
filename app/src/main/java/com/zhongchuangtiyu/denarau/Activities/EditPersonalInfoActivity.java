@@ -1,6 +1,7 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
@@ -87,6 +88,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
     private static final String IMAGE_FILE_NAME = "header.jpg";
     private String path;
     private com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -95,6 +97,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        progressDialog = new ProgressDialog(this);
         setData();
         setListeners();
         ActivityCollector.addActivity(this);
@@ -150,7 +153,16 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
             @Override
             public void netFail(VolleyError error)
             {
-
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(EditPersonalInfoActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(EditPersonalInfoActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(EditPersonalInfoActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

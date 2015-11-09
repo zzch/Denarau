@@ -22,7 +22,7 @@ public class Announcements implements Serializable
     private String uuid;
     private String title;
     private String summary;
-    private int published_at;
+    private long published_at;
 
     public void setUuid(String uuid)
     {
@@ -39,7 +39,7 @@ public class Announcements implements Serializable
         this.summary = summary;
     }
 
-    public void setPublished_at(int published_at)
+    public void setPublished_at(long published_at)
     {
         this.published_at = published_at;
     }
@@ -59,7 +59,7 @@ public class Announcements implements Serializable
         return summary;
     }
 
-    public int getPublished_at()
+    public long getPublished_at()
     {
         return published_at;
     }

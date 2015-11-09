@@ -99,7 +99,16 @@ public class CardBagListActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void netFail(VolleyError error)
             {
-                Toast.makeText(CardBagListActivity.this, "无数据", Toast.LENGTH_SHORT).show();
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(CardBagListActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(CardBagListActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(CardBagListActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }

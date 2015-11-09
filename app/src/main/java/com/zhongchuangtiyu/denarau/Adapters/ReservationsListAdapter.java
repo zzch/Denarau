@@ -88,10 +88,11 @@ public class ReservationsListAdapter extends BaseAdapter
         }
 //        viewHolder.state.setText(reservations.getState());
         String beginDate = String.valueOf(reservations.getWill_playing_at()*1000);
-        Xlog.d(reservations.getWill_playing_at()*1000 + "reservations.getWill_playing_at()-----------------------------");
+        Xlog.d(reservations.getWill_playing_at() * 1000 + "reservations.getWill_playing_at()-----------------------------");
         SimpleDateFormat sdf=new SimpleDateFormat("MM月dd号 HH:mm");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+1"));
         String sd = sdf.format(new Date(Long.parseLong(beginDate)));
+        Xlog.d(sd+"sd---------------------------");
         viewHolder.willPlayingAt.setText(sd);
         return view;
     }

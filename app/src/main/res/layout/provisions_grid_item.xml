@@ -2,17 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:background="@drawable/layout_border1"
                 android:gravity="center">
 
-    <com.zhongchuangtiyu.denarau.Utils.XCRoundRectImageView
+    <ImageView
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="160dp"
         android:id="@+id/foodImage"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        />
+        android:layout_alignParentStart="true"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -28,7 +27,9 @@
             android:text="叫花鸡叫花鸡叫花鸡"
             android:id="@+id/foodName"
             android:textColor="#222222"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="5dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,6 +40,7 @@
             android:id="@+id/foodPrice"
             android:singleLine="true"
             android:layout_below="@+id/foodName"
-            android:layout_alignEnd="@+id/foodName"/>
+            android:layout_alignEnd="@+id/foodName"
+            android:layout_marginTop="5dp"/>
     </RelativeLayout>
 </RelativeLayout>

@@ -105,7 +105,16 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void netFail(VolleyError error)
             {
-                Toast.makeText(FeedBackActivity.this, "数据发送失败，请检查网络连接或稍后再试", Toast.LENGTH_SHORT).show();
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(FeedBackActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(FeedBackActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(FeedBackActivity.this, "网络连接失败，请检查网络连接");
+                }
             }
         });
     }
