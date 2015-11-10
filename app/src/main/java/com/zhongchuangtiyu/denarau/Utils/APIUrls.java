@@ -24,5 +24,6 @@ public class APIUrls
     public static String PROMOTIONS = "http://123.57.210.52:80/api/v1/promotions.json?";
     public static String PROMOTIONS_DETAIL = "http://123.57.210.52:80/api/v1/promotions/detail.json?";
     public static String RESERVATIONS = "http://123.57.210.52:80/api/v1/reservations.json?";
+    public static String TABS = "http://123.57.210.52:80/api/v1/tabs.json?";
 
 }

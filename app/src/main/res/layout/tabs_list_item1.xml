@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="单号"
+        android:id="@+id/textView26"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="前台支付"
+        android:id="@+id/textView27"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/sequence"
+        android:layout_below="@+id/textView26"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/reception_payment"
+        android:layout_below="@+id/textView27"
+        android:layout_alignParentEnd="true"/>
+
+    <ImageView
+        android:background="#ff0000"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/imageView42"
+        android:layout_below="@+id/sequence"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="消费时间"
+        android:id="@+id/textView28"
+        android:layout_above="@+id/entrance_time"
+        android:layout_toEndOf="@+id/imageView42"/>
+
+    <ImageView
+        android:background="#ff0000"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/imageView43"
+        android:layout_below="@+id/textView28"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/entranceDate"
+        android:layout_below="@+id/imageView43"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/entrance_time"
+        android:layout_below="@+id/imageView42"
+        android:layout_toEndOf="@+id/entranceDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/departure_time"
+        android:layout_below="@+id/imageView42"
+        android:layout_toEndOf="@+id/entrance_time"/>
+
+    <ImageView
+        android:background="#ff0000"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/imageView44"
+        android:layout_below="@+id/entranceDate"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:background="#ff0000"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/imageView45"
+        android:layout_below="@+id/imageView44"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="消费球场"
+        android:id="@+id/textView29"
+        android:layout_alignBottom="@+id/imageView45"
+        android:layout_toEndOf="@+id/imageView44"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/consumeCourse"
+        android:layout_below="@+id/imageView45"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:background="#ff0000"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/imageView46"
+        android:layout_below="@+id/consumeCourse"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:background="#ff0000"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/imageView47"
+        android:layout_below="@+id/imageView46"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="消费明细"
+        android:id="@+id/textView30"
+        android:layout_alignBottom="@+id/imageView47"
+        android:layout_toEndOf="@+id/imageView46"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="消费内容"
+        android:id="@+id/textView31"
+        android:layout_below="@+id/imageView47"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="小计"
+        android:id="@+id/textView32"
+        android:layout_below="@+id/imageView46"
+        android:layout_toEndOf="@+id/textView31"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="付款方式"
+        android:id="@+id/textView33"
+        android:layout_below="@+id/imageView46"
+        android:layout_toEndOf="@+id/textView32"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tabListView2"
+        android:layout_below="@+id/textView31"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

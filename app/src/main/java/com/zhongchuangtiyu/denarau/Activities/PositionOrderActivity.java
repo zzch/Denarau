@@ -80,7 +80,8 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
     private AlertDialog.Builder builder;
     private String formatedDate;
     private int combinedTimeStamp;
-
+    private List<Weathers> data;
+    private int date;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -127,10 +128,10 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
                     ActivityCollector.finishAll();
                 } else
                 {
-                    List<Weathers> data = Weathers.instance(response);
+                    data = Weathers.instance(response);
                     if (data.size() == 3)
                     {
-                        int date = data.get(i).getDate();
+                        date = data.get(i).getDate();
                         int btnTodayDate = data.get(0).getDate();
                         int btnTomorrowDate = data.get(1).getDate();
                         int btnTheDayAfterTomorrowDate = data.get(2).getDate();
@@ -152,13 +153,13 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
                         String btnDay3 = formatMMdd.format(new Date(Long.parseLong(day3Date) * 1000));
                         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));
                         formatedDate = simpleDateFormat.format(new Date(Long.parseLong(formatDate) * 1000));
-                        String editedSelectedValue = selectedValue.replace(":", "");
-                        String startTwo = editedSelectedValue.substring(0, 2);
-                        String endTwo = editedSelectedValue.substring(2, 4);
-                        int hour = Integer.valueOf(startTwo);
-                        int minute = Integer.valueOf(endTwo);
-                        combinedTimeStamp = date + hour * 3600 + minute * 60;
-
+//                        String editedSelectedValue = selectedValue.replace(":", "");
+//                        String startTwo = editedSelectedValue.substring(0, 2);
+//                        String endTwo = editedSelectedValue.substring(2, 4);
+//                        int hour = Integer.valueOf(startTwo);
+//                        int minute = Integer.valueOf(endTwo);
+//                        combinedTimeStamp = date + hour * 3600 + minute * 60;
+//                        Xlog.d(String.valueOf(hour) + "hour=========================");
                         positionOrderDate.setText(formatedDate);
                         positionOrderTemperature.setText(String.valueOf(maximum_temperature) + "°");
                         positionOrderWeatherTv.setText(content);
@@ -234,6 +235,13 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
         String club_uuid = CacheUtils.getString(PositionOrderActivity.this, "clubuuid", "aa");
         map.put("token", token);
         map.put("club_uuid", club_uuid);
+        String editedSelectedValue = selectedValue.replace(":", "");
+        String startTwo = editedSelectedValue.substring(0, 2);
+        String endTwo = editedSelectedValue.substring(2, 4);
+        int hour = Integer.valueOf(startTwo);
+        int minute = Integer.valueOf(endTwo);
+        Xlog.d("date" + String.valueOf(date) + "hour:" + String.valueOf(hour) + "minute" + String.valueOf(minute));
+        combinedTimeStamp = date + hour * 3600 + minute * 60;
         map.put("reserve_at", String.valueOf(combinedTimeStamp));
         MyApplication.volleyPOST(APIUrls.RESERVATION_URL, map, new MyApplication.VolleyCallBack()
         {

@@ -20,6 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.zhongchuangtiyu.denarau.Entities.Sign_In;
 import com.zhongchuangtiyu.denarau.Entities.Welcome;
 import com.zhongchuangtiyu.denarau.R;
@@ -32,6 +36,7 @@ import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.ValidatePhoneNum;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,6 +77,9 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
     private int editEnd;//光标结束位置
     private final int charMaxNum = 10;
     private TimeCount time = new TimeCount(60000,1000);
+    private LocationClient mLocationClient;
+    private LocationClientOption mOption;
+    public double latitude, longitude;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -87,7 +95,7 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         validateRlContainer.setVisibility(View.GONE);
         btnLogin.setVisibility(View.GONE);
         setListeners();
-
+        initLocation();
     }
 
     private void setListeners()
@@ -95,6 +103,34 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         loginPhoneNum.addTextChangedListener(this);
         btnLogin.setOnClickListener(this);
         resendValidateCode.setOnClickListener(this);
+    }
+    private void initLocation()
+    {
+        mLocationClient = new LocationClient(this);
+        mOption = new LocationClientOption();
+    /* 设置选项 */
+        mOption.setOpenGps(true);
+        mOption.setCoorType("bd09ll");
+        mOption.setScanSpan(100);		   //每隔0.1s, 扫描一次 (应该就是卫星定位的意思)
+    /* 本地取址Client 端设置 Option选项 */
+        mLocationClient.setLocOption(mOption);
+    /* 设置监听器，监听服务器发送过来的地址信息 */
+        mLocationClient.registerLocationListener(new BDLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                if(bdLocation == null)
+                    return;
+                StringBuffer sb = new StringBuffer(256);
+        /* 获取经纬度 */
+                latitude = bdLocation.getLatitude();
+                longitude = bdLocation.getLongitude();
+                mLocationClient.stop();
+            }
+        });
+
+                if(mLocationClient == null)
+                    return;
+                mLocationClient.start();
     }
 
     private void setDividerBelowWelcomRlAnimIn()
@@ -528,8 +564,14 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         Map<String, String> validate = new HashMap<>();
         validate.put("phone", loginPhoneNum.getText().toString());
         validate.put("verification_code", loginVerificationCode.getText().toString());
-//        validate.put("latitude", "39.6888290000");
-//        validate.put("longitude","116.5195330000");
+        DecimalFormat df = new DecimalFormat("####0.00");
+        Xlog.d(String.valueOf(latitude) + "latitude-------------------------------------");
+        Xlog.d(String.valueOf(longitude) + "longitude------------------------------------");
+        if (!String.valueOf(latitude).equals("4.9E-324") && !String.valueOf(latitude).equals("4.9E-324"))
+        {
+            validate.put("latitude", df.format(latitude));
+            validate.put("longitude",df.format(longitude));
+        }
         MyApplication.volleyPOST(APIUrls.SIGN_IN_URL, validate, new MyApplication.VolleyCallBack()
         {
             @Override

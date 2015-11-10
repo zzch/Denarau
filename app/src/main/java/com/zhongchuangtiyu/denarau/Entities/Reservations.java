@@ -20,12 +20,15 @@ public class Reservations implements Serializable
     private ClubEntity club;
     /**
      * club : {"name":"中创高尔夫"}
-     * will_playing_at : 11111
+     * will_playing_at : 1447342200
      * state : submitted
      */
 
     private long will_playing_at;
     private String state;
+
+
+
     public void setClub(ClubEntity club)
     {
         this.club = club;

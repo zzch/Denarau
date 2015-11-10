@@ -402,6 +402,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         membershipCardMainTitleLeft.setOnClickListener(this);
         btnMemberStore.setOnClickListener(this);
         membershipCardNoticeInfo.setOnClickListener(this);
+        btnCostHistory.setOnClickListener(this);
     }
 
     @Override
@@ -432,6 +433,9 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.membershipCardNoticeInfo:
                 startActivity(new Intent(MembershipCardMainActivity.this, AnnouncementsListActivity.class));
+                break;
+            case R.id.btnCostHistory:
+                startActivity(new Intent(MembershipCardMainActivity.this, TabsListActivity.class));
                 break;
             default:
                 break;
