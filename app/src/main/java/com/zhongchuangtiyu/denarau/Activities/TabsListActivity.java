@@ -35,6 +35,13 @@ public class TabsListActivity extends AppCompatActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
         sendRequest();
     }
 
@@ -60,5 +67,6 @@ public class TabsListActivity extends AppCompatActivity
             }
         });
     }
+
 
 }

@@ -54,7 +54,8 @@ public class TabsListAdapter1 extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        Tabs tabs = list.get(position);
+        final Tabs tabs = list.get(position);
+
         View view;
         ViewHolder viewholder;
         if (convertView == null)
@@ -67,10 +68,11 @@ public class TabsListAdapter1 extends BaseAdapter
             view = convertView;
             viewholder = (ViewHolder) view.getTag();
         }
-        TabListAdapter2 adapter2 = new TabListAdapter2(tabs.getItems(), context);
-        viewholder.tabListView2.setAdapter(adapter2);
-        SetListViewHeight.setListViewHeightBasedOnChildren(viewholder.tabListView2);
-        viewholder.sequence.setText(tabs.getSequence());
+
+                TabListAdapter2 adapter2 = new TabListAdapter2(tabs.getItems(), context);
+                viewholder.tabListView2.setAdapter(adapter2);
+                SetListViewHeight.setListViewHeightBasedOnChildren(viewholder.tabListView2);
+
         return view;
 
     }
