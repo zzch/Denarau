@@ -177,13 +177,13 @@
         android:layout_below="@+id/imageView46"
         android:layout_toEndOf="@+id/textView32"/>
 
-    <ListView
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView31"
         android:layout_centerHorizontal="true"
         android:id="@+id/tabListView2">
-    </ListView>
+    </LinearLayout>
 
 </RelativeLayout>

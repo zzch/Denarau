@@ -68,10 +68,24 @@ public class TabsListAdapter1 extends BaseAdapter
             view = convertView;
             viewholder = (ViewHolder) view.getTag();
         }
-
-                TabListAdapter2 adapter2 = new TabListAdapter2(tabs.getItems(), context);
-                viewholder.tabListView2.setAdapter(adapter2);
-                SetListViewHeight.setListViewHeightBasedOnChildren(viewholder.tabListView2);
+        viewholder.tabListView2.removeAllViews();
+        for (int i = 0; i < tabs.getItems().size(); i++)
+        {
+            LinearLayout linearLayout = new LinearLayout(context);
+            TextView name = new TextView(context);
+            TextView price = new TextView(context);
+            TextView method = new TextView(context);
+            name.setText(tabs.getItems().get(i).getName());
+            price.setText(tabs.getItems().get(i).getTotal_price());
+            method.setText(tabs.getItems().get(i).getPayment_method());
+            linearLayout.addView(name);
+            linearLayout.addView(price);
+            linearLayout.addView(method);
+            viewholder.tabListView2.addView(linearLayout);
+        }
+//                TabListAdapter2 adapter2 = new TabListAdapter2(tabs.getItems(), context);
+//                viewholder.tabListView2.setAdapter(adapter2);
+//                SetListViewHeight.setListViewHeightBasedOnChildren(viewholder.tabListView2);
 
         return view;
 
@@ -98,7 +112,7 @@ public class TabsListAdapter1 extends BaseAdapter
         @Bind(R.id.consumeCourse)
         TextView consumeCourse;
         @Bind(R.id.tabListView2)
-        ListView tabListView2;
+        LinearLayout tabListView2;
 
         ViewHolder(View view)
         {

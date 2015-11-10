@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Entities.Announcements;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
@@ -72,5 +73,7 @@ public class Test extends Activity
                 }, 2000);
             }
         });
+//        String time = DateUtils.getDateToString2(1446800400000l);
+//        Xlog.d(time + "time---------------------------");
     }
 }
