@@ -1,17 +1,18 @@
 package com.zhongchuangtiyu.denarau.Adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zhongchuangtiyu.denarau.Entities.Tabs;
 import com.zhongchuangtiyu.denarau.R;
-import com.zhongchuangtiyu.denarau.Utils.SetListViewHeight;
+import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 
 import java.util.List;
 
@@ -63,30 +64,48 @@ public class TabsListAdapter1 extends BaseAdapter
             view = LayoutInflater.from(context).inflate(R.layout.tabs_list_item1, null);
             viewholder = new ViewHolder(view);
             view.setTag(viewholder);
-        }else
+        } else
         {
             view = convertView;
             viewholder = (ViewHolder) view.getTag();
         }
         viewholder.tabListView2.removeAllViews();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < tabs.getItems().size(); i++)
         {
+            params.setMargins(0, 15, 0, 15);
             LinearLayout linearLayout = new LinearLayout(context);
+            linearLayout.setLayoutParams(params);
             TextView name = new TextView(context);
             TextView price = new TextView(context);
             TextView method = new TextView(context);
             name.setText(tabs.getItems().get(i).getName());
+            name.setGravity(Gravity.CENTER_HORIZONTAL);
+            name.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             price.setText(tabs.getItems().get(i).getTotal_price());
+            price.setGravity(Gravity.CENTER_HORIZONTAL);
+            price.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             method.setText(tabs.getItems().get(i).getPayment_method());
+            method.setGravity(Gravity.CENTER_HORIZONTAL);
+            method.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             linearLayout.addView(name);
             linearLayout.addView(price);
             linearLayout.addView(method);
             viewholder.tabListView2.addView(linearLayout);
+            Resources res = context.getResources();
+            viewholder.tabListView2.setDividerDrawable(res.getDrawable(R.drawable.tabs_divider));
+            viewholder.tabListView2.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE | LinearLayout.SHOW_DIVIDER_BEGINNING | LinearLayout.SHOW_DIVIDER_END);
         }
 //                TabListAdapter2 adapter2 = new TabListAdapter2(tabs.getItems(), context);
 //                viewholder.tabListView2.setAdapter(adapter2);
 //                SetListViewHeight.setListViewHeightBasedOnChildren(viewholder.tabListView2);
-
+        viewholder.sequence.setText(tabs.getSequence());
+        viewholder.receptionPayment.setText(tabs.getReception_payment());
+        String date = DateUtils.getDateToString1(tabs.getDeparture_time());
+        viewholder.entranceDate.setText(date);
+        String entranceTime = DateUtils.getDateToString2(tabs.getEntrance_time());
+        String departureTime = DateUtils.getDateToString2(tabs.getDeparture_time());
+        viewholder.tabsTime.setText(entranceTime + "-" + departureTime);
         return view;
 
     }
@@ -105,12 +124,8 @@ public class TabsListAdapter1 extends BaseAdapter
         TextView receptionPayment;
         @Bind(R.id.entranceDate)
         TextView entranceDate;
-        @Bind(R.id.entrance_time)
-        TextView entranceTime;
-        @Bind(R.id.departure_time)
-        TextView departureTime;
-        @Bind(R.id.consumeCourse)
-        TextView consumeCourse;
+        @Bind(R.id.tabs_time)
+        TextView tabsTime;
         @Bind(R.id.tabListView2)
         LinearLayout tabListView2;
 

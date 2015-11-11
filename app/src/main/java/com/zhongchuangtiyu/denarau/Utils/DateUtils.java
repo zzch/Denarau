@@ -43,4 +43,20 @@ public class DateUtils
         }
         return date.getTime();
     }
+    /*时间戳转换成字符串MM dd*/
+    public static String getDateToString1(long time)
+    {
+        Date d = new Date(time);
+        sf = new SimpleDateFormat("MM月dd日");
+        return sf.format(d);
+    }
+    /*时间戳转换成字符串 HH-mm*/
+    public static String getDateToString2(long time)
+    {
+        Date d = new Date(time);
+        sf = new SimpleDateFormat("HH:m");
+        return sf.format(d);
+    }
+
+
 }

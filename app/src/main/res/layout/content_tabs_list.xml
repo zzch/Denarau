@@ -7,10 +7,15 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_tabs_list"
-    tools:context="com.zhongchuangtiyu.denarau.Activities.TabsListActivity">
+    android:background="#e9e9e9"
+    tools:context="com.zhongchuangtiyu.denarau.Activities.TabsListActivity"
+    android:paddingRight="15dp"
+    android:paddingLeft="15dp">
 
 
     <ListView
+        android:divider="#00000000"
+        android:dividerHeight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tabListView1"
