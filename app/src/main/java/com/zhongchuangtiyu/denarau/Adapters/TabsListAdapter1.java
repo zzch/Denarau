@@ -85,7 +85,41 @@ public class TabsListAdapter1 extends BaseAdapter
             price.setText(tabs.getItems().get(i).getTotal_price());
             price.setGravity(Gravity.CENTER_HORIZONTAL);
             price.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            method.setText(tabs.getItems().get(i).getPayment_method());
+            switch (tabs.getItems().get(i).getPayment_method())
+            {
+                case "by_ball_member":
+                    method.setText("计球卡");
+                    break;
+                case "by_time_member":
+                    method.setText("计时卡");
+                    break;
+                case "unlimited_member":
+                    method.setText("畅打卡");
+                    break;
+                case "stored_member":
+                    method.setText("储值卡");
+                    break;
+                case "credit_card":
+                    method.setText("信用卡");
+                    break;
+                case "cash":
+                    method.setText("现金");
+                    break;
+                case "check":
+                    method.setText("支票");
+                    break;
+                case "on_account":
+                    method.setText("挂账");
+                    break;
+                case "signing":
+                    method.setText("签单");
+                    break;
+                case "coupon":
+                    method.setText("抵用卷");
+                    break;
+                default:
+                    break;
+            }
             method.setGravity(Gravity.CENTER_HORIZONTAL);
             method.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             linearLayout.addView(name);

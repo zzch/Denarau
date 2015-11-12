@@ -3,6 +3,7 @@ package com.zhongchuangtiyu.denarau.Utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by wangm on 2015/11/1.
@@ -46,15 +47,17 @@ public class DateUtils
     /*时间戳转换成字符串MM dd*/
     public static String getDateToString1(long time)
     {
-        Date d = new Date(time);
+        Date d = new Date(time * 1000);
         sf = new SimpleDateFormat("MM月dd日");
+        sf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sf.format(d);
     }
     /*时间戳转换成字符串 HH-mm*/
     public static String getDateToString2(long time)
     {
-        Date d = new Date(time);
-        sf = new SimpleDateFormat("HH:m");
+        Date d = new Date(time * 1000);
+        sf = new SimpleDateFormat("HH:mm");
+        sf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sf.format(d);
     }
 
