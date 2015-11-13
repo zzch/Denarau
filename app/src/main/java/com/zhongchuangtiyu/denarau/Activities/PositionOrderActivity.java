@@ -1,5 +1,6 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -82,6 +83,7 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
     private int combinedTimeStamp;
     private List<Weathers> data;
     private int date;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -90,6 +92,9 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.positionOrderToolBar);
         setSupportActionBar(toolbar);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("预定中...");
+        progressDialog.setCancelable(false);
         btnToday.setSelected(true);
         requestData();
         setListeners();
@@ -248,7 +253,28 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
             @Override
             public void netSuccess(String response)
             {
-
+                if (response.contains("20004"))
+                {
+                    progressDialog.dismiss();
+                    builder = new AlertDialog.Builder(PositionOrderActivity.this);
+                    builder.setTitle("重复预约");
+                    builder.setMessage("您已经预约过当天的打位");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+                    { //设置确定按钮
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            dialog.dismiss(); //关闭dialog
+                            Toast.makeText(PositionOrderActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setCancelable(false);
+                    builder.create();
+                    builder.show();
+                    Xlog.d(response + "response------------------------------------------");
+                }else
+                {
+                    progressDialog.dismiss();
                     builder = new AlertDialog.Builder(PositionOrderActivity.this);
                     builder.setTitle("预定成功");
                     builder.setMessage("你已经成功预定" + formatedDate + " " + selectedValue + "的打位，可以在“个人中心”>“打位预约”中查看");
@@ -265,12 +291,14 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
                     builder.create();
                     builder.show();
                     Xlog.d(response + "response------------------------------------------");
+                }
 
             }
 
             @Override
             public void netFail(VolleyError error)
             {
+                progressDialog.dismiss();
                 Toast.makeText(PositionOrderActivity.this, "预定失败，请检查网络连接或稍后再试", Toast.LENGTH_SHORT).show();
             }
         });
@@ -315,6 +343,7 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
                 else
                 {
                     sendOrderRequest();
+//                    progressDialog.show();
                 }
                 break;
             case R.id.positionOrderTitleLeft:

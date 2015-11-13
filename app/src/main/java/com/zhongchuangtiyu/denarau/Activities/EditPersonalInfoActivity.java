@@ -98,6 +98,8 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("头像上传中...");
+        progressDialog.setCancelable(false);
         setData();
         setListeners();
         ActivityCollector.addActivity(this);
@@ -120,12 +122,21 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
                 {
                     Bitmap photo1 = BitmapFactory.decodeFile(cachedPortrait);
                     personalInfoImageToEdit.setImageBitmap(photo1);
-                } else if (data.getPortrait() != null && cachedPortrait == null) ;
+                } else if (data.getPortrait() != null && cachedPortrait == null)
                 {
                     imageLoader.init(ImageLoaderConfiguration.createDefault(EditPersonalInfoActivity.this));
                     String portraitUrl = data.getPortrait();
                     imageLoader.displayImage(portraitUrl, personalInfoImageToEdit);
+                }else  if (data.getPortrait() == null && cachedPortrait == null)
+            {
+                if (data.getGender().equals("male"))
+                {
+                    personalInfoImageToEdit.setImageResource(R.mipmap.nan);
+                }else if (data.getGender().equals("female"))
+                {
+                    personalInfoImageToEdit.setImageResource(R.mipmap.nv);
                 }
+            }
                 if (data.getName() != null && !data.getName().equals(""))
                 {
                     String setName = data.getName();
@@ -256,6 +267,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
             @Override
             public void onLoading(long total, long current, boolean isUploading) {
                 if (isUploading) {
+                    progressDialog.show();
                 } else {
                 }
             }
@@ -263,10 +275,12 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 CustomToast.showToast(EditPersonalInfoActivity.this, "头像上传成功");
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg) {
+                progressDialog.dismiss();
                 CustomToast.showToast(EditPersonalInfoActivity.this,"头像上传失败");
             }
         });

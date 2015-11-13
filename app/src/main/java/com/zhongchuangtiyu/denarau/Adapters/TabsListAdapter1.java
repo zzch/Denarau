@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhongchuangtiyu.denarau.Entities.Promotions;
 import com.zhongchuangtiyu.denarau.Entities.Tabs;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.DateUtils;
@@ -51,7 +52,11 @@ public class TabsListAdapter1 extends BaseAdapter
     {
         return 0;
     }
-
+    public void addData(List<Tabs> datas)
+    {
+        this.list.addAll(datas);
+        notifyDataSetChanged();
+    }
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
@@ -71,65 +76,69 @@ public class TabsListAdapter1 extends BaseAdapter
         }
         viewholder.tabListView2.removeAllViews();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        for (int i = 0; i < tabs.getItems().size(); i++)
+        if (tabs.getItems() != null)
         {
-            params.setMargins(0, 15, 0, 15);
-            LinearLayout linearLayout = new LinearLayout(context);
-            linearLayout.setLayoutParams(params);
-            TextView name = new TextView(context);
-            TextView price = new TextView(context);
-            TextView method = new TextView(context);
-            name.setText(tabs.getItems().get(i).getName());
-            name.setGravity(Gravity.CENTER_HORIZONTAL);
-            name.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            price.setText(tabs.getItems().get(i).getTotal_price());
-            price.setGravity(Gravity.CENTER_HORIZONTAL);
-            price.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            switch (tabs.getItems().get(i).getPayment_method())
+            for (int i = 0; i < tabs.getItems().size(); i++)
             {
-                case "by_ball_member":
-                    method.setText("计球卡");
-                    break;
-                case "by_time_member":
-                    method.setText("计时卡");
-                    break;
-                case "unlimited_member":
-                    method.setText("畅打卡");
-                    break;
-                case "stored_member":
-                    method.setText("储值卡");
-                    break;
-                case "credit_card":
-                    method.setText("信用卡");
-                    break;
-                case "cash":
-                    method.setText("现金");
-                    break;
-                case "check":
-                    method.setText("支票");
-                    break;
-                case "on_account":
-                    method.setText("挂账");
-                    break;
-                case "signing":
-                    method.setText("签单");
-                    break;
-                case "coupon":
-                    method.setText("抵用卷");
-                    break;
-                default:
-                    break;
+                params.setMargins(0, 15, 0, 15);
+                LinearLayout linearLayout = new LinearLayout(context);
+                linearLayout.setLayoutParams(params);
+                TextView name = new TextView(context);
+                TextView price = new TextView(context);
+                TextView method = new TextView(context);
+                name.setText(tabs.getItems().get(i).getName());
+                name.setGravity(Gravity.CENTER_HORIZONTAL);
+                name.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+                price.setText(tabs.getItems().get(i).getTotal_price());
+                price.setGravity(Gravity.CENTER_HORIZONTAL);
+                price.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+                switch (tabs.getItems().get(i).getPayment_method())
+                {
+                    case "by_ball_member":
+                        method.setText("计球卡");
+                        break;
+                    case "by_time_member":
+                        method.setText("计时卡");
+                        break;
+                    case "unlimited_member":
+                        method.setText("畅打卡");
+                        break;
+                    case "stored_member":
+                        method.setText("储值卡");
+                        break;
+                    case "credit_card":
+                        method.setText("信用卡");
+                        break;
+                    case "cash":
+                        method.setText("现金");
+                        break;
+                    case "check":
+                        method.setText("支票");
+                        break;
+                    case "on_account":
+                        method.setText("挂账");
+                        break;
+                    case "signing":
+                        method.setText("签单");
+                        break;
+                    case "coupon":
+                        method.setText("抵用卷");
+                        break;
+                    default:
+                        break;
+                }
+                method.setGravity(Gravity.CENTER_HORIZONTAL);
+                method.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+                linearLayout.addView(name);
+                linearLayout.addView(price);
+                linearLayout.addView(method);
+                viewholder.tabListView2.addView(linearLayout);
+                Resources res = context.getResources();
+                viewholder.tabListView2.setDividerDrawable(res.getDrawable(R.drawable.tabs_divider));
+                viewholder.tabListView2.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE | LinearLayout.SHOW_DIVIDER_BEGINNING | LinearLayout.SHOW_DIVIDER_END);
             }
-            method.setGravity(Gravity.CENTER_HORIZONTAL);
-            method.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            linearLayout.addView(name);
-            linearLayout.addView(price);
-            linearLayout.addView(method);
-            viewholder.tabListView2.addView(linearLayout);
-            Resources res = context.getResources();
-            viewholder.tabListView2.setDividerDrawable(res.getDrawable(R.drawable.tabs_divider));
-            viewholder.tabListView2.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE | LinearLayout.SHOW_DIVIDER_BEGINNING | LinearLayout.SHOW_DIVIDER_END);
         }
+
 //                TabListAdapter2 adapter2 = new TabListAdapter2(tabs.getItems(), context);
 //                viewholder.tabListView2.setAdapter(adapter2);
 //                SetListViewHeight.setListViewHeightBasedOnChildren(viewholder.tabListView2);

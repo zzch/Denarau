@@ -101,6 +101,34 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
     private void setListeners()
     {
         loginPhoneNum.addTextChangedListener(this);
+        loginVerificationCode.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                if (loginVerificationCode.getText().length() == 4)
+                {
+
+                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(getCurrentFocus()
+                                            .getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
+
+                }
+            }
+        });
         btnLogin.setOnClickListener(this);
         resendValidateCode.setOnClickListener(this);
     }
@@ -488,6 +516,7 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         {
             setSignInWelcomeRlAnimOut();
         }
+
     }
 
 
@@ -506,7 +535,13 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
                 {
                     welcomeTextView.setText("用户不存在");
                     setDividerBelowWelcomRlAnimIn();
-                } else if (welcome != null && !exceptionMsg.contains("20001"))
+                }
+                else if (welcome != null && exceptionMsg.contains("20002"))
+                {
+                    welcomeTextView.setText("用户未激活");
+                    setDividerBelowWelcomRlAnimIn();
+                }
+                else if (welcome != null && !exceptionMsg.contains("20001"))
                 {
                     if(getCurrentFocus()!=null)
                     {

@@ -152,9 +152,12 @@ public class ReservationsActivity extends BaseActivity implements View.OnClickLi
                     ActivityCollector.finishAll();
                 } else
                 {
-                    final List<Reservations> data = Reservations.instance(response);
-                    ReservationsListAdapter adapter = (ReservationsListAdapter) reservationsListView.getAdapter();
-                    adapter.addData(data);
+                    if (!response.contains("球场未找到"))
+                    {
+                        final List<Reservations> data = Reservations.instance(response);
+                        ReservationsListAdapter adapter = (ReservationsListAdapter) reservationsListView.getAdapter();
+                        adapter.addData(data);
+                    }
                 }
             }
 

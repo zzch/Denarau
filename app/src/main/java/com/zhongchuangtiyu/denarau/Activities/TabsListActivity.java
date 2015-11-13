@@ -10,7 +10,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
+import com.zhongchuangtiyu.denarau.Adapters.PromotionsListAdapter;
 import com.zhongchuangtiyu.denarau.Adapters.TabsListAdapter1;
+import com.zhongchuangtiyu.denarau.Entities.Promotions;
 import com.zhongchuangtiyu.denarau.Entities.Tabs;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
@@ -19,6 +21,7 @@ import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +85,7 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onRefreshBegin(final PtrFrameLayout ptr)
             {
-//                page = 1;
+                page = 1;
                 ptr.postDelayed(new Runnable()
                 {
                     @Override
@@ -109,14 +112,82 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
                 tabsPtr.autoRefresh();
             }
         }, 100);
+        tabListView1.setOnScrollListener(new AbsListView.OnScrollListener()
+        {
+            //AbsListView view 这个view对象就是listview
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState)
+            {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE)
+                {
+                    if (view.getLastVisiblePosition() == view.getCount() - 1)
+                    {
+                        page++;
+                        sendPartRequest();
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+            {
+                CustomToast.showToast(TabsListActivity.this, String.valueOf(view.getCount()));
+                lastItem = firstVisibleItem + visibleItemCount - 1;
+            }
+        });
+    }
+
+    private void sendPartRequest()
+    {
+        Map<String, String> map = new HashMap<>();
+        final String token = CacheUtils.getString(TabsListActivity.this, "token", null);
+        String club_uuid = CacheUtils.getString(TabsListActivity.this, "clubuuid", null);
+        Xlog.d(String.valueOf(page) + "page------------------------------");
+        Xlog.d(token + "token------------------------------");
+        Xlog.d(club_uuid + "club_uuid------------------------------");
+
+        MyApplication.volleyGET(APIUrls.PROMOTIONS + "token=" + token + "&" + "club_uuid=" + club_uuid + "&" + "page=" + page, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+                if (response.contains("10002"))
+                {
+                    CustomToast.showToast(TabsListActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(TabsListActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                } else
+                {
+                    final List<Tabs> data = Tabs.instance(response);
+                    TabsListAdapter1 adapter = (TabsListAdapter1) tabListView1.getAdapter();
+                    adapter.addData(data);
+                }
+            }
+
+            @Override
+            public void netFail(VolleyError error)
+            {
+                if (error.toString().contains("AuthFailureError"))
+                {
+                    CustomToast.showToast(TabsListActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(TabsListActivity.this, SignInActivity.class));
+                    finish();
+                    ActivityCollector.finishAll();
+                }else
+                {
+                    CustomToast.showToast(TabsListActivity.this, "网络连接失败，请检查网络连接");
+                    tabsPtr.refreshComplete();
+                }
+            }
+        });
     }
 
 
-        @Override
+    @Override
         protected void onResume ()
         {
             super.onResume();
-            sendRequest();
         }
 
     private void sendRequest()

@@ -105,11 +105,20 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
                     {
                         Bitmap photo1 = BitmapFactory.decodeFile(cachedPortrait);
                         personalImage.setImageBitmap(photo1);
-                    } else if (data.getPortrait() != null && cachedPortrait == null) ;
+                    } else if (data.getPortrait() != null && cachedPortrait == null)
                     {
                         imageLoader.init(ImageLoaderConfiguration.createDefault(PersonalCenterActivity.this));
                         String portraitUrl = data.getPortrait();
                         imageLoader.displayImage(portraitUrl, personalImage);
+                    }else if (data.getPortrait() == null && cachedPortrait == null)
+                    {
+                        if (data.getGender().equals("male"))
+                        {
+                            personalImage.setImageResource(R.mipmap.nan);
+                        }else if (data.getGender().equals("female"))
+                        {
+                            personalImage.setImageResource(R.mipmap.nv);
+                        }
                     }
                     if (data.getName() != null && !data.getName().equals(""))
                     {
@@ -155,6 +164,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
             case R.id.quitLoginRl:
                 CacheUtils.putString(PersonalCenterActivity.this, "token", null);
                 CacheUtils.putString(PersonalCenterActivity.this, "clubuuid", null);
+                CacheUtils.putString(PersonalCenterActivity.this, "setPortrait", null);
                 startActivity(new Intent(PersonalCenterActivity.this, SignInActivity.class));
                 finish();
                 ActivityCollector.finishAll();
