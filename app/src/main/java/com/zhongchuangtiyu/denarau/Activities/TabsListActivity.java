@@ -131,7 +131,7 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
             {
-                CustomToast.showToast(TabsListActivity.this, String.valueOf(view.getCount()));
+//                CustomToast.showToast(TabsListActivity.this, String.valueOf(view.getCount()));
                 lastItem = firstVisibleItem + visibleItemCount - 1;
             }
         });

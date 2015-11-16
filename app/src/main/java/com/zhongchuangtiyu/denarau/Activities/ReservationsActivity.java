@@ -128,7 +128,7 @@ public class ReservationsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
             {
-                CustomToast.showToast(ReservationsActivity.this, String.valueOf(view.getCount()));
+//                CustomToast.showToast(ReservationsActivity.this, String.valueOf(view.getCount()));
                 lastItem = firstVisibleItem + visibleItemCount - 1;
             }
         });

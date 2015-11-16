@@ -73,12 +73,6 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".Activities.MemberStoreActivity"
-            android:label="@string/title_activity_member_store"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity
             android:name=".Activities.CostHistoryActivity"
             android:label="@string/title_activity_cost_history"
             android:screenOrientation="portrait"
@@ -123,6 +117,7 @@
         </activity>
         <activity android:name=".Utils.ClipImageActivity" />
         <activity android:name=".Demos.Test" >
+
         </activity>
         <activity
             android:name=".Activities.BeforePostAdvice"
@@ -155,6 +150,7 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity android:name=".Demos.Test2" >
+
         </activity>
         <activity
             android:name=".Activities.TabsListActivity"

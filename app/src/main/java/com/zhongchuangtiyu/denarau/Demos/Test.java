@@ -45,35 +45,5 @@ public class Test extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.testlayout);
-        ImageView imageView = (ImageView) findViewById(R.id.imageView41);
-        imageView.setImageResource(R.mipmap.test);
-        PtrClassicFrameLayout ptr = (PtrClassicFrameLayout) findViewById(R.id.ptr);
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("头像上传中");
-        progressDialog.show();
-        ptr.setPtrHandler(new PtrHandler()
-        {
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header)
-            {
-                return true;
-            }
-
-            @Override
-            public void onRefreshBegin(final PtrFrameLayout frame)
-            {
-                frame.postDelayed(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        frame.refreshComplete();
-                    }
-                }, 2000);
-            }
-        });
-//        String time = DateUtils.getDateToString2(1446800400000l);
-//        Xlog.d(time + "time---------------------------");
     }
 }

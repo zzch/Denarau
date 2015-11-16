@@ -49,7 +49,8 @@ public class ClipImageActivity extends Activity implements OnClickListener {
 
 		// 有的系统返回的图片是旋转了，有的没有旋转，所以处理
 		int degreee = readBitmapDegree(path);
-		Bitmap bitmap = createBitmap(path);
+		Bitmap bitmap=ImageTools.convertToBitmap(path, 600, 600);
+//		Bitmap bitmap = createBitmap(path);
 		if (bitmap != null) {
 			if (degreee == 0) {
 				mClipImageLayout.setImageBitmap(bitmap);

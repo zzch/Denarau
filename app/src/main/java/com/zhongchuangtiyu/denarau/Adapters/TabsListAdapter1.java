@@ -2,11 +2,13 @@ package com.zhongchuangtiyu.denarau.Adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v7.internal.widget.ThemeUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -83,6 +85,8 @@ public class TabsListAdapter1 extends BaseAdapter
                 params.setMargins(0, 15, 0, 15);
                 LinearLayout linearLayout = new LinearLayout(context);
                 linearLayout.setLayoutParams(params);
+                ImageView divider = new ImageView(context);
+
                 TextView name = new TextView(context);
                 TextView price = new TextView(context);
                 TextView method = new TextView(context);
@@ -135,7 +139,7 @@ public class TabsListAdapter1 extends BaseAdapter
                 viewholder.tabListView2.addView(linearLayout);
                 Resources res = context.getResources();
                 viewholder.tabListView2.setDividerDrawable(res.getDrawable(R.drawable.tabs_divider));
-                viewholder.tabListView2.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE | LinearLayout.SHOW_DIVIDER_BEGINNING | LinearLayout.SHOW_DIVIDER_END);
+                viewholder.tabListView2.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE | LinearLayout.SHOW_DIVIDER_BEGINNING);
             }
         }
 

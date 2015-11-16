@@ -131,7 +131,7 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
             {
-                CustomToast.showToast(PromotionsActivity.this, String.valueOf(view.getCount()));
+//                CustomToast.showToast(PromotionsActivity.this, String.valueOf(view.getCount()));
                 lastItem = firstVisibleItem + visibleItemCount - 1;
             }
         });

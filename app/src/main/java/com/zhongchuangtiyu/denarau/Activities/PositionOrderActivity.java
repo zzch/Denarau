@@ -265,7 +265,7 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
                         public void onClick(DialogInterface dialog, int which)
                         {
                             dialog.dismiss(); //关闭dialog
-                            Toast.makeText(PositionOrderActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(PositionOrderActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.setCancelable(false);
