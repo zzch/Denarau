@@ -89,6 +89,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
     private String path;
     private com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
     private ProgressDialog progressDialog;
+    private Bitmap photo1;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -120,7 +121,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
                 String cachedPortrait = CacheUtils.getString(EditPersonalInfoActivity.this, "setPortrait", null);
                 if (cachedPortrait != null)
                 {
-                    Bitmap photo1 = BitmapFactory.decodeFile(cachedPortrait);
+                    photo1 = BitmapFactory.decodeFile(cachedPortrait);
                     personalInfoImageToEdit.setImageBitmap(photo1);
                 } else if (data.getPortrait() != null && cachedPortrait == null)
                 {
@@ -323,8 +324,8 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
             case CROP_RESULT_CODE:
                 path = data.getStringExtra(ClipImageActivity.RESULT_PATH);
                 Bitmap photo = BitmapFactory.decodeFile(path);
-                CacheUtils.putString(EditPersonalInfoActivity.this, "setPortrait", path);
                 personalInfoImageToEdit.setImageBitmap(photo);
+                CacheUtils.putString(EditPersonalInfoActivity.this, "setPortrait", path);
                 uploadPortrait();
                 dialog.dismiss();
                 break;
