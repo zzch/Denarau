@@ -2,7 +2,6 @@ package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
@@ -10,10 +9,10 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
-import com.zhongchuangtiyu.denarau.Adapters.PromotionsListAdapter;
+import com.zhongchuangtiyu.denarau.Adapters.TabsAllListAdapter;
 import com.zhongchuangtiyu.denarau.Adapters.TabsListAdapter1;
-import com.zhongchuangtiyu.denarau.Entities.Promotions;
 import com.zhongchuangtiyu.denarau.Entities.Tabs;
+import com.zhongchuangtiyu.denarau.Entities.TabsAll;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
@@ -36,15 +35,15 @@ import in.srain.cube.views.ptr.PtrHandler;
 import in.srain.cube.views.ptr.header.MaterialHeader;
 import in.srain.cube.views.ptr.util.PtrLocalDisplay;
 
-public class TabsListActivity extends BaseActivity implements View.OnClickListener
+public class TabsAllActivity extends BaseActivity implements View.OnClickListener
 {
 
-    @Bind(R.id.tabListView1)
-    ListView tabListView1;
-    @Bind(R.id.tabsTitleLeft)
-    ImageButton tabsTitleLeft;
-    @Bind(R.id.tabsPtr)
-    PtrClassicFrameLayout tabsPtr;
+    @Bind(R.id.tabsAllTitleLeft)
+    ImageButton tabsAllTitleLeft;
+    @Bind(R.id.tabsAllListView)
+    ListView tabsAllListView;
+    @Bind(R.id.tabsAllPtr)
+    PtrClassicFrameLayout tabsAllPtr;
     private int page = 0;
     private int lastItem;
 
@@ -52,7 +51,7 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabs_list);
+        setContentView(R.layout.activity_tabs_all);
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,19 +61,19 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
 
     private void setListeners()
     {
-        tabsTitleLeft.setOnClickListener(this);
-        final MaterialHeader header = new MaterialHeader(TabsListActivity.this);
+        tabsAllTitleLeft.setOnClickListener(this);
+        final MaterialHeader header = new MaterialHeader(TabsAllActivity.this);
         int[] colors = getResources().getIntArray(R.array.google_colors);
         header.setColorSchemeColors(colors);
         header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
         header.setPadding(0, PtrLocalDisplay.dp2px(15), 0, PtrLocalDisplay.dp2px(10));
-        header.setPtrFrameLayout(tabsPtr);
+        header.setPtrFrameLayout(tabsAllPtr);
 
-        tabsPtr.setLoadingMinTime(1000);
-        tabsPtr.setDurationToCloseHeader(1500);
-        tabsPtr.setHeaderView(header);
-        tabsPtr.addPtrUIHandler(header);
-        tabsPtr.setPtrHandler(new PtrHandler()
+        tabsAllPtr.setLoadingMinTime(1000);
+        tabsAllPtr.setDurationToCloseHeader(1500);
+        tabsAllPtr.setHeaderView(header);
+        tabsAllPtr.addPtrUIHandler(header);
+        tabsAllPtr.setPtrHandler(new PtrHandler()
         {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header)
@@ -96,23 +95,23 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
                 }, 1000);
             }
         });
-        tabsPtr.setResistance(1.7f);
-        tabsPtr.setRatioOfHeaderHeightToRefresh(1.2f);
-        tabsPtr.setDurationToClose(200);
-        tabsPtr.setDurationToCloseHeader(1000);
+        tabsAllPtr.setResistance(1.7f);
+        tabsAllPtr.setRatioOfHeaderHeightToRefresh(1.2f);
+        tabsAllPtr.setDurationToClose(200);
+        tabsAllPtr.setDurationToCloseHeader(1000);
         // default is false
-        tabsPtr.setPullToRefresh(false);
+        tabsAllPtr.setPullToRefresh(false);
         // default is true
-        tabsPtr.setKeepHeaderWhenRefresh(true);
-        tabsPtr.postDelayed(new Runnable()
+        tabsAllPtr.setKeepHeaderWhenRefresh(true);
+        tabsAllPtr.postDelayed(new Runnable()
         {
             @Override
             public void run()
             {
-                tabsPtr.autoRefresh();
+                tabsAllPtr.autoRefresh();
             }
         }, 100);
-        tabListView1.setOnScrollListener(new AbsListView.OnScrollListener()
+        tabsAllListView.setOnScrollListener(new AbsListView.OnScrollListener()
         {
             //AbsListView view 这个view对象就是listview
             @Override
@@ -140,27 +139,25 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
     private void sendPartRequest()
     {
         Map<String, String> map = new HashMap<>();
-        final String token = CacheUtils.getString(TabsListActivity.this, "token", null);
-        String club_uuid = CacheUtils.getString(TabsListActivity.this, "clubuuid", null);
+        final String token = CacheUtils.getString(TabsAllActivity.this, "token", null);
         Xlog.d(String.valueOf(page) + "page------------------------------");
         Xlog.d(token + "token------------------------------");
-        Xlog.d(club_uuid + "club_uuid------------------------------");
 
-        MyApplication.volleyGET(APIUrls.TABS + "token=" + token + "&" + "club_uuid=" + club_uuid + "&" + "page=" + page, map, new MyApplication.VolleyCallBack()
+        MyApplication.volleyGET(APIUrls.TABS_ALL + "token=" + token + "&" + "&" + "page=" + page, map, new MyApplication.VolleyCallBack()
         {
             @Override
             public void netSuccess(String response)
             {
                 if (response.contains("10002"))
                 {
-                    CustomToast.showToast(TabsListActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(TabsListActivity.this, SignInActivity.class));
+                    CustomToast.showToast(TabsAllActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(TabsAllActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
                 } else
                 {
-                    final List<Tabs> data = Tabs.instance(response);
-                    TabsListAdapter1 adapter = (TabsListAdapter1) tabListView1.getAdapter();
+                    final List<TabsAll> data = TabsAll.instance(response);
+                    TabsAllListAdapter adapter = (TabsAllListAdapter) tabsAllListView.getAdapter();
                     adapter.addData(data);
                 }
             }
@@ -170,69 +167,65 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
             {
                 if (error.toString().contains("AuthFailureError"))
                 {
-                    CustomToast.showToast(TabsListActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(TabsListActivity.this, SignInActivity.class));
+                    CustomToast.showToast(TabsAllActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(TabsAllActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
-                }else
+                } else
                 {
-                    CustomToast.showToast(TabsListActivity.this, "网络连接失败，请检查网络连接");
-                    tabsPtr.refreshComplete();
+                    CustomToast.showToast(TabsAllActivity.this, "网络连接失败，请检查网络连接");
+                    tabsAllPtr.refreshComplete();
                 }
             }
         });
     }
-    @Override
-        protected void onResume ()
-        {
-            super.onResume();
-        }
 
     private void sendRequest()
     {
         Map<String, String> map = new HashMap<>();
-        String token = CacheUtils.getString(TabsListActivity.this, "token", null);
-        String club_uuid = CacheUtils.getString(TabsListActivity.this, "clubuuid", null);
-        MyApplication.volleyGET(APIUrls.TABS + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
+        String token = CacheUtils.getString(TabsAllActivity.this, "token", null);
+        MyApplication.volleyGET(APIUrls.TABS_ALL + "token=" + token, map, new MyApplication.VolleyCallBack()
         {
             @Override
             public void netSuccess(String response)
             {
                 if (response.contains("10002"))
                 {
-                    CustomToast.showToast(TabsListActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(TabsListActivity.this, SignInActivity.class));
+                    CustomToast.showToast(TabsAllActivity.this, "登录失效，请重新登录");
+                    startActivity(new Intent(TabsAllActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
                 } else
                 {
-                    List<Tabs> data = Tabs.instance(response);
-                    TabsListAdapter1 adapter1 = new TabsListAdapter1(data, TabsListActivity.this);
-                    tabListView1.setAdapter(adapter1);
-                    tabsPtr.refreshComplete();
+                    List<TabsAll> data = TabsAll.instance(response);
+                    TabsAllListAdapter adapter1 = new TabsAllListAdapter(data, TabsAllActivity.this);
+                    tabsAllListView.setAdapter(adapter1);
+                    tabsAllPtr.refreshComplete();
                 }
             }
 
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.showToast(TabsListActivity.this, "刷新失败，请检查网络连接");
-                tabsPtr.refreshComplete();
+                CustomToast.showToast(TabsAllActivity.this, "刷新失败，请检查网络连接");
+                tabsAllPtr.refreshComplete();
             }
         });
     }
+
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
+
     @Override
     public void onClick(View v)
     {
         switch (v.getId())
         {
-            case R.id.tabsTitleLeft:
+            case R.id.tabsAllTitleLeft:
                 finish();
                 break;
             default:

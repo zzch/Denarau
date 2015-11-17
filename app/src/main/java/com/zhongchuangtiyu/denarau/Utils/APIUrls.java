@@ -25,5 +25,5 @@ public class APIUrls
     public static String PROMOTIONS_DETAIL = "http://staging.lianqiubao.com/api/v1/promotions/detail.json?";
     public static String RESERVATIONS = "http://staging.lianqiubao.com/api/v1/reservations.json?";
     public static String TABS = "http://staging.lianqiubao.com/api/v1/tabs.json?";
-
+    public static String TABS_ALL = "http://staging.lianqiubao.com/api/v1/tabs/all.json?";
 }

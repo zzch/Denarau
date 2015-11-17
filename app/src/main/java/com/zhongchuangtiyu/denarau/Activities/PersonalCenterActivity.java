@@ -161,6 +161,9 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
             case R.id.positionOrderRl:
                 startActivity(new Intent(PersonalCenterActivity.this, ReservationsActivity.class));
                 break;
+            case R.id.myConsumeRl:
+                startActivity(new Intent(PersonalCenterActivity.this, TabsAllActivity.class));
+                break;
             case R.id.quitLoginRl:
                 CacheUtils.putString(PersonalCenterActivity.this, "token", null);
                 CacheUtils.putString(PersonalCenterActivity.this, "clubuuid", null);

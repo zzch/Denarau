@@ -119,11 +119,74 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"/>
     </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout12"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout14">
+
+        <ImageView
+            android:background="@mipmap/xiaofeixinxi_xuanx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView102"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:textColor="#e54a4b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="消费球场"
+            android:id="@+id/textView101"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView102"
+            android:layout_marginTop="16dp"/>
+
+        <ImageView
+            android:background="#e54a4b"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/imageView100"
+            android:layout_below="@+id/textView101"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView100"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="消费内容"
+                android:id="@+id/clubName"
+                android:layout_alignTop="@+id/imageView71"
+                android:layout_alignStart="@+id/imageView71"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="22dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout14"
         android:layout_centerHorizontal="true"
         android:id="@+id/relativeLayout13">
 
@@ -175,7 +238,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="消费内容"
-                android:id="@+id/textView32"
                 android:layout_alignTop="@+id/imageView71"
                 android:layout_alignStart="@+id/imageView71"
                 android:layout_weight="1"
@@ -186,7 +248,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="小计"
-                android:id="@+id/textView33"
                 android:layout_alignTop="@+id/imageView71"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
@@ -197,7 +258,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="付款方式"
-                android:id="@+id/textView34"
                 android:layout_below="@+id/imageView71"
                 android:layout_alignEnd="@+id/imageView71"
                 android:layout_weight="1"

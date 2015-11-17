@@ -42,4 +42,5 @@
         <item>@color/green</item>
     </integer-array>
     <string name="title_activity_tabs_list">TabsListActivity</string>
+    <string name="title_activity_tabs_all">TabsAllActivity</string>
 </resources>

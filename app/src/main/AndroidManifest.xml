@@ -117,7 +117,6 @@
         </activity>
         <activity android:name=".Utils.ClipImageActivity" />
         <activity android:name=".Demos.Test" >
-
         </activity>
         <activity
             android:name=".Activities.BeforePostAdvice"
@@ -150,11 +149,15 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity android:name=".Demos.Test2" >
-
         </activity>
         <activity
             android:name=".Activities.TabsListActivity"
             android:label="@string/title_activity_tabs_list"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".Activities.TabsAllActivity"
+            android:label="@string/title_activity_tabs_all"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
