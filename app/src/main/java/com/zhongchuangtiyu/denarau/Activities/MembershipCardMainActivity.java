@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -35,6 +36,7 @@ import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.ArrayList;
@@ -125,6 +127,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+//        StatusBarCompat.compat(this);
         membershipCardMainToolbar = (Toolbar) findViewById(R.id.membershipCardMainToolbar);
         imageLoader.init(ImageLoaderConfiguration.createDefault(MembershipCardMainActivity.this));
         membershipCardViewPager.setPageMargin(30);

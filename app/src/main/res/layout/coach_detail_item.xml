@@ -15,7 +15,7 @@
         android:layout_marginLeft="20dp"/>
 
     <ImageView
-        android:layout_width="12dp"
+        android:layout_width="10dp"
         android:layout_height="12dp"
         android:background="@mipmap/shouye_arrow_icon"
         android:id="@+id/imageView4"

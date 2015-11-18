@@ -90,7 +90,7 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
                             Intent intent = new Intent(CoachTutorialListActivity.this, CoachesDetailActivity.class);
                             intent.putExtra("uuid", uuid);
                             startActivity(intent);
-                            CustomToast.showToast(CoachTutorialListActivity.this, String.valueOf(position));
+//                            CustomToast.showToast(CoachTutorialListActivity.this, String.valueOf(position));
                         }
                     });
                 }
