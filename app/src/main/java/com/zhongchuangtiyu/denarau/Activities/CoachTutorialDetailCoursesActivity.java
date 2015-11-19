@@ -17,6 +17,7 @@ import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class CoachTutorialDetailCoursesActivity extends BaseActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_tutorial_detail_courses);
         ButterKnife.bind(this);
+        StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setListeners();

@@ -8,6 +8,7 @@ import android.widget.ListView;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
+import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class CostHistoryActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cost_history);
         ButterKnife.bind(this);
+        StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.costHistoryToolbar);
         setSupportActionBar(toolbar);
         ActivityCollector.addActivity(this);

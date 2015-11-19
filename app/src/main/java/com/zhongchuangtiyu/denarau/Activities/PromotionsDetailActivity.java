@@ -18,6 +18,7 @@ import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class PromotionsDetailActivity extends BaseActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promotions_detail);
         ButterKnife.bind(this);
+        StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setListeners();

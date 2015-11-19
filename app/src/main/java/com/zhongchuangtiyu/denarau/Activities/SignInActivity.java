@@ -33,6 +33,7 @@ import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.ValidatePhoneNum;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
@@ -86,6 +87,7 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         signInWelcomeRl.setVisibility(View.GONE);

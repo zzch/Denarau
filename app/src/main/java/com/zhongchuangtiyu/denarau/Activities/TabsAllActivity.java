@@ -20,6 +20,7 @@ import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.HashMap;
@@ -53,6 +54,7 @@ public class TabsAllActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_all);
         ButterKnife.bind(this);
+        StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setListeners();

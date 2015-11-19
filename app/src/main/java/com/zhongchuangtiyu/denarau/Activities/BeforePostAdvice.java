@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
+import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,6 +33,7 @@ public class BeforePostAdvice extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_before_post_advice);
         ButterKnife.bind(this);
+        StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActivityCollector.addActivity(this);

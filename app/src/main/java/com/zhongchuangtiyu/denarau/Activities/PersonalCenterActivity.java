@@ -24,6 +24,7 @@ import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.HashMap;
@@ -60,6 +61,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        StatusBarCompat.compat(this);
         setListeners();
         ActivityCollector.addActivity(this);
     }

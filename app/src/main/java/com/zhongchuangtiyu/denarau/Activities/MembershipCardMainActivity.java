@@ -127,7 +127,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        StatusBarCompat.compat(this);
+        StatusBarCompat.compat(this);
         membershipCardMainToolbar = (Toolbar) findViewById(R.id.membershipCardMainToolbar);
         imageLoader.init(ImageLoaderConfiguration.createDefault(MembershipCardMainActivity.this));
         membershipCardViewPager.setPageMargin(30);
