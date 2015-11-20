@@ -2,6 +2,7 @@ package com.zhongchuangtiyu.denarau.Adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,7 +85,11 @@ public class TabsAllListAdapter extends BaseAdapter
                 params.setMargins(0, 15, 0, 15);
                 LinearLayout linearLayout = new LinearLayout(context);
                 linearLayout.setLayoutParams(params);
-                ImageView divider = new ImageView(context);
+
+                ImageView imageView = new ImageView(context);
+                imageView.setMinimumWidth(100);
+                imageView.setMinimumHeight(1);
+                imageView.setBackgroundColor(Color.parseColor("#e47778"));
 
                 TextView name = new TextView(context);
                 TextView price = new TextView(context);
@@ -135,13 +140,14 @@ public class TabsAllListAdapter extends BaseAdapter
                 linearLayout.addView(name);
                 linearLayout.addView(price);
                 linearLayout.addView(method);
+
+                viewholder.tabListView2.addView(imageView);
                 viewholder.tabListView2.addView(linearLayout);
-                Resources res = context.getResources();
-                viewholder.tabListView2.setDividerDrawable(res.getDrawable(R.drawable.tabs_divider));
-                viewholder.tabListView2.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE | LinearLayout.SHOW_DIVIDER_BEGINNING);
+//                Resources res = context.getResources();
+//                viewholder.tabListView2.setDividerDrawable(res.getDrawable(R.drawable.tabs_divider));
+//                viewholder.tabListView2.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE | LinearLayout.SHOW_DIVIDER_BEGINNING);
             }
         }
-
 //                TabListAdapter2 adapter2 = new TabListAdapter2(tabs.getItems(), context);
 //                viewholder.tabListView2.setAdapter(adapter2);
 //                SetListViewHeight.setListViewHeightBasedOnChildren(viewholder.tabListView2);

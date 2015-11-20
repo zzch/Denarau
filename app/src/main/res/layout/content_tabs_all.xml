@@ -25,7 +25,6 @@
         <ListView
             android:scrollbars="none"
             android:background="#e9e9e9"
-            android:layout_marginTop="10dp"
             android:divider="#00000000"
             android:dividerHeight="20dp"
             android:layout_width="wrap_content"

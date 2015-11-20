@@ -188,7 +188,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
 
     private void setAnnouncementOutAnimation()
     {
-        Animation announcementOutAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY(), -60f);
+        Animation announcementOutAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY(), -70f);
         announcementOutAnimation.setDuration(500);
         membershipCardNoticeInfo.startAnimation(announcementOutAnimation);
         announcementOutAnimation.setAnimationListener(new Animation.AnimationListener()
@@ -215,7 +215,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
 
     private void setAnnouncementInAnimation()
     {
-        Animation announcementInAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY() + 60f, membershipCardNoticeInfo.getScaleY());
+        Animation announcementInAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY() + 70f, membershipCardNoticeInfo.getScaleY());
         announcementInAnimation.setDuration(500);
         membershipCardNoticeInfo.startAnimation(announcementInAnimation);
         announcementInAnimation.setAnimationListener(new Animation.AnimationListener()
@@ -345,14 +345,14 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                         adapter = new MembershipCardViewpagerAdapter(pagerViews, MembershipCardMainActivity.this);
                         membershipCardViewPager.setAdapter(adapter);
                         final int finalI = i;
-                        membershipCardViewPagerRoot.setOnClickListener(new View.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(View v)
-                            {
-                                Toast.makeText(MembershipCardMainActivity.this, data.getMembers().get(finalI).getCard().getName(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//                        membershipCardViewPagerRoot.setOnClickListener(new View.OnClickListener()
+//                        {
+//                            @Override
+//                            public void onClick(View v)
+//                            {
+//                                Toast.makeText(MembershipCardMainActivity.this, data.getMembers().get(finalI).getCard().getName(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
                         adapter = new MembershipCardViewpagerAdapter(pagerViews, MembershipCardMainActivity.this);
                         if (dataSize > 1)
                         {
