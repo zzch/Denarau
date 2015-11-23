@@ -368,14 +368,16 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             @Override
             public void netFail(VolleyError error)
             {
-                if (error.toString().equals("com.android.volley.AuthFailureErrorerror"))
-                {
-                    CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
-                    startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
-                    finish();
-                    ActivityCollector.finishAll();
-                }
-                CustomToast.showToast(MembershipCardMainActivity.this, "网络连接失败，请检查网络连接");
+//                if (error.toString().equals("com.android.volley.AuthFailureErrorerror"))
+//                {
+//                    CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
+//                    startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
+//                    finish();
+//                    ActivityCollector.finishAll();
+//                }else
+//                {
+//                    CustomToast.showToast(MembershipCardMainActivity.this, "网络连接失败，请检查网络连接");
+//                }
             }
         });
     }

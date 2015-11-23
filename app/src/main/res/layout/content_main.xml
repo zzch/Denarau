@@ -121,34 +121,40 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="0dp"
         android:id="@+id/linearLayout"
         android:layout_above="@+id/linearLayout3"
         android:layout_alignParentStart="true"
-        >
+        android:layout_weight="1">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/btnOrderPositon">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="62dp"
-                android:layout_height="62dp"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/shouye_yuyue_icon"
-                android:id="@+id/view"
-                android:layout_marginTop="10dp"
-                />
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="打位预约"
-                android:id="@+id/textView3"
-                android:layout_alignParentBottom="true"
-                android:layout_alignEnd="@+id/view"
-                android:layout_marginBottom="10dp"/>
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/shouye_yuyue_icon"
+                    android:id="@+id/view"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="打位预约"
+                    android:id="@+id/textView3"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
         </RelativeLayout>
 
         <ImageView
@@ -162,13 +168,18 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/btnCoachTurorial">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="62dp"
                 android:layout_height="62dp"
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/shouye_jiaolian_icon"
                 android:id="@+id/view2"
-                android:layout_marginTop="10dp"
                 />
 
             <TextView
@@ -177,8 +188,8 @@
                 android:text="教练教学"
                 android:id="@+id/textView4"
                 android:layout_alignParentBottom="true"
-                android:layout_alignEnd="@+id/view2"
-                android:layout_marginBottom="10dp"/>
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
 
         </RelativeLayout>
 
@@ -193,13 +204,17 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/btnMemberStore">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="62dp"
                 android:layout_height="62dp"
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/shouye_shangcheng_icon"
                 android:id="@+id/view3"
-                android:layout_marginTop="10dp"
                 />
 
             <TextView
@@ -208,8 +223,8 @@
                 android:text="会员商城"
                 android:id="@+id/textView5"
                 android:layout_alignParentBottom="true"
-                android:layout_alignEnd="@+id/view3"
-                android:layout_marginBottom="10dp"/>
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
         </RelativeLayout>
 
     </LinearLayout>
@@ -223,35 +238,39 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="0dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="4dp"
         android:id="@+id/linearLayout3"
-        >
+        android:layout_weight="1">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/btnCostHistory"
             android:layout_weight="1">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="62dp"
-                android:layout_height="62dp"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/shouye_xiaofei_icon"
-                android:id="@+id/view4"
-                android:layout_marginTop="10dp"
-                />
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="消费记录"
-                android:id="@+id/textView6"
-                android:layout_alignParentBottom="true"
-                android:layout_alignEnd="@+id/view4"
-                android:layout_marginBottom="10dp"/>
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/shouye_xiaofei_icon"
+                    android:id="@+id/view4"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="消费记录"
+                    android:id="@+id/textView6"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
 
             <ImageView
                 android:background="#e2e2e2"
@@ -272,23 +291,27 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/btnFoodService">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="62dp"
-                android:layout_height="62dp"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/shouye_canyin_icon"
-                android:id="@+id/view5"
-                android:layout_marginTop="10dp"
-                />
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="餐饮服务"
-                android:id="@+id/textView7"
-                android:layout_alignParentBottom="true"
-                android:layout_alignEnd="@+id/view5"
-                android:layout_marginBottom="10dp"/>
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/shouye_canyin_icon"
+                    android:id="@+id/view5"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="餐饮服务"
+                    android:id="@+id/textView7"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
             <ImageView
                 android:background="#e2e2e2"
                 android:layout_width="match_parent"
@@ -308,23 +331,27 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/btnGiveAdvice">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="62dp"
-                android:layout_height="62dp"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/shouye_yijian_icon"
-                android:id="@+id/view6"
-                android:layout_marginTop="10dp"
-                />
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="意见反馈"
-                android:id="@+id/textView8"
-                android:layout_alignParentBottom="true"
-                android:layout_alignEnd="@+id/view6"
-                android:layout_marginBottom="10dp"/>
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/shouye_yijian_icon"
+                    android:id="@+id/view6"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="意见反馈"
+                    android:id="@+id/textView8"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
             <ImageView
                 android:background="#e2e2e2"
                 android:layout_width="match_parent"
