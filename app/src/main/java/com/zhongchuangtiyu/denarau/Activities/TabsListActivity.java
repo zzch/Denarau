@@ -62,7 +62,7 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
         ActivityCollector.addActivity(this);
     }
 
-    private void setListeners()
+    public void setListeners()
     {
         tabsTitleLeft.setOnClickListener(this);
         final MaterialHeader header = new MaterialHeader(TabsListActivity.this);

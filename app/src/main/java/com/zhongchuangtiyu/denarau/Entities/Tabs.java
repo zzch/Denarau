@@ -24,6 +24,7 @@ public class Tabs
     private String uuid;
     private String sequence;
     private String reception_payment;
+    private String state;
     private int entrance_time;
     private int departure_time;
     /**
@@ -47,6 +48,21 @@ public class Tabs
     public void setReception_payment(String reception_payment)
     {
         this.reception_payment = reception_payment;
+    }
+
+    public String getState()
+    {
+        return state;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
+    }
+
+    public Tabs(String state)
+    {
+        this.state = state;
     }
 
     public void setEntrance_time(int entrance_time)
@@ -132,7 +148,6 @@ public class Tabs
     }
     public static List<Tabs> instance(String str)
     {
-
         Gson gson = new Gson();
         return gson.fromJson(str, new TypeToken<List<Tabs>>() {
         }.getType());

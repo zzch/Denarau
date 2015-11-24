@@ -25,6 +25,7 @@ public class TabsAll
     private String uuid;
     private String sequence;
     private String reception_payment;
+    private String state;
     private int entrance_time;
     private int departure_time;
     /**
@@ -53,6 +54,16 @@ public class TabsAll
     public void setReception_payment(String reception_payment)
     {
         this.reception_payment = reception_payment;
+    }
+
+    public String getState()
+    {
+        return state;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
     }
 
     public void setEntrance_time(int entrance_time)

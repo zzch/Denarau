@@ -1,6 +1,9 @@
 package com.zhongchuangtiyu.denarau.Adapters;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.internal.widget.ThemeUtils;
@@ -9,16 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.zhongchuangtiyu.denarau.Activities.TabsListActivity;
 import com.zhongchuangtiyu.denarau.Entities.Promotions;
 import com.zhongchuangtiyu.denarau.Entities.Tabs;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.DateUtils;
+import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,9 +43,10 @@ import butterknife.ButterKnife;
 public class TabsListAdapter1 extends BaseAdapter
 {
     private List<Tabs> list;
-    private Context context;
+    private TabsListActivity context;
 
-    public TabsListAdapter1(List<Tabs> list, Context context)
+
+    public TabsListAdapter1(List<Tabs> list, TabsListActivity context)
     {
         this.list = list;
         this.context = context;
@@ -66,7 +80,7 @@ public class TabsListAdapter1 extends BaseAdapter
         final Tabs tabs = list.get(position);
 
         View view;
-        ViewHolder viewholder;
+        final ViewHolder viewholder;
         if (convertView == null)
         {
             view = LayoutInflater.from(context).inflate(R.layout.tabs_list_item1, null);
@@ -136,6 +150,78 @@ public class TabsListAdapter1 extends BaseAdapter
                     default:
                         break;
                 }
+                switch (tabs.getState())
+                {
+                    case "finished":
+                        viewholder.tvState.setText("已完成");
+                        viewholder.tvState.setVisibility(View.VISIBLE);
+                        break;
+                    case "progressing":
+                        viewholder.tvState.setText("进行中");
+                        viewholder.tvState.setVisibility(View.VISIBLE);
+                        break;
+                    case "cancelled":
+                        viewholder.tvState.setText("已取消");
+                        viewholder.tvState.setVisibility(View.VISIBLE);
+                        break;
+                    case "confirming":
+                        viewholder.btnConfirmC.setText("待确认");
+                        viewholder.btnConfirmC.setVisibility(View.VISIBLE);
+                        viewholder.tvState.setVisibility(View.GONE);
+
+                        break;
+                }
+                final Dialog dialog = new AlertDialog.Builder(context)
+                        .setMessage("您要确认该笔消费吗？")
+                        .setPositiveButton("确认", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                Map<String, String> map = new HashMap<>();
+                                String token = CacheUtils.getString(context, "token", null);
+                                String club_uuid = CacheUtils.getString(context, "clubuuid", null);
+                                String uuid = tabs.getUuid();
+                                Xlog.d(token);
+                                Xlog.d(club_uuid);
+                                Xlog.d(uuid);
+                                MyApplication.volleyPUT(APIUrls.TABS_CONFIRM + "token=" + token + "&" + "club_uuid=" + club_uuid + "&" + "uuid=" + uuid, map, new MyApplication.VolleyCallBack()
+                                {
+                                    @Override
+                                    public void netSuccess(String response)
+                                    {
+                                        context.setListeners();
+                                        CustomToast.showToast(context,response);
+                                    }
+
+                                    @Override
+                                    public void netFail(VolleyError error)
+                                    {
+                                        CustomToast.showToast(context,error.toString());
+
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setCancelable(false)
+                        .create();
+                viewholder.btnConfirmC.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        dialog.show();
+                    }
+                });
+
                 method.setGravity(Gravity.CENTER_HORIZONTAL);
                 method.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
                 linearLayout.addView(name);
@@ -165,6 +251,7 @@ public class TabsListAdapter1 extends BaseAdapter
 
     }
 
+
     /**
      * This class contains all butterknife-injected Views & Layouts from layout file 'tabs_list_item1.xml'
      * for easy to all layout elements.
@@ -183,7 +270,10 @@ public class TabsListAdapter1 extends BaseAdapter
         TextView tabsTime;
         @Bind(R.id.tabListView2)
         LinearLayout tabListView2;
-
+        @Bind(R.id.tvState)
+        TextView tvState;
+        @Bind(R.id.btnConfirmC)
+        Button btnConfirmC;
         ViewHolder(View view)
         {
             ButterKnife.bind(this, view);

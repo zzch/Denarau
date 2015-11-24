@@ -1,6 +1,7 @@
 package com.zhongchuangtiyu.denarau.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -12,12 +13,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.zhongchuangtiyu.denarau.Activities.SignInActivity;
+import com.zhongchuangtiyu.denarau.Entities.AnnouncementsDetail;
 import com.zhongchuangtiyu.denarau.Entities.Tabs;
 import com.zhongchuangtiyu.denarau.Entities.TabsAll;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.APIUrls;
+import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.DateUtils;
+import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -135,6 +146,21 @@ public class TabsAllListAdapter extends BaseAdapter
                     default:
                         break;
                 }
+                switch (tabs.getState())
+                {
+                    case "finished":
+                        viewholder.tvState.setText("已完成");
+                        viewholder.tvState.setVisibility(View.VISIBLE);
+                        break;
+                    case "progressing":
+                        viewholder.tvState.setText("进行中");
+                        viewholder.tvState.setVisibility(View.VISIBLE);
+                        break;
+                    case "cancelled":
+                        viewholder.tvState.setText("已取消");
+                        viewholder.tvState.setVisibility(View.VISIBLE);
+                        break;
+                }
                 method.setGravity(Gravity.CENTER_HORIZONTAL);
                 method.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
                 linearLayout.addView(name);
@@ -163,6 +189,8 @@ public class TabsAllListAdapter extends BaseAdapter
 
     }
 
+
+
     /**
      * This class contains all butterknife-injected Views & Layouts from layout file 'tabs_list_item1.xml'
      * for easy to all layout elements.
@@ -183,6 +211,8 @@ public class TabsAllListAdapter extends BaseAdapter
         LinearLayout tabListView2;
         @Bind(R.id.clubName)
         TextView clubName;
+        @Bind(R.id.tvState)
+        TextView tvState;
 
         ViewHolder(View view)
         {

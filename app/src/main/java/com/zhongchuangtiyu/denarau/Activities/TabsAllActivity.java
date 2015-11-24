@@ -70,7 +70,6 @@ public class TabsAllActivity extends BaseActivity implements View.OnClickListene
         header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
         header.setPadding(0, PtrLocalDisplay.dp2px(15), 0, PtrLocalDisplay.dp2px(10));
         header.setPtrFrameLayout(tabsAllPtr);
-
         tabsAllPtr.setLoadingMinTime(1000);
         tabsAllPtr.setDurationToCloseHeader(1500);
         tabsAllPtr.setHeaderView(header);
