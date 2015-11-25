@@ -168,7 +168,6 @@ public class TabsListAdapter1 extends BaseAdapter
                         viewholder.btnConfirmC.setText("待确认");
                         viewholder.btnConfirmC.setVisibility(View.VISIBLE);
                         viewholder.tvState.setVisibility(View.GONE);
-
                         break;
                 }
                 final Dialog dialog = new AlertDialog.Builder(context)

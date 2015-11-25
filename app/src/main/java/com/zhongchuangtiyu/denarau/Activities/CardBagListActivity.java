@@ -30,6 +30,7 @@ import java.util.HashMap;
 
         import butterknife.Bind;
         import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class CardBagListActivity extends BaseActivity implements View.OnClickListener
 {
@@ -50,6 +51,7 @@ public class CardBagListActivity extends BaseActivity implements View.OnClickLis
         Toolbar toolbar = (Toolbar) findViewById(R.id.cardBagListToolbar);
         setSupportActionBar(toolbar);
         sendCardbagRequest();
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
     }
@@ -71,6 +73,8 @@ public class CardBagListActivity extends BaseActivity implements View.OnClickLis
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(CardBagListActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(CardBagListActivity.this, "token", null);
+                    CacheUtils.putString(CardBagListActivity.this, "registration_id", null);
                     startActivity(new Intent(CardBagListActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

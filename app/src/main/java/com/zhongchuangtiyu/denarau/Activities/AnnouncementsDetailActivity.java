@@ -24,6 +24,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class AnnouncementsDetailActivity extends BaseActivity implements View.OnClickListener
 {
@@ -47,6 +48,7 @@ public class AnnouncementsDetailActivity extends BaseActivity implements View.On
         setSupportActionBar(toolbar);
         sendAnnouncementsDetailRequest();
         setListeners();
+        JPushInterface.init(getApplicationContext());
         ActivityCollector.addActivity(this);
     }
 
@@ -71,6 +73,8 @@ public class AnnouncementsDetailActivity extends BaseActivity implements View.On
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(AnnouncementsDetailActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(AnnouncementsDetailActivity.this, "token", null);
+                    CacheUtils.putString(AnnouncementsDetailActivity.this, "registration_id", null);
                     startActivity(new Intent(AnnouncementsDetailActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

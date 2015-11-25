@@ -14,6 +14,7 @@ import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class BeforePostAdvice extends BaseActivity implements View.OnClickListener
 {
@@ -37,6 +38,7 @@ public class BeforePostAdvice extends BaseActivity implements View.OnClickListen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActivityCollector.addActivity(this);
+        JPushInterface.init(getApplicationContext());
         setListeners();
     }
 

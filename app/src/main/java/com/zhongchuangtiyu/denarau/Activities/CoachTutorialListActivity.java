@@ -31,6 +31,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class CoachTutorialListActivity extends BaseActivity implements View.OnClickListener
 {
@@ -52,6 +53,7 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
         Toolbar toolbar = (Toolbar) findViewById(R.id.coachTutorialToolBar);
         setSupportActionBar(toolbar);
         sendCoachRequest();
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
     }
@@ -74,6 +76,8 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(CoachTutorialListActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(CoachTutorialListActivity.this, "token", null);
+                    CacheUtils.putString(CoachTutorialListActivity.this, "registration_id", null);
                     startActivity(new Intent(CoachTutorialListActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

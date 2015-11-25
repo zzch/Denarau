@@ -15,6 +15,7 @@ import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
+import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class CoachTutorialDetailCoursesActivity extends BaseActivity implements View.OnClickListener
 {
@@ -49,6 +51,7 @@ public class CoachTutorialDetailCoursesActivity extends BaseActivity implements 
         StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        JPushInterface.init(getApplicationContext());
         setListeners();
         initData();
         ActivityCollector.addActivity(this);
@@ -74,6 +77,8 @@ public class CoachTutorialDetailCoursesActivity extends BaseActivity implements 
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(CoachTutorialDetailCoursesActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(CoachTutorialDetailCoursesActivity.this, "token", null);
+                    CacheUtils.putString(CoachTutorialDetailCoursesActivity.this, "registration_id", null);
                     startActivity(new Intent(CoachTutorialDetailCoursesActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

@@ -1,6 +1,9 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -29,6 +32,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhongchuangtiyu.denarau.Adapters.MembershipCardViewpagerAdapter;
 import com.zhongchuangtiyu.denarau.Entities.Announcements;
 import com.zhongchuangtiyu.denarau.Entities.ClubsHome;
+import com.zhongchuangtiyu.denarau.Jpush.ExampleUtil;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
@@ -48,6 +52,7 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class MembershipCardMainActivity extends BaseActivity implements View.OnClickListener
 {
@@ -87,6 +92,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     private final List<String> list = new ArrayList<String>();
     private int j = 0;
     private Timer timer;
+
+
 
     final Handler handler = new Handler()
     {
@@ -135,6 +142,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         timer = new Timer(true);
         timer.schedule(task, 1000, 4000);
         setListeners();
+        JPushInterface.init(getApplicationContext());
+        Xlog.d(CacheUtils.getString(MembershipCardMainActivity.this, "registration_id",null) + "registration_id--------------------------------");
         ActivityCollector.addActivity(this);
     }
 
@@ -152,6 +161,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(MembershipCardMainActivity.this, "token", null);
+                    CacheUtils.putString(MembershipCardMainActivity.this, "registration_id", null);
                     startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
@@ -317,6 +328,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(MembershipCardMainActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(MembershipCardMainActivity.this, "token", null);
+                    CacheUtils.putString(MembershipCardMainActivity.this, "registration_id", null);
                     startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

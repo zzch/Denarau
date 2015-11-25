@@ -28,6 +28,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class FeedBackActivity extends BaseActivity implements View.OnClickListener
 {
@@ -50,6 +51,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
         StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.giveAdviceToolbar);
         setSupportActionBar(toolbar);
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
     }
@@ -81,6 +83,8 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(FeedBackActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(FeedBackActivity.this, "token", null);
+                    CacheUtils.putString(FeedBackActivity.this, "registration_id", null);
                     startActivity(new Intent(FeedBackActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

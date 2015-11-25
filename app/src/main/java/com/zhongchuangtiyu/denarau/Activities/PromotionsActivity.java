@@ -30,6 +30,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -58,6 +59,7 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //        sendProtionsRequest();
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
     }
@@ -156,6 +158,8 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(PromotionsActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(PromotionsActivity.this, "token", null);
+                    CacheUtils.putString(PromotionsActivity.this, "registration_id", null);
                     startActivity(new Intent(PromotionsActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
@@ -199,6 +203,8 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(PromotionsActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(PromotionsActivity.this, "token", null);
+                    CacheUtils.putString(PromotionsActivity.this, "registration_id", null);
                     startActivity(new Intent(PromotionsActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

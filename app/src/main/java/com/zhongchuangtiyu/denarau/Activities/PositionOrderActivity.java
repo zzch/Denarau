@@ -39,6 +39,7 @@ import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class PositionOrderActivity extends BaseActivity implements View.OnClickListener
 {
@@ -99,6 +100,7 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
         progressDialog.setCancelable(false);
         btnToday.setSelected(true);
         requestData();
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
     }
@@ -130,6 +132,8 @@ public class PositionOrderActivity extends BaseActivity implements View.OnClickL
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(PositionOrderActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(PositionOrderActivity.this, "token", null);
+                    CacheUtils.putString(PositionOrderActivity.this, "registration_id", null);
                     startActivity(new Intent(PositionOrderActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

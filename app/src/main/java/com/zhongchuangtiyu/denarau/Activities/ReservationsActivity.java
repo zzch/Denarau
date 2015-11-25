@@ -27,6 +27,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -54,6 +55,7 @@ public class ReservationsActivity extends BaseActivity implements View.OnClickLi
         StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
 //        sendRequest();
@@ -149,6 +151,8 @@ public class ReservationsActivity extends BaseActivity implements View.OnClickLi
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(ReservationsActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(ReservationsActivity.this, "token", null);
+                    CacheUtils.putString(ReservationsActivity.this, "registration_id", null);
                     startActivity(new Intent(ReservationsActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
@@ -193,6 +197,8 @@ public class ReservationsActivity extends BaseActivity implements View.OnClickLi
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(ReservationsActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(ReservationsActivity.this, "token", null);
+                    CacheUtils.putString(ReservationsActivity.this, "registration_id", null);
                     startActivity(new Intent(ReservationsActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

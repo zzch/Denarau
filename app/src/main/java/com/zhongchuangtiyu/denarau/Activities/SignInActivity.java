@@ -1,12 +1,16 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -19,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Cache;
 import com.android.volley.VolleyError;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -26,6 +31,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.zhongchuangtiyu.denarau.Entities.Sign_In;
 import com.zhongchuangtiyu.denarau.Entities.Welcome;
+import com.zhongchuangtiyu.denarau.Jpush.ExampleUtil;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
@@ -43,6 +49,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class SignInActivity extends BaseActivity implements TextWatcher, View.OnClickListener
 {
@@ -81,6 +88,14 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
     private LocationClient mLocationClient;
     private LocationClientOption mOption;
     public double latitude, longitude;
+
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -98,8 +113,60 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         btnLogin.setVisibility(View.GONE);
         setListeners();
         initLocation();
-    }
+        registerMessageReceiver();
+        JPushInterface.init(getApplicationContext());
+        String regId = JPushInterface.getRegistrationID(SignInActivity.this);
+        CacheUtils.putString(SignInActivity.this, "registration_id",regId);
+        Log.d("REGId", regId + "regIdregIdregIdregIdregIdregIdregIdregId");
 
+    }
+    private void putRegistrationId()
+    {
+        Map<String, String> map = new HashMap<>();
+        String token = CacheUtils.getString(SignInActivity.this, "token", null);
+        String registration_id = CacheUtils.getString(SignInActivity.this, "registration_id", null);
+        MyApplication.volleyPUT(APIUrls.REGISTRATION_ID + "token=" + token + "&" + "registration_id=" + registration_id, map, new MyApplication.VolleyCallBack()
+        {
+            @Override
+            public void netSuccess(String response)
+            {
+
+            }
+
+            @Override
+            public void netFail(VolleyError error)
+            {
+
+            }
+        });
+    }
+    private void registerMessageReceiver()
+    {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        registerReceiver(mMessageReceiver, filter);
+    }
+    public class MessageReceiver extends BroadcastReceiver
+    {
+
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction()))
+            {
+                String messge = intent.getStringExtra(KEY_MESSAGE);
+                String extras = intent.getStringExtra(KEY_EXTRAS);
+                StringBuilder showMsg = new StringBuilder();
+                showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                if (!ExampleUtil.isEmpty(extras))
+                {
+                    showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                }
+            }
+        }
+    }
     private void setListeners()
     {
         loginPhoneNum.addTextChangedListener(this);
@@ -145,10 +212,12 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
     /* 本地取址Client 端设置 Option选项 */
         mLocationClient.setLocOption(mOption);
     /* 设置监听器，监听服务器发送过来的地址信息 */
-        mLocationClient.registerLocationListener(new BDLocationListener() {
+        mLocationClient.registerLocationListener(new BDLocationListener()
+        {
             @Override
-            public void onReceiveLocation(BDLocation bdLocation) {
-                if(bdLocation == null)
+            public void onReceiveLocation(BDLocation bdLocation)
+            {
+                if (bdLocation == null)
                     return;
                 StringBuffer sb = new StringBuffer(256);
         /* 获取经纬度 */
@@ -669,6 +738,8 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         }
 
     }
+
+
     class TimeCount extends CountDownTimer
     {
         public TimeCount(long millisInFuture, long countDownInterval)
@@ -695,6 +766,15 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
     protected void onDestroy()
     {
         super.onDestroy();
+        String registration_id = CacheUtils.getString(SignInActivity.this, "registration_id", null);
+        String token = CacheUtils.getString(SignInActivity.this, "token", null);
+
+        if (registration_id.equals(""))
+        {
+            Xlog.d("registration_idregistration_idregistration_idregistration_idregistration_idregistration_id" + registration_id);
+            Xlog.d("tokentokentokentokentokentokentokentokentokentokentokentokentoken" + token);
+            putRegistrationId();
+        }
         ActivityCollector.removeActivity(this);
     }
 }

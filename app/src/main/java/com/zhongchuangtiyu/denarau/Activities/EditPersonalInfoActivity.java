@@ -62,6 +62,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class EditPersonalInfoActivity extends BaseActivity implements View.OnClickListener
 {
@@ -104,6 +105,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements View.OnCli
         progressDialog.setMessage("头像上传中...");
         progressDialog.setCancelable(false);
         setData();
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
     }

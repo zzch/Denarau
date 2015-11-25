@@ -30,6 +30,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -58,6 +59,7 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
         StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
     }
@@ -156,6 +158,8 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(TabsListActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(TabsListActivity.this, "token", null);
+                    CacheUtils.putString(TabsListActivity.this, "registration_id", null);
                     startActivity(new Intent(TabsListActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
@@ -203,6 +207,8 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(TabsListActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(TabsListActivity.this, "token", null);
+                    CacheUtils.putString(TabsListActivity.this, "registration_id", null);
                     startActivity(new Intent(TabsListActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

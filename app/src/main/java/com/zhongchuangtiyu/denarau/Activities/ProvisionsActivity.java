@@ -40,6 +40,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class ProvisionsActivity extends BaseActivity
 {
@@ -67,6 +68,7 @@ public class ProvisionsActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         sendProvisionsRequest();
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
     }
@@ -96,6 +98,8 @@ public class ProvisionsActivity extends BaseActivity
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(ProvisionsActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(ProvisionsActivity.this, "token", null);
+                    CacheUtils.putString(ProvisionsActivity.this, "registration_id", null);
                     startActivity(new Intent(ProvisionsActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();

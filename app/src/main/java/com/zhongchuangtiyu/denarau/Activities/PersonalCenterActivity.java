@@ -32,6 +32,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class PersonalCenterActivity extends BaseActivity implements View.OnClickListener
 {
@@ -62,6 +63,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         StatusBarCompat.compat(this);
+        JPushInterface.init(getApplicationContext());
         setListeners();
         ActivityCollector.addActivity(this);
     }
@@ -96,6 +98,8 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
                 if (response.contains("10002"))
                 {
                     CustomToast.showToast(PersonalCenterActivity.this, "登录失效，请重新登录");
+                    CacheUtils.putString(PersonalCenterActivity.this, "token", null);
+                    CacheUtils.putString(PersonalCenterActivity.this, "registration_id", null);
                     startActivity(new Intent(PersonalCenterActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
