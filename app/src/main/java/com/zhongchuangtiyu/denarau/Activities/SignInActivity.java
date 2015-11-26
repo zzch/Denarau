@@ -87,6 +87,8 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
     private TimeCount time = new TimeCount(60000,1000);
     private LocationClient mLocationClient;
     private LocationClientOption mOption;
+    private String registration_id;
+    private String  token;
     public double latitude, longitude;
 
     private MessageReceiver mMessageReceiver;
@@ -115,22 +117,26 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         initLocation();
         registerMessageReceiver();
         JPushInterface.init(getApplicationContext());
-        String regId = JPushInterface.getRegistrationID(SignInActivity.this);
-        CacheUtils.putString(SignInActivity.this, "registration_id",regId);
-        Log.d("REGId", regId + "regIdregIdregIdregIdregIdregIdregIdregId");
+        registration_id = JPushInterface.getRegistrationID(SignInActivity.this);
+
+        CacheUtils.putString(SignInActivity.this, "registration_id",registration_id);
+        Log.d("REGId", registration_id + "regIdregIdregIdregIdregIdregIdregIdregId");
 
     }
+
+
+
     private void putRegistrationId()
     {
         Map<String, String> map = new HashMap<>();
-        String token = CacheUtils.getString(SignInActivity.this, "token", null);
-        String registration_id = CacheUtils.getString(SignInActivity.this, "registration_id", null);
+//        String token = CacheUtils.getString(SignInActivity.this, "token", null);
+//        String registration_id = CacheUtils.getString(SignInActivity.this, "registration_id", null);
         MyApplication.volleyPUT(APIUrls.REGISTRATION_ID + "token=" + token + "&" + "registration_id=" + registration_id, map, new MyApplication.VolleyCallBack()
         {
             @Override
             public void netSuccess(String response)
             {
-
+                Xlog.d("responseresponseresponseresponseresponseresponse" + response);
             }
 
             @Override
@@ -692,12 +698,16 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
                 {
                     String name = data.getUser().getName();
                     String gender = data.getUser().getGender();
-                    String token = data.getUser().getToken();
+                    token = data.getUser().getToken();
                     String club_uuid = data.getClub().getUuid();
                     CacheUtils.putString(SignInActivity.this, "token", token);
                     CacheUtils.putString(SignInActivity.this, "clubuuid", club_uuid);
                     CacheUtils.putString(SignInActivity.this, "name", name);
                     CacheUtils.putString(SignInActivity.this, "gender", gender);
+                    if (!registration_id.equals(""))
+                    {
+                        putRegistrationId();
+                    }
                     startActivity(new Intent(SignInActivity.this, MembershipCardMainActivity.class));
                     finish();
                 }
@@ -728,6 +738,9 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
                 else
                 {
                     sendSignInRequest();
+                    Xlog.d("registration_idregistration_idregistration_idregistration_idregistration_idregistration_id" + registration_id);
+
+
                 }
                 break;
             case R.id.resendValidateCode:
@@ -737,7 +750,7 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
                 break;
         }
 
-    }
+     }
 
 
     class TimeCount extends CountDownTimer
@@ -761,20 +774,18 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
             resendValidateCode.setText(millisUntilFinished / 1000 + "秒");
         }
     }
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
 
+        unregisterReceiver(mMessageReceiver);
+    }
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
-        String registration_id = CacheUtils.getString(SignInActivity.this, "registration_id", null);
-        String token = CacheUtils.getString(SignInActivity.this, "token", null);
 
-        if (registration_id.equals(""))
-        {
-            Xlog.d("registration_idregistration_idregistration_idregistration_idregistration_idregistration_id" + registration_id);
-            Xlog.d("tokentokentokentokentokentokentokentokentokentokentokentokentoken" + token);
-            putRegistrationId();
-        }
         ActivityCollector.removeActivity(this);
     }
 }

@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.zhongchuangtiyu.denarau.Activities.CoachTutorialListActivity;
 import com.zhongchuangtiyu.denarau.Activities.TabsListActivity;
+import com.zhongchuangtiyu.denarau.Demos.Test3;
+import com.zhongchuangtiyu.denarau.Entities.JpushCustomMessageEntity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
@@ -40,22 +42,49 @@ public class MyReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
         	Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
         	processCustomMessage(context, bundle);
-			Xlog.d(CacheUtils.getString(context, "registration_id", null));
+//			String customMsg = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+			JpushCustomMessageEntity customMsg = JpushCustomMessageEntity.instance(bundle.getString(JPushInterface.EXTRA_EXTRA));
+			String redirect_to = customMsg.getRedirect_to();
+			String club_uuid = customMsg.getClub_uuid();
+			Xlog.d("bundle.getString(JPushInterface.EXTRA_MESSAGE).toString()" + bundle.getString(JPushInterface.EXTRA_EXTRA));
+			Xlog.d("club_uuidclub_uuidclub_uuidclub_uuidclub_uuidclub_uuid" + club_uuid);
+			Xlog.d("redirect_toredirect_toredirect_toredirect_toredirect_toredirect_toredirect_to" + redirect_to);
+			Intent intent1 = new Intent(context, Test3.class);
+			intent1.putExtras(bundle);
+			intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			context.startActivity(intent1);
+			Xlog.d("customMsgcustomMsgcustomMsgcustomMsgcustomMsgcustomMsgcustomMsg" + customMsg);
 
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+			JpushCustomMessageEntity customMsg = JpushCustomMessageEntity.instance(bundle.getString(JPushInterface.EXTRA_MESSAGE).toString());
+			String redirect_to = customMsg.getRedirect_to();
+			String club_uuid = customMsg.getClub_uuid();
+			Xlog.d("redirect_toredirect_toredirect_toredirect_toredirect_to" + redirect_to);
+			Xlog.d("club_uuidclub_uuidclub_uuidclub_uuidclub_uuidclub_uuid" + club_uuid);
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
             
         	//打开自定义的Activity
-        	Intent i = new Intent(context, TabsListActivity.class);
-        	i.putExtras(bundle);
-        	//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-        	context.startActivity(i);
-        	
+			if (bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID).contains("tabs_list"))
+			{
+
+				Intent i = new Intent(context, TabsListActivity.class);
+				i.putExtras(bundle);
+				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+				context.startActivity(i);
+			}else if (bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID).contains(""))
+			{
+				Intent i = new Intent(context, TabsListActivity.class);
+				i.putExtras(bundle);
+				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+				context.startActivity(i);
+			}
+
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
             //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
