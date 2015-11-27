@@ -21,8 +21,8 @@ import android.widget.ImageView;
  * 缩放图片的View
  * 
  * @ClassName: ClipZoomImageView
- * @Description:
- * @author xiechengfa2000@163.com
+ * 作者：WangMeng on 2015/11/4 10:19
+ * 邮箱：wangmeng.wiz@foxmail.com
  * @date 2015-5-10 下午6:20:41
  */
 public class ClipZoomImageView extends ImageView implements

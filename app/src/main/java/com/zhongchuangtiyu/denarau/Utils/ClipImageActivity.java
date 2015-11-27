@@ -21,10 +21,9 @@ import java.io.IOException;
 
 /**
  * 裁剪图片的Activity
- * 
- * @ClassName: CropImageActivity
- * @Description:
- * @author xiechengfa2000@163.com
+ *
+ * 作者：WangMeng on 2015/11/4 10:19
+ * 邮箱：wangmeng.wiz@foxmail.com
  * @date 2015-5-8 下午3:39:22
  */
 public class ClipImageActivity extends Activity implements OnClickListener {

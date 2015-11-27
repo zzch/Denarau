@@ -11,8 +11,8 @@ import android.view.View;
 
 /**
  * @ClassName: ClipImageBorderView
- * @Description:
- * @author xiechengfa2000@163.com
+ * 作者：WangMeng on 2015/11/4 10:19
+ * 邮箱：wangmeng.wiz@foxmail.com
  * @date 2015-5-10 下午10:22:53
  */
 public class ClipImageBorderView extends View {
