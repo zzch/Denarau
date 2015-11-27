@@ -120,6 +120,7 @@ public class MyReceiver extends BroadcastReceiver {
 			JpushCustomMessageEntity customMsg = JpushCustomMessageEntity.instance(bundle.getString(JPushInterface.EXTRA_EXTRA));
 			String redirect_to = customMsg.getRedirect_to();
 			String club_uuid = customMsg.getClub_uuid();
+			CacheUtils.putString(context, "clubuuid", club_uuid);
         	//打开自定义的Activity
 			if (redirect_to.contains("tabs_list"))
 			{
