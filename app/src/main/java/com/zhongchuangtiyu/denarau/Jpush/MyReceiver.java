@@ -1,16 +1,30 @@
 package com.zhongchuangtiyu.denarau.Jpush;
 
+
+
+import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 
-import com.zhongchuangtiyu.denarau.Activities.CoachTutorialListActivity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
+
 import com.zhongchuangtiyu.denarau.Activities.TabsListActivity;
 import com.zhongchuangtiyu.denarau.Demos.Test3;
 import com.zhongchuangtiyu.denarau.Entities.JpushCustomMessageEntity;
+import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.AppState;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
+import com.zhongchuangtiyu.denarau.Utils.DensityUtil;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import org.json.JSONException;
@@ -31,7 +45,7 @@ public class MyReceiver extends BroadcastReceiver {
 	private static final String TAG = "JPush";
 
 	@Override
-	public void onReceive(Context context, Intent intent) {
+	public void onReceive(final Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
 		Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 		
@@ -59,25 +73,57 @@ public class MyReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
-			JpushCustomMessageEntity customMsg = JpushCustomMessageEntity.instance(bundle.getString(JPushInterface.EXTRA_MESSAGE).toString());
-			String redirect_to = customMsg.getRedirect_to();
-			String club_uuid = customMsg.getClub_uuid();
+			String msg = bundle.getString(JPushInterface.EXTRA_ALERT);
+			JpushCustomMessageEntity customMsg = JpushCustomMessageEntity.instance(bundle.getString(JPushInterface.EXTRA_EXTRA));
+			final String redirect_to = customMsg.getRedirect_to();
+			final String club_uuid = customMsg.getClub_uuid();
+			if (!AppState.isApplicationBroughtToBackground(context))
+			{
+
+				JPushInterface.clearAllNotifications(context);
+				AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme);
+				builder.setMessage(msg)
+						.setCancelable(false)
+						.setPositiveButton("去看看", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								if (redirect_to.equals("tabs_list"))
+								{
+									CacheUtils.putString(context, "clubuuid", club_uuid);
+									Intent i = new Intent(context, TabsListActivity.class);
+									i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+									context.startActivity(i);
+								}
+							}
+						})
+						.setNegativeButton("否", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								dialog.cancel();
+							}
+						});
+				AlertDialog alert = builder.create();
+				alert.getWindow().setLayout(DensityUtil.dp2px(context,300), WindowManager.LayoutParams.WRAP_CONTENT);
+				alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+
+				alert.show();
+				CustomToast.showToast(context, "AppState.isApplicationBroughtToBackground(context)");
+			}
+			Xlog.d("AppState.isApplicationBroughtToBackground(context)" + AppState.isApplicationBroughtToBackground(context));
+
 			Xlog.d("redirect_toredirect_toredirect_toredirect_toredirect_to" + redirect_to);
 			Xlog.d("club_uuidclub_uuidclub_uuidclub_uuidclub_uuidclub_uuid" + club_uuid);
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
-            
+			JpushCustomMessageEntity customMsg = JpushCustomMessageEntity.instance(bundle.getString(JPushInterface.EXTRA_EXTRA));
+			String redirect_to = customMsg.getRedirect_to();
+			String club_uuid = customMsg.getClub_uuid();
         	//打开自定义的Activity
-			if (bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID).contains("tabs_list"))
+			if (redirect_to.contains("tabs_list"))
 			{
-
-				Intent i = new Intent(context, TabsListActivity.class);
-				i.putExtras(bundle);
-				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-				context.startActivity(i);
-			}else if (bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID).contains(""))
-			{
+				CacheUtils.putString(context, "club_uuid", club_uuid);
 				Intent i = new Intent(context, TabsListActivity.class);
 				i.putExtras(bundle);
 				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

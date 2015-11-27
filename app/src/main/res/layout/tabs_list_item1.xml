@@ -220,19 +220,24 @@
     </LinearLayout>
 
     <Button
+        android:background="@mipmap/xfjl_niu"
+        android:textColor="#ffffff"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
         android:text="New Button"
         android:id="@+id/btnConfirmC"
         android:visibility="gone"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/tabListView2"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:textColor="#ffffff"
+        android:background="@mipmap/xfjl_anniu"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/tvState"

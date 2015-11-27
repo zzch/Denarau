@@ -290,13 +290,17 @@
         android:layout_centerHorizontal="true"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:textColor="#ffffff"
+        android:background="@mipmap/xfjl_anniu"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/tvState"
+        android:gravity="center"
         android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@+id/tabListView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
 
 </RelativeLayout>

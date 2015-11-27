@@ -165,7 +165,7 @@ public class TabsListAdapter1 extends BaseAdapter
                         viewholder.tvState.setVisibility(View.VISIBLE);
                         break;
                     case "confirming":
-                        viewholder.btnConfirmC.setText("待确认");
+                        viewholder.btnConfirmC.setText("确认消费");
                         viewholder.btnConfirmC.setVisibility(View.VISIBLE);
                         viewholder.tvState.setVisibility(View.GONE);
                         break;

@@ -110,7 +110,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                         j = 0;
                     }
                     setAnnouncementOutAnimation();
-                    Xlog.d(String.valueOf(j) + "j--------------------------------------");
+//                    Xlog.d(String.valueOf(j) + "j--------------------------------------");
                     break;
             }
             super.handleMessage(msg);
