@@ -54,7 +54,6 @@ public class FirstScreenActivity extends InstrumentedActivity
                 intent.setClass(FirstScreenActivity.this, MembershipCardMainActivity.class);
             }else
             {
-
                 intent.setClass(FirstScreenActivity.this, SignInActivity.class);
             }
             startActivity(intent);

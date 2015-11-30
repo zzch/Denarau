@@ -118,7 +118,6 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         registerMessageReceiver();
         JPushInterface.init(getApplicationContext());
         registration_id = JPushInterface.getRegistrationID(SignInActivity.this);
-
         CacheUtils.putString(SignInActivity.this, "registration_id",registration_id);
         Log.d("REGId", registration_id + "regIdregIdregIdregIdregIdregIdregIdregId");
 
@@ -739,8 +738,6 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
                 {
                     sendSignInRequest();
                     Xlog.d("registration_idregistration_idregistration_idregistration_idregistration_idregistration_id" + registration_id);
-
-
                 }
                 break;
             case R.id.resendValidateCode:

@@ -52,10 +52,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <!--判断程序是否前台权限-->
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <!--在receiver中创建dialog-->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"></uses-permission>
+    <!-- 判断程序是否前台权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- 在receiver中创建dialog -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:name=".Utils.MyApplication"
         android:allowBackup="true"

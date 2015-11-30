@@ -92,7 +92,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     private final List<String> list = new ArrayList<String>();
     private int j = 0;
     private Timer timer;
-
+    private String registration_id;
 
 
     final Handler handler = new Handler()
@@ -124,10 +124,41 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         {
             Message message = new Message();
             message.what = 1;
+            message.what = 2;
             handler.sendMessage(message);
         }
     };
+    Thread rId = new Thread(new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            registration_id = CacheUtils.getString(MembershipCardMainActivity.this, "registration_id", null);
+            String token = CacheUtils.getString(MembershipCardMainActivity.this, "token", null);
+            if (registration_id == null || registration_id != JPushInterface.getRegistrationID(MembershipCardMainActivity.this));
+            {
+                registration_id = JPushInterface.getRegistrationID(MembershipCardMainActivity.this);
+                CacheUtils.putString(MembershipCardMainActivity.this, "registration_id",registration_id);
+                Map<String, String> map = new HashMap<>();
+//        String token = CacheUtils.getString(SignInActivity.this, "token", null);
+//        String registration_id = CacheUtils.getString(SignInActivity.this, "registration_id", null);
+                MyApplication.volleyPUT(APIUrls.REGISTRATION_ID + "token=" + token + "&" + "registration_id=" + registration_id, map, new MyApplication.VolleyCallBack()
+                {
+                    @Override
+                    public void netSuccess(String response)
+                    {
+                        Xlog.d("responseresponseresponseresponseresponseresponse" + response);
+                    }
 
+                    @Override
+                    public void netFail(VolleyError error)
+                    {
+
+                    }
+                });
+            }
+        }
+    });
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -141,6 +172,10 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         setSupportActionBar(membershipCardMainToolbar);
         timer = new Timer(true);
         timer.schedule(task, 1000, 4000);
+        if (CacheUtils.getString(MembershipCardMainActivity.this, "registration_id", null) == null)
+        {
+            rId.start();
+        }
         setListeners();
         JPushInterface.init(getApplicationContext());
         Xlog.d(CacheUtils.getString(MembershipCardMainActivity.this, "registration_id",null) + "registration_id--------------------------------");

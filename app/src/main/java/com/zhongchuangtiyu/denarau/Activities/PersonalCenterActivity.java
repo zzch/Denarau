@@ -174,6 +174,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
                 CacheUtils.putString(PersonalCenterActivity.this, "token", null);
                 CacheUtils.putString(PersonalCenterActivity.this, "clubuuid", null);
                 CacheUtils.putString(PersonalCenterActivity.this, "setPortrait", null);
+                CacheUtils.putString(PersonalCenterActivity.this, "registration_id",null);
                 startActivity(new Intent(PersonalCenterActivity.this, SignInActivity.class));
                 finish();
                 ActivityCollector.finishAll();
