@@ -39,6 +39,7 @@ import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.NetworkState;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.ValidatePhoneNum;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
@@ -114,16 +115,26 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         validateRlContainer.setVisibility(View.GONE);
         btnLogin.setVisibility(View.GONE);
         setListeners();
-        initLocation();
-        registerMessageReceiver();
-        JPushInterface.init(getApplicationContext());
-        registration_id = JPushInterface.getRegistrationID(SignInActivity.this);
-        CacheUtils.putString(SignInActivity.this, "registration_id",registration_id);
-        Log.d("REGId", registration_id + "regIdregIdregIdregIdregIdregIdregIdregId");
-
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (NetworkState.isNetworkAvailable(SignInActivity.this))
+        {
 
+            initLocation();
+            registerMessageReceiver();
+            JPushInterface.init(getApplicationContext());
+            registration_id = JPushInterface.getRegistrationID(SignInActivity.this);
+            CacheUtils.putString(SignInActivity.this, "registration_id",registration_id);
+            Log.d("REGId", registration_id + "regIdregIdregIdregIdregIdregIdregIdregId");
+        }else
+        {
+            CustomToast.showToast(SignInActivity.this, "网络连接不可用");
+        }
+    }
 
     private void putRegistrationId()
     {
@@ -715,7 +726,8 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
             @Override
             public void netFail(VolleyError error)
             {
-                CustomToast.showToast(SignInActivity.this, "网络连接失败");
+
+                CustomToast.showToast(SignInActivity.this, error.toString());
             }
         });
     }
@@ -743,6 +755,7 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
             case R.id.resendValidateCode:
                 time.start();
                 resendValidateCodeRequest();
+                break;
             default:
                 break;
         }
@@ -775,8 +788,10 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
     protected void onPause()
     {
         super.onPause();
-
-        unregisterReceiver(mMessageReceiver);
+        if (NetworkState.isNetworkAvailable(SignInActivity.this))
+        {
+            unregisterReceiver(mMessageReceiver);
+        }
     }
     @Override
     protected void onDestroy()

@@ -1,9 +1,6 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -15,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -24,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -32,7 +27,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhongchuangtiyu.denarau.Adapters.MembershipCardViewpagerAdapter;
 import com.zhongchuangtiyu.denarau.Entities.Announcements;
 import com.zhongchuangtiyu.denarau.Entities.ClubsHome;
-import com.zhongchuangtiyu.denarau.Jpush.ExampleUtil;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
@@ -124,41 +118,40 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         {
             Message message = new Message();
             message.what = 1;
-            message.what = 2;
             handler.sendMessage(message);
         }
     };
-    Thread rId = new Thread(new Runnable()
-    {
-        @Override
-        public void run()
-        {
-            registration_id = CacheUtils.getString(MembershipCardMainActivity.this, "registration_id", null);
-            String token = CacheUtils.getString(MembershipCardMainActivity.this, "token", null);
-            if (registration_id == null || registration_id != JPushInterface.getRegistrationID(MembershipCardMainActivity.this));
-            {
-                registration_id = JPushInterface.getRegistrationID(MembershipCardMainActivity.this);
-                CacheUtils.putString(MembershipCardMainActivity.this, "registration_id",registration_id);
-                Map<String, String> map = new HashMap<>();
-//        String token = CacheUtils.getString(SignInActivity.this, "token", null);
-//        String registration_id = CacheUtils.getString(SignInActivity.this, "registration_id", null);
-                MyApplication.volleyPUT(APIUrls.REGISTRATION_ID + "token=" + token + "&" + "registration_id=" + registration_id, map, new MyApplication.VolleyCallBack()
-                {
-                    @Override
-                    public void netSuccess(String response)
-                    {
-                        Xlog.d("responseresponseresponseresponseresponseresponse" + response);
-                    }
-
-                    @Override
-                    public void netFail(VolleyError error)
-                    {
-
-                    }
-                });
-            }
-        }
-    });
+//    Thread rId = new Thread(new Runnable()
+//    {
+//        @Override
+//        public void run()
+//        {
+//            registration_id = CacheUtils.getString(MembershipCardMainActivity.this, "registration_id", null);
+//            String token = CacheUtils.getString(MembershipCardMainActivity.this, "token", null);
+//            if (registration_id == null || registration_id != JPushInterface.getRegistrationID(MembershipCardMainActivity.this));
+//            {
+//                registration_id = JPushInterface.getRegistrationID(MembershipCardMainActivity.this);
+//                CacheUtils.putString(MembershipCardMainActivity.this, "registration_id",registration_id);
+//                Map<String, String> map = new HashMap<>();
+////        String token = CacheUtils.getString(SignInActivity.this, "token", null);
+////        String registration_id = CacheUtils.getString(SignInActivity.this, "registration_id", null);
+//                MyApplication.volleyPUT(APIUrls.REGISTRATION_ID + "token=" + token + "&" + "registration_id=" + registration_id, map, new MyApplication.VolleyCallBack()
+//                {
+//                    @Override
+//                    public void netSuccess(String response)
+//                    {
+//                        Xlog.d("responseresponseresponseresponseresponseresponse" + response);
+//                    }
+//
+//                    @Override
+//                    public void netFail(VolleyError error)
+//                    {
+//
+//                    }
+//                });
+//            }
+//        }
+//    });
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -172,10 +165,10 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         setSupportActionBar(membershipCardMainToolbar);
         timer = new Timer(true);
         timer.schedule(task, 1000, 4000);
-        if (CacheUtils.getString(MembershipCardMainActivity.this, "registration_id", null) == null)
-        {
-            rId.start();
-        }
+//        if (CacheUtils.getString(MembershipCardMainActivity.this, "registration_id", null) == null)
+//        {
+//            rId.start();
+//        }
         setListeners();
         JPushInterface.init(getApplicationContext());
         Xlog.d(CacheUtils.getString(MembershipCardMainActivity.this, "registration_id",null) + "registration_id--------------------------------");
