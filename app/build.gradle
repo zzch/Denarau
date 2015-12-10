@@ -39,5 +39,9 @@ dependencies {
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile files('libs/locSDK_6.13.jar')
     compile files('src/main/jniLibs/jpush-android-2.0.5.jar')
+    compile files('libs/httpmime-4.1.3.jar')
+    compile files('libs/SocialSDK_WeiXin_1.jar')
+    compile files('libs/SocialSDK_WeiXin_2.jar')
+    compile files('libs/umeng_social_sdk.jar')
 }
 

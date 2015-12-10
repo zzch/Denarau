@@ -6,7 +6,7 @@
                 android:gravity="center">
 
     <ImageView
-        android:background="@mipmap/cyfw_moreng"
+        android:background="@mipmap/cyfw_mr"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="130dp"

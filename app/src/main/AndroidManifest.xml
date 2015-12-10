@@ -65,6 +65,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
+        <!--友盟start-->
+        <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56668f8c67e58e6d7c001009" >
+        </meta-data>
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
+        <!-- 微信回调activity -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--友盟end-->
         <!-- 极光推送start -->
         <!-- For test only 测试的主程序 -->
         <activity
@@ -323,15 +346,16 @@
             android:name=".Activities.FirstScreenActivity"
             android:label="@string/title_activity_first_screen"
             android:theme="@style/AppTheme.NoActionBar" >
+
+        </activity>
+        <activity
+            android:name=".Demos.Test3"
+            android:label="@string/title_activity_test3" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".Demos.Test3"
-            android:label="@string/title_activity_test3" >
         </activity>
     </application>
 
