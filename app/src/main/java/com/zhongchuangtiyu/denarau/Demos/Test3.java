@@ -29,8 +29,7 @@ public class Test3 extends Activity
 
         configPlatforms();
         setShareContent();
-
-        mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
+        mController.setShareContent("分享内容，http://www.umeng.com/social");
         // 设置分享图片, 参数2为图片的url地址
         mController.setShareMedia(new UMImage(Test3.this,
                 R.mipmap.icon));

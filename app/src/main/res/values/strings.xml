@@ -43,7 +43,7 @@
     </integer-array>
     <string name="title_activity_tabs_list">TabsListActivity</string>
     <string name="title_activity_tabs_all">TabsAllActivity</string>
-    <string name="title_activity_first_screen">FirstScreenActivity</string>
+    <string name="title_activity_first_screen">练球宝</string>
 
     <!--极光推送start-->
     <string name="hello">Hello World, JPush!</string>

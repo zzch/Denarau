@@ -24,6 +24,7 @@ import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -241,6 +242,7 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId())
         {
             case R.id.tabsTitleLeft:
+                startActivity(new Intent(TabsListActivity.this, MembershipCardMainActivity.class));
                 finish();
                 break;
             default:

@@ -20,6 +20,7 @@ import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.ScreenUtils;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.lang.reflect.Member;
@@ -96,7 +97,7 @@ public class FirstScreenActivity extends InstrumentedActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_screen);
-
+        ScreenUtils.setFullScreen(this);
         timer = new Timer(true);
         timer.schedule(task, 1000, 60000);
 

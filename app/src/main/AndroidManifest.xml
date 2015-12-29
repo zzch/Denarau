@@ -60,7 +60,7 @@
     <application
         android:name=".Utils.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -235,6 +235,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
+
         </activity>
         <activity
             android:name=".Activities.PositionOrderActivity"
@@ -346,16 +347,16 @@
             android:name=".Activities.FirstScreenActivity"
             android:label="@string/title_activity_first_screen"
             android:theme="@style/AppTheme.NoActionBar" >
-
-        </activity>
-        <activity
-            android:name=".Demos.Test3"
-            android:label="@string/title_activity_test3" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Demos.Test3"
+            android:label="@string/title_activity_test3" >
+
         </activity>
     </application>
 

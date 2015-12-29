@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -84,7 +85,10 @@ public class AnnouncementsDetailActivity extends BaseActivity implements View.On
                 } else
                 {
                     announcementsDetailTitleTv.setText(data.getTitle());
-                    announcementsDetailWebView.loadData(data.getContent(), "text/html", "UTF-8");
+                    announcementsDetailWebView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+                    announcementsDetailWebView.loadData(data.getContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+                    announcementsDetailWebView.getSettings().setUseWideViewPort(true);
+                    announcementsDetailWebView.getSettings().setLoadWithOverviewMode(true);
                 }
             }
 

@@ -109,7 +109,7 @@ public class MyReceiver extends BroadcastReceiver {
 				alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 
 				alert.show();
-				CustomToast.showToast(context, "AppState.isApplicationBroughtToBackground(context)");
+//				CustomToast.showToast(context, "AppState.isApplicationBroughtToBackground(context)");
 			}
 			Xlog.d("AppState.isApplicationBroughtToBackground(context)" + AppState.isApplicationBroughtToBackground(context));
 

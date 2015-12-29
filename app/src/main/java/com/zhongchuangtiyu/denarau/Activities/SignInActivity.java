@@ -123,7 +123,6 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
         super.onResume();
         if (NetworkState.isNetworkAvailable(SignInActivity.this))
         {
-
             initLocation();
             registerMessageReceiver();
             JPushInterface.init(getApplicationContext());
@@ -727,7 +726,7 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
             public void netFail(VolleyError error)
             {
 
-                CustomToast.showToast(SignInActivity.this, error.toString());
+//                CustomToast.showToast(SignInActivity.this, error.toString());
             }
         });
     }

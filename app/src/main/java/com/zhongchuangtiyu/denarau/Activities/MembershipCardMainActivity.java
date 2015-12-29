@@ -427,6 +427,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     protected void onPause()
     {
         super.onPause();
+        JPushInterface.onPause(this);
         indicatorLinearLayout.removeAllViews();
     }
 
@@ -434,6 +435,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     protected void onResume()
     {
         super.onResume();
+        JPushInterface.onResume(this);
         requestCardInfo();
         sendAnnoucementsRequest();
     }
