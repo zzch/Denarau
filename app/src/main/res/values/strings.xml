@@ -58,6 +58,12 @@
     <string name="logining">程序在后台执行, 请查看日志！</string>
     <string name="setting_su">设置成功</string>
     <string name="title_activity_test3">Test3</string>
+    <string name="title_activity_courses_detail">CoursesDetailActivity</string>
+    <string name="title_activity_second">Second</string>
+    <string name="title_activity_test">Test</string>
+    <string name="title_activity_cd2">CD2A</string>
+    <string name="title_activity_course_order">CourseOrderActivity</string>
+    <string name="title_activity_my_course">MyCourseActivity</string>
     <!--极光推送end-->
 
 </resources>
