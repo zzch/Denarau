@@ -374,11 +374,15 @@
             android:name=".Activities.CourseOrderActivity"
             android:label="@string/title_activity_course_order"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <activity
             android:name=".Activities.MyCourseActivity"
             android:label="@string/title_activity_my_course"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".Activities.CourseOrder2Activity"
+            android:label="@string/title_activity_course_order2"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

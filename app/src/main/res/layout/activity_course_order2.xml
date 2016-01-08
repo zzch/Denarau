@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zhongchuangtiyu.denarau.Activities.CDA2Activity">
+    tools:context="com.zhongchuangtiyu.denarau.Activities.CourseOrder2Activity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="课程详情"
+                    android:text="预定"
                     android:id="@+id/textView"
                     android:textColor="@android:color/white"
                     android:layout_centerInParent="true"
@@ -45,6 +45,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_cda2"/>
+    <include layout="@layout/content_course_order2"/>
 
 </android.support.design.widget.CoordinatorLayout>

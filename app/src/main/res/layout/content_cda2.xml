@@ -124,7 +124,7 @@
 
         <com.hedgehog.ratingbar.RatingBar
         android:layout_gravity="center"
-        android:id="@+id/ratingbar"
+        android:id="@+id/cda2RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         hedgehog:starCount="5"
