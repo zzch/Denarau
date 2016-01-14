@@ -244,6 +244,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".Activities.PositionOrderActivity"
@@ -280,6 +281,7 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".Activities.CoachesDetailActivity"
@@ -355,6 +357,11 @@
             android:name=".Activities.FirstScreenActivity"
             android:label="@string/title_activity_first_screen"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".Demos.Test3"
@@ -364,11 +371,7 @@
             android:name=".Activities.CDA2Activity"
             android:label="@string/title_activity_cd2"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.CourseOrderActivity"

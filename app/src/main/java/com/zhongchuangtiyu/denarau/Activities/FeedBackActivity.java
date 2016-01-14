@@ -99,7 +99,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
                         public void onClick(DialogInterface dialog, int which)
                         {
                             dialog.dismiss(); //关闭dialog
-                            Toast.makeText(FeedBackActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(FeedBackActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.setCancelable(false);
@@ -146,7 +146,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
                         public void onClick(DialogInterface dialog, int which)
                         {
                             dialog.dismiss(); //关闭dialog
-                            Toast.makeText(FeedBackActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(FeedBackActivity.this, "确认" + which, Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.setCancelable(false);

@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/courseOrder2Coachname"
+            android:id="@+id/courseOrder2CoachName"
             android:layout_alignTop="@+id/courseOrder2Image"
             android:layout_toEndOf="@+id/courseOrder2Image"
             android:layout_marginLeft="20dp"/>
@@ -41,7 +41,7 @@
             android:text="Medium Text"
             android:id="@+id/courseOrder2CoachType"
             android:layout_alignBottom="@+id/courseOrder2Image"
-            android:layout_alignStart="@+id/courseOrder2Coachname"/>
+            android:layout_alignStart="@+id/courseOrder2CoachName"/>
     </RelativeLayout>
 
     <WebView

@@ -25,8 +25,8 @@
 
                 <ImageButton
                     android:background="@mipmap/icon_back_arrow"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:id="@+id/positionOrderTitleLeft"/>
@@ -37,7 +37,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="打位预定"
                     android:id="@+id/textView"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@android:color/white"
                     android:layout_centerInParent="true"
                     android:textSize="25dp"/>
             </RelativeLayout>

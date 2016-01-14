@@ -122,19 +122,19 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"/>
 
-        <com.hedgehog.ratingbar.RatingBar
-        android:layout_gravity="center"
-        android:id="@+id/cda2RatingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        hedgehog:starCount="5"
-        hedgehog:clickable="true"
-        hedgehog:starEmpty="@mipmap/xx_mr"
-        hedgehog:starFill="@mipmap/xx_xz"
-        hedgehog:starImageSize="50dp"
-        android:layout_below="@+id/textView27"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"></com.hedgehog.ratingbar.RatingBar>
+        <!--<com.hedgehog.ratingbar.RatingBar-->
+        <!--android:layout_gravity="center"-->
+        <!--android:id="@+id/cda2RatingBar"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--hedgehog:starCount="5"-->
+        <!--hedgehog:clickable="true"-->
+        <!--hedgehog:starEmpty="@mipmap/xx_mr"-->
+        <!--hedgehog:starFill="@mipmap/xx_xz"-->
+        <!--hedgehog:starImageSize="50dp"-->
+        <!--android:layout_below="@+id/textView27"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="15dp"></com.hedgehog.ratingbar.RatingBar>-->
     </RelativeLayout>
 
     <Button

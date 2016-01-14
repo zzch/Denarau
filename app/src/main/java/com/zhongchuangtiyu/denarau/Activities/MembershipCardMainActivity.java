@@ -33,6 +33,7 @@ import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
+import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
@@ -51,10 +52,10 @@ import cn.jpush.android.api.JPushInterface;
 public class MembershipCardMainActivity extends BaseActivity implements View.OnClickListener
 {
 
-    @Bind(R.id.membershipCardMainTitleLeft)
-    ImageButton membershipCardMainTitleLeft;
-    @Bind(R.id.membershipCardMainTitleRight)
-    ImageButton membershipCardMainTitleRight;
+    @Bind(R.id.membershipCardMainImageLeft)
+    ImageButton membershipCardMainImageLeft;
+    @Bind(R.id.membershipCardMainImageRight)
+    ImageButton membershipCardMainImageRight;
     @Bind(R.id.membershipCardMainToolbar)
     Toolbar membershipCardMainToolbar;
     @Bind(R.id.membershipCardViewPager)
@@ -77,6 +78,10 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     LinearLayout indicatorLinearLayout;
     @Bind(R.id.membershipCardMainWeather)
     TextView membershipCardMainWeather;
+    @Bind(R.id.membershipCardMainTitleRight)
+    RelativeLayout membershipCardMainTitleRight;
+    @Bind(R.id.membershipCardMainTitleLeft)
+    RelativeLayout membershipCardMainTitleLeft;
     private List<View> pagerViews;
     private MembershipCardViewpagerAdapter adapter;
     private View view;
@@ -121,7 +126,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
             handler.sendMessage(message);
         }
     };
-//    Thread rId = new Thread(new Runnable()
+
+    //    Thread rId = new Thread(new Runnable()
 //    {
 //        @Override
 //        public void run()
@@ -171,7 +177,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
 //        }
         setListeners();
         JPushInterface.init(getApplicationContext());
-        Xlog.d(CacheUtils.getString(MembershipCardMainActivity.this, "registration_id",null) + "registration_id--------------------------------");
+        Xlog.d(CacheUtils.getString(MembershipCardMainActivity.this, "registration_id", null) + "registration_id--------------------------------");
         ActivityCollector.addActivity(this);
     }
 
@@ -197,13 +203,17 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 } else
                 {
                     List<Announcements> data = Announcements.instance(response);
-                    for (int i = 0; i < data.size(); i++)
+                    if (data.size() > 0)
                     {
-                        String text = data.get(i).getTitle();
-                        list.add(text);
+                        for (int i = 0; i < data.size(); i++)
+                        {
+                            String text = data.get(i).getTitle();
+                            list.add(text);
+                        }
+                        membershipCardNoticeInfo.setText(data.get(0).getTitle());
+                        Xlog.d(list.toString() + "list------------------------------------");
                     }
-                    membershipCardNoticeInfo.setText(data.get(0).getTitle());
-                    Xlog.d(list.toString() + "list------------------------------------");
+
                 }
             }
 
@@ -217,7 +227,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                     startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
-                }else
+                } else
                 {
                     CustomToast.showToast(MembershipCardMainActivity.this, "网络连接失败，请检查网络连接");
                 }
@@ -374,12 +384,15 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                         TextView membershipViewPagerCardType = (TextView) view.findViewById(R.id.membershipViewPagerCardType);
                         TextView membershipViewPagerCardBalance = (TextView) view.findViewById(R.id.membershipViewPagerCardBalance);
                         TextView membershipViewPagerCardNumber = (TextView) view.findViewById(R.id.membershipViewPagerCardNumber);
+                        TextView membershipViewPagerCardPeriodOfValidity = (TextView) view.findViewById(R.id.periodOfValidity);
                         RelativeLayout membershipCardViewPagerRoot = (RelativeLayout) view.findViewById(R.id.membershipCardViewPagerRoot);
                         imageLoader.displayImage(data.getClub().getLogo(), membershipViewPagerCourseImage);
                         membershipViewPagerCourseName.setText(data.getClub().getName());
                         membershipViewPagerCardType.setText(data.getMembers().get(i).getCard().getName());
-                        membershipViewPagerCardBalance.setText(data.getMembers().get(i).getBalance());
-                        membershipViewPagerCardNumber.setText(data.getMembers().get(i).getNumber());
+                        String periodOfValidity = DateUtils.getDateToString(Long.valueOf(data.getMembers().get(i).getExpired_at()) * 1000);
+                        membershipViewPagerCardPeriodOfValidity.setText("有效日期：" + periodOfValidity);
+                        membershipViewPagerCardBalance.setText("余额:￥" + data.getMembers().get(i).getBalance());
+                        membershipViewPagerCardNumber.setText("NO:" + data.getMembers().get(i).getNumber());
                         GradientDrawable myGrad = (GradientDrawable) membershipCardViewPagerRoot.getBackground();
                         myGrad.setColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
                         pagerViews.add(view);
@@ -451,6 +464,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         btnMemberStore.setOnClickListener(this);
         membershipCardNoticeInfo.setOnClickListener(this);
         btnCostHistory.setOnClickListener(this);
+        membershipCardMainImageLeft.setClickable(false);
+        membershipCardMainImageRight.setClickable(false);
     }
 
     @Override
@@ -469,9 +484,11 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.btnCoachTurorial:
                 startActivity(new Intent(MembershipCardMainActivity.this, CoachTutorialListActivity.class));
+//                startActivity(new Intent(MembershipCardMainActivity.this, CourseOrderActivity.class));
                 break;
             case R.id.btnFoodService:
                 startActivity(new Intent(MembershipCardMainActivity.this, ProvisionsActivity.class));
+//                startActivity(new Intent(MembershipCardMainActivity.this, CourseOrder2Activity.class));
                 break;
             case R.id.membershipCardMainTitleLeft:
                 startActivity(new Intent(MembershipCardMainActivity.this, PersonalCenterActivity.class));

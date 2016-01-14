@@ -22,7 +22,7 @@
         android:layout_marginLeft="2dp"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/membershipViewPagerCourseImage"
-        android:layout_marginTop="11dp"/>
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,8 +30,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="储值卡"
         android:id="@+id/membershipViewPagerCardType"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/membershipViewPagerCourseImage"
+        android:textSize="30sp"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
 
     <TextView
@@ -40,7 +40,8 @@
         android:text="NO. 1111 1111 1111 1111"
         android:id="@+id/membershipViewPagerCardNumber"
         android:layout_below="@+id/viewPagerDivider"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,13 +50,22 @@
         android:id="@+id/membershipViewPagerCardBalance"
         android:layout_marginRight="10dp"
         android:layout_alignBottom="@+id/viewPagerDivider"
-        android:layout_alignEnd="@+id/viewPagerDivider"/>
+        android:layout_alignEnd="@+id/viewPagerDivider"
+        android:layout_marginBottom="4dp"/>
     <ImageView
         android:id="@+id/viewPagerDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#a29d9d"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="68dp"
         android:layout_below="@+id/membershipViewPagerCardType"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/periodOfValidity"
+        android:layout_alignBottom="@+id/membershipViewPagerCardBalance"
         android:layout_alignParentStart="true"/>
 </RelativeLayout>

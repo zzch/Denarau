@@ -28,4 +28,5 @@ public class APIUrls
     public static String TABS_ALL = "http://staging.lianqiubao.com/api/v1/tabs/all.json?";
     public static String TABS_CONFIRM = "http://staging.lianqiubao.com/api/v1/tabs/confirm.json?";
     public static String REGISTRATION_ID = "http://staging.lianqiubao.com/api/v1/users/registration_id.json?";
+    public static String STUDENTS_AND_COACHES = "http://staging.lianqiubao.com/api/v1/students_and_coaches.json?";
 }

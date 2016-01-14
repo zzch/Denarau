@@ -2,8 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/layout_border1"
-                android:gravity="center">
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:gravity="center"
+    >
 
     <ImageView
         android:background="@mipmap/cyfw_mr"
@@ -15,11 +17,13 @@
         android:layout_alignParentStart="true"/>
 
     <RelativeLayout
+        android:background="@drawable/layout_border4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/foodImage"
         android:layout_alignEnd="@+id/foodImage"
-        android:layout_alignStart="@+id/foodImage">
+        android:layout_alignStart="@+id/foodImage"
+        android:id="@+id/relativeLayout21">
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,4 +48,5 @@
             android:layout_alignEnd="@+id/foodName"
             android:layout_marginTop="5dp"/>
     </RelativeLayout>
+
 </RelativeLayout>
