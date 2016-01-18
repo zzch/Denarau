@@ -13,12 +13,6 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/coachCourseListView"
-        android:layout_gravity="center_horizontal"/>
-
-    <ListView
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/coachTutorialListView"
         android:layout_centerHorizontal="true"/>

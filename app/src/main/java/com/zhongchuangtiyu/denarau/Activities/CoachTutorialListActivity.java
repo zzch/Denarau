@@ -14,7 +14,9 @@ import com.android.volley.Cache;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.zhongchuangtiyu.denarau.Adapters.CoachListAdapter;
+import com.zhongchuangtiyu.denarau.Adapters.StudentsAndCoachesAdapter;
 import com.zhongchuangtiyu.denarau.Entities.Coaches;
+import com.zhongchuangtiyu.denarau.Entities.StudentsAndCoaches;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
@@ -68,7 +70,7 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
         Map<String,String> map = new HashMap<>();
         String token = CacheUtils.getString(CoachTutorialListActivity.this,"token",null);
         String club_uuid = CacheUtils.getString(CoachTutorialListActivity.this,"clubuuid",null);
-        MyApplication.volleyGET(APIUrls.COACHES_URL + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
+        MyApplication.volleyGET(APIUrls.STUDENTS_AND_COACHES + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
         {
             @Override
             public void netSuccess(final String response)
@@ -83,9 +85,9 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
                     ActivityCollector.finishAll();
                 } else
                 {
-                    Coaches data = Coaches.instance(response);
-                    final List<Coaches> result = data.generateListInfo();
-                    CoachListAdapter adapter = new CoachListAdapter(result, CoachTutorialListActivity.this);
+                    StudentsAndCoaches data = StudentsAndCoaches.instance(response);
+                    final List<StudentsAndCoaches> result = data.generateListInfo();
+                    StudentsAndCoachesAdapter adapter = new StudentsAndCoachesAdapter(result, CoachTutorialListActivity.this);
                     coachTutorialListView.setAdapter(adapter);
                     coachTutorialListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {

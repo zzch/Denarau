@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.zhongchuangtiyu.denarau.Entities.Coaches;
+import com.zhongchuangtiyu.denarau.Entities.StudentsAndCoaches;
 import com.zhongchuangtiyu.denarau.R;
 
 import java.util.List;
@@ -19,20 +19,21 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 作者：WangMeng on 2015/10/26 14:56
+ * 作者：WangMeng on 2016/1/18 18:04
  * 邮箱：wangmeng.wiz@foxmail.com
  */
-public class CoachListAdapter extends BaseAdapter
+public class StudentsAndCoachesAdapter extends BaseAdapter
 {
     private static final int TYPE_FEATURED = 0;//高级教练
     private static final int TYPE_NORMAL = 1;//普通教练
     private static final int TYPE_COUNT = 2;//item类型的总数
+    private static final int TYPE_STUDENT = 3;//item类型的总数
     private int currentType;
     private ImageLoader imageLoader = ImageLoader.getInstance();
-    private List<Coaches> list;
+    private List<StudentsAndCoaches> list;
     private Context context;
 
-    public CoachListAdapter(List<Coaches> list, Context context)
+    public StudentsAndCoachesAdapter(List<StudentsAndCoaches> list, Context context)
     {
         this.list = list;
         this.context = context;
@@ -65,12 +66,15 @@ public class CoachListAdapter extends BaseAdapter
     @Override
     public int getItemViewType(int position)
     {
-        if (Coaches.FEATURED.equals(list.get(position).getCoachType()))
+        if (StudentsAndCoaches.FEATURED.equals(list.get(position).getCoachType()))
         {
             return TYPE_FEATURED;
-        } else if (Coaches.NORMAL.equals(list.get(position).getCoachType()))
+        } else if (StudentsAndCoaches.NORMAL.equals(list.get(position).getCoachType()))
         {
             return TYPE_NORMAL;
+        } else if (StudentsAndCoaches.STUDENT.equals(list.get(position).getCoachType()))
+        {
+            return TYPE_STUDENT;
         } else
         {
             return 100;
@@ -88,8 +92,10 @@ public class CoachListAdapter extends BaseAdapter
     {
         View typeFeatured;
         View typeNormal;
+        View typeStudent;
         FeaturedViewHolder featuredViewHolder;
         NormalViewHolder normalViewHolder;
+        StudentViewHolder studentViewHolder;
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
         currentType = getItemViewType(position);
         if (currentType == TYPE_FEATURED)
@@ -133,6 +139,21 @@ public class CoachListAdapter extends BaseAdapter
             normalViewHolder.listCoachName.setText(list.get(position).getName());
             normalViewHolder.listCoachType.setText(list.get(position).getTitle());
             normalViewHolder.listCoachPrice.setText("￥" + list.get(position).getStarting_price());
+        } else if (currentType == TYPE_STUDENT)
+        {
+            if (convertView == null)
+            {
+                typeStudent = LayoutInflater.from(context).inflate(R.layout.coach_tutorial_list_item3, null);
+                studentViewHolder = new StudentViewHolder(typeStudent);
+                typeStudent.setTag(studentViewHolder);
+                convertView = typeStudent;
+            } else
+            {
+                typeStudent = convertView;
+                studentViewHolder = (StudentViewHolder) typeStudent.getTag();
+            }
+            studentViewHolder.courseDate.setText(list.get(position).getExpired_at());
+            studentViewHolder.courseType.setText(list.get(position).getType());
         }
         return convertView;
     }
@@ -186,5 +207,22 @@ public class CoachListAdapter extends BaseAdapter
         }
     }
 
+    /**
+     * This class contains all butterknife-injected Views & Layouts from layout file 'coach_tutorial_list_item3.xml'
+     * for easy to all layout elements.
+     *
+     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
+     */
+    static class StudentViewHolder
+    {
+        @Bind(R.id.courseType)
+        TextView courseType;
+        @Bind(R.id.courseDate)
+        TextView courseDate;
 
+        StudentViewHolder(View view)
+        {
+            ButterKnife.bind(this, view);
+        }
+    }
 }
