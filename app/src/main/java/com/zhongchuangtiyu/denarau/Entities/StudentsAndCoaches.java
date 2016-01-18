@@ -443,11 +443,24 @@ public class StudentsAndCoaches
     public List<StudentsAndCoaches> generateListInfo()
     {
         List<StudentsAndCoaches> result = new ArrayList<>();
-        if (getFeatured() != null && getFeatured().size() > 0)
+        if (getStudents() != null && getStudents().size() > 0)
         {
-            for (FeaturedEntity entity :
-                    getFeatured())
+            for (StudentsEntity entity :
+                    getStudents())
             {
+                StudentsAndCoaches tmp = new StudentsAndCoaches();
+                tmp.setExpired_at(entity.getExpired_at());
+                tmp.setTotal_lessons(entity.getTotal_lessons());
+                tmp.setName(entity.getCourse().getName());
+                tmp.setUuid(entity.getCourse().getUuid());
+                tmp.setType(entity.getCourse().getType());
+                tmp.setCoachType(StudentsAndCoaches.STUDENT);
+                result.add(tmp);
+            }
+        }
+        if (getFeatured() != null && getFeatured().size() > 0) {
+            for (FeaturedEntity entity :
+                    getFeatured()) {
                 StudentsAndCoaches tmp = new StudentsAndCoaches();
                 tmp.setName(entity.getName());
                 tmp.setGender(entity.getGender());
@@ -477,21 +490,7 @@ public class StudentsAndCoaches
                 result.add(tmp);
             }
         }
-            if (getStudents() != null && getStudents().size() > 0)
-            {
-                for (StudentsEntity entity :
-                        getStudents())
-                {
-                    StudentsAndCoaches tmp = new StudentsAndCoaches();
-                    tmp.setExpired_at(entity.getExpired_at());
-                    tmp.setTotal_lessons(entity.getTotal_lessons());
-                    tmp.setName(entity.getCourse().getName());
-                    tmp.setUuid(entity.getCourse().getUuid());
-                    tmp.setType(entity.getCourse().getType());
-                    tmp.setCoachType(StudentsAndCoaches.STUDENT);
-                    result.add(tmp);
-                }
-            }
+
         return result;
     }
 

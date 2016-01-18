@@ -31,8 +31,8 @@ public class Test3 extends Activity
         setShareContent();
         mController.setShareContent("分享内容，http://www.umeng.com/social");
         // 设置分享图片, 参数2为图片的url地址
-        mController.setShareMedia(new UMImage(Test3.this,
-                R.mipmap.icon));
+//        mController.setShareMedia(new UMImage(Test3.this,
+//                R.mipmap.icon));
 
         button.setOnClickListener(new View.OnClickListener()
         {

@@ -26,8 +26,8 @@ public class StudentsAndCoachesAdapter extends BaseAdapter
 {
     private static final int TYPE_FEATURED = 0;//高级教练
     private static final int TYPE_NORMAL = 1;//普通教练
-    private static final int TYPE_COUNT = 2;//item类型的总数
-    private static final int TYPE_STUDENT = 3;//item类型的总数
+    private static final int TYPE_COUNT = 3;//item类型的总数
+    private static final int TYPE_STUDENT = 2;//item类型的总数
     private int currentType;
     private ImageLoader imageLoader = ImageLoader.getInstance();
     private List<StudentsAndCoaches> list;
