@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="110dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/openCourseDate"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_above="@+id/openCourseStatus"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/openCourseTime"
+        android:layout_alignTop="@+id/openCourseDate"
+        android:layout_toEndOf="@+id/openCourseDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="预约人数:"
+        android:id="@+id/textView29"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/openCourseStatus"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/openCourseCurrentAmount"
+        android:layout_alignBottom="@+id/textView29"
+        android:layout_toEndOf="@+id/textView29"/>
+
+    <TextView
+        android:background="@mipmap/yy_keyuyue"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="可预约"
+        android:id="@+id/openCourseStatus"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"/>
+</RelativeLayout>

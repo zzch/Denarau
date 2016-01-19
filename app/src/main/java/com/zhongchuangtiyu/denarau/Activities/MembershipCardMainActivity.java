@@ -484,11 +484,9 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.btnCoachTurorial:
                 startActivity(new Intent(MembershipCardMainActivity.this, CoachTutorialListActivity.class));
-//                startActivity(new Intent(MembershipCardMainActivity.this, CourseOrderActivity.class));
                 break;
             case R.id.btnFoodService:
                 startActivity(new Intent(MembershipCardMainActivity.this, ProvisionsActivity.class));
-//                startActivity(new Intent(MembershipCardMainActivity.this, CourseOrder2Activity.class));
                 break;
             case R.id.membershipCardMainTitleLeft:
                 startActivity(new Intent(MembershipCardMainActivity.this, PersonalCenterActivity.class));

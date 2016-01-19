@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhongchuangtiyu.denarau.Entities.StudentsAndCoaches;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 
 import java.util.List;
 
@@ -152,8 +153,9 @@ public class StudentsAndCoachesAdapter extends BaseAdapter
                 typeStudent = convertView;
                 studentViewHolder = (StudentViewHolder) typeStudent.getTag();
             }
-            studentViewHolder.courseDate.setText(list.get(position).getExpired_at());
-            studentViewHolder.courseType.setText(list.get(position).getType());
+            String validateDate = DateUtils.getDateToString(Long.valueOf(list.get(position).getExpired_at()) * 1000);
+            studentViewHolder.courseDate.setText("有效期:" + validateDate);
+            studentViewHolder.courseType.setText(list.get(position).getName());
         }
         return convertView;
     }

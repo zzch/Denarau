@@ -374,7 +374,7 @@
 
         </activity>
         <activity
-            android:name=".Activities.CourseOrderActivity"
+            android:name=".Activities.PrivateCoursesActivity"
             android:label="@string/title_activity_course_order"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -384,7 +384,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Activities.CourseOrder2Activity"
+            android:name=".Activities.OpenCoursesActivity"
             android:label="@string/title_activity_course_order2"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

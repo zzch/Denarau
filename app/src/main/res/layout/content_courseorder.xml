@@ -7,7 +7,7 @@
                  android:background="#e7e7e7"
                  app:layout_behavior="@string/appbar_scrolling_view_behavior"
                  tools:showIn="@layout/activity_course_order"
-                 tools:context="com.zhongchuangtiyu.denarau.Activities.CourseOrderActivity">
+                 tools:context=".Activities.PrivateCoursesActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:background="#ff0000"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/courseOrder2Image"
+            android:id="@+id/PrivateCoachImage"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="20dp"/>
@@ -30,25 +30,25 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/courseOrder2CoachName"
-            android:layout_alignTop="@+id/courseOrder2Image"
-            android:layout_toEndOf="@+id/courseOrder2Image"
-            android:layout_marginLeft="20dp"/>
+            android:id="@+id/privateCoachName"
+            android:layout_marginLeft="20dp"
+            android:layout_alignTop="@+id/PrivateCoachImage"
+            android:layout_toEndOf="@+id/PrivateCoachImage"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:id="@+id/textView29"
-            android:layout_alignBottom="@+id/courseOrder2Image"
-            android:layout_alignStart="@+id/courseOrder2CoachName"/>
+            android:id="@+id/privateCoachTitle"
+            android:layout_alignBottom="@+id/PrivateCoachImage"
+            android:layout_alignStart="@+id/privateCoachName"/>
     </RelativeLayout>
 
     <WebView
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:id="@+id/courseOder2WebView"
+        android:id="@+id/privateCoachWebView"
         android:layout_below="@+id/relativeLayout18"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"/>
@@ -101,7 +101,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="上课时间"
         android:id="@+id/textView28"
-        android:layout_below="@+id/courseOder2WebView"
+        android:layout_below="@+id/privateCoachWebView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
 

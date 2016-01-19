@@ -9,7 +9,7 @@ import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 
-public class CourseOrderActivity extends BaseActivity
+public class PrivateCoursesActivity extends BaseActivity
 {
 
     @Override

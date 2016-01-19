@@ -12,6 +12,8 @@
 
 
     <ListView
+        android:divider="#e1e1e1"
+        android:dividerHeight="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/coachTutorialListView"

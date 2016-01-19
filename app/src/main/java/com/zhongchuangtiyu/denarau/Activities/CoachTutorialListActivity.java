@@ -2,20 +2,14 @@ package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.android.volley.Cache;
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-import com.zhongchuangtiyu.denarau.Adapters.CoachListAdapter;
 import com.zhongchuangtiyu.denarau.Adapters.StudentsAndCoachesAdapter;
-import com.zhongchuangtiyu.denarau.Entities.Coaches;
 import com.zhongchuangtiyu.denarau.Entities.StudentsAndCoaches;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
@@ -25,8 +19,8 @@ import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +64,7 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
         Map<String,String> map = new HashMap<>();
         String token = CacheUtils.getString(CoachTutorialListActivity.this,"token",null);
         String club_uuid = CacheUtils.getString(CoachTutorialListActivity.this,"clubuuid",null);
+        Xlog.d("clubUuid" + club_uuid);
         MyApplication.volleyGET(APIUrls.STUDENTS_AND_COACHES + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
         {
             @Override
@@ -95,9 +90,23 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                         {
                             String uuid = result.get(position).getUuid();
-                            Intent intent = new Intent(CoachTutorialListActivity.this, CoachesDetailActivity.class);
-                            intent.putExtra("uuid", uuid);
-                            startActivity(intent);
+                            Xlog.d("result.get(position).getType()result.get(position).getType()" + result.get(position).getType());
+                            if (result.get(position).getType() == null)
+                            {
+                                Intent intent = new Intent(CoachTutorialListActivity.this, CoachesDetailActivity.class);
+                                intent.putExtra("uuid", uuid);
+                                startActivity(intent);
+                            }else if (result.get(position).getType().equals("open"))
+                            {
+                                Intent intent = new Intent(CoachTutorialListActivity.this, OpenCoursesActivity.class);
+                                intent.putExtra("uuid", uuid);
+                                startActivity(intent);
+                            }else if (result.get(position).getType().equals("private"))
+                            {
+                                Intent intent = new Intent(CoachTutorialListActivity.this, PrivateCoursesActivity.class);
+                                intent.putExtra("uuid", uuid);
+                                startActivity(intent);
+                            }
 //                            CustomToast.showToast(CoachTutorialListActivity.this, String.valueOf(position));
                         }
                     });

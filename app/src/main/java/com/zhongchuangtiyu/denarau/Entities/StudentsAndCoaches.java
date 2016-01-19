@@ -496,7 +496,6 @@ public class StudentsAndCoaches
 
     public static StudentsAndCoaches  instance(String str)
     {
-
         Gson gson = new Gson();
         return gson.fromJson(str, new TypeToken<StudentsAndCoaches>() {
         }.getType());

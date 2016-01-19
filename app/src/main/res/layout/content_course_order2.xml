@@ -6,7 +6,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:showIn="@layout/activity_course_order2"
-                tools:context="com.zhongchuangtiyu.denarau.Activities.CourseOrder2Activity">
+                tools:context=".Activities.OpenCoursesActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,90 +16,51 @@
         android:id="@+id/relativeLayout18">
 
         <ImageView
-            android:background="#ff0000"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/courseOrder2Image"
+            android:scaleType="fitCenter"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/openCoachImage"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="20dp"/>
 
         <TextView
+            android:gravity="top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/courseOrder2CoachName"
-            android:layout_alignTop="@+id/courseOrder2Image"
-            android:layout_toEndOf="@+id/courseOrder2Image"
-            android:layout_marginLeft="20dp"/>
+            android:id="@+id/openCoachName"
+            android:layout_marginLeft="20dp"
+            android:layout_alignTop="@+id/openCoachImage"
+            android:layout_toEndOf="@+id/openCoachImage"
+            android:layout_marginStart="20dp"/>
 
         <TextView
+            android:gravity="bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:id="@+id/courseOrder2CoachType"
-            android:layout_alignBottom="@+id/courseOrder2Image"
-            android:layout_alignStart="@+id/courseOrder2CoachName"/>
+            android:id="@+id/openCoachTitle"
+            android:layout_alignBottom="@+id/openCoachImage"
+            android:layout_alignStart="@+id/openCoachName"
+            android:layout_marginTop="5dp"/>
     </RelativeLayout>
 
     <WebView
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:id="@+id/courseOder2WebView"
+        android:id="@+id/openCoachWebView"
         android:layout_below="@+id/relativeLayout18"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"/>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_below="@+id/courseOder2WebView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:id="@+id/linearLayout4">
-
-        <Button
-            android:background="@drawable/position_order_btn_selector"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="今天"
-            android:id="@+id/btnOrderToday"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:layout_margin="5dp"/>
-
-        <Button
-            android:background="@drawable/position_order_btn_selector"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="明天"
-            android:id="@+id/btnOrderTonight"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:layout_margin="5dp"/>
-
-        <Button
-            android:background="@drawable/position_order_btn_selector"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="后天"
-            android:id="@+id/btnOrderTheDayAfterTomorrow"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:layout_margin="5dp"/>
-    </LinearLayout>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/courseOrder2ListView"
-        android:layout_below="@+id/linearLayout4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"/>
+        android:id="@+id/openCoachListView"
+        android:layout_below="@+id/openCoachWebView"
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>
