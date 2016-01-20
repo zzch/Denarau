@@ -24,8 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageButton
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:background="@mipmap/icon_back_arrow"

@@ -7,7 +7,12 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:showIn="@layout/activity_course_order2"
                 tools:context=".Activities.OpenCoursesActivity">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -62,5 +67,6 @@
         android:id="@+id/openCoachListView"
         android:layout_below="@+id/openCoachWebView"
         android:layout_alignParentStart="true"/>
-
+    </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

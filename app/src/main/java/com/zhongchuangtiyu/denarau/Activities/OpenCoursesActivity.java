@@ -3,10 +3,13 @@ package com.zhongchuangtiyu.denarau.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -17,9 +20,11 @@ import com.zhongchuangtiyu.denarau.Entities.OpenCourses;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
+import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
+import com.zhongchuangtiyu.denarau.Utils.SetListViewHeight;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.HashMap;
@@ -29,12 +34,10 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class OpenCoursesActivity extends Activity
+public class OpenCoursesActivity extends BaseActivity implements View.OnClickListener
 {
 
 
-    @Bind(R.id.annoucementsDetailTitleLeft)
-    ImageButton annoucementsDetailTitleLeft;
     @Bind(R.id.openCoachImage)
     ImageView openCoachImage;
     @Bind(R.id.openCoachName)
@@ -45,6 +48,8 @@ public class OpenCoursesActivity extends Activity
     WebView openCoachWebView;
     @Bind(R.id.openCoachListView)
     ListView openCoachListView;
+    @Bind(R.id.openCourseTitleImageLeft)
+    ImageButton openCourseTitleImageLeft;
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
     @Override
@@ -55,6 +60,13 @@ public class OpenCoursesActivity extends Activity
         ButterKnife.bind(this);
         imageLoader.init(ImageLoaderConfiguration.createDefault(OpenCoursesActivity.this));
         sendRequest();
+        setListeners();
+        ActivityCollector.addActivity(this);
+    }
+
+    private void setListeners()
+    {
+        openCourseTitleImageLeft.setOnClickListener(this);
     }
 
     private void sendRequest()
@@ -89,8 +101,9 @@ public class OpenCoursesActivity extends Activity
                     openCoachName.setText(data.getCoach().getName());
                     openCoachTitle.setText(data.getCoach().getTitle());
                     openCoachWebView.loadData(data.getDescription(), "text/html", "UTF-8");
-                    OpenCourseAdapter adapter = new OpenCourseAdapter(OpenCoursesActivity.this,result);
+                    OpenCourseAdapter adapter = new OpenCourseAdapter(OpenCoursesActivity.this, result);
                     openCoachListView.setAdapter(adapter);
+                    SetListViewHeight.setListViewHeightBasedOnChildren(openCoachListView);
                 }
             }
 
@@ -102,4 +115,22 @@ public class OpenCoursesActivity extends Activity
         });
     }
 
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.openCourseTitleImageLeft:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }
