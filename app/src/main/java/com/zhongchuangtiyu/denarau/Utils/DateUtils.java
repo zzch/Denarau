@@ -60,6 +60,13 @@ public class DateUtils
         sf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sf.format(d);
     }
+    public static String getDateToString3(long time)
+    {
+        Date d = new Date(time * 1000);
+        sf = new SimpleDateFormat("MM-dd");
+        sf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return sf.format(d);
+    }
 
 
 }

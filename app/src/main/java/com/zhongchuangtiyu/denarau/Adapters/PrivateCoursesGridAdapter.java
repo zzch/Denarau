@@ -52,11 +52,15 @@ public class PrivateCoursesGridAdapter extends BaseAdapter
     {
         View view = LayoutInflater.from(mContext).inflate(R.layout.private_courses_grid_item,null);
         TextView time = (TextView) view.findViewById(R.id.privateCourseTimeAndState);
-        if (list.get(position).getTime().equals("08:00") && list.get(position).getTime().equals("08:00") && list.get(position).getTime().equals("08:00") && list.get(position).getTime().equals("08:00") && list.get(position).getTime().equals("08:00"))
+        if (position %4 == 0)
         {
-
+            time.setText(list.get(position).getTime());
+        }else
+        {
+            time.setText("");
         }
-        time.setText(list.get(position).getTime());
+
+//            time.setText(list.get(position).getTime());
         Xlog.d("list.get(position).getScheduleEntity().get(position).getState()" + "----------------" + list.get(position).getState());
         if (list.get(position).getState().equals("available"))
         {

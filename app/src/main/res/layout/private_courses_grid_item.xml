@@ -6,7 +6,7 @@
     <TextView
         android:textSize="8sp"
         android:gravity="center"
-        android:layout_width="33dp"
+        android:layout_width="35dp"
         android:layout_height="28dp"
         android:text="09:00"
         android:id="@+id/privateCourseTimeAndState"

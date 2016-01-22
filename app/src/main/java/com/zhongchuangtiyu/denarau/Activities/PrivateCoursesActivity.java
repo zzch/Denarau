@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -20,6 +21,7 @@ import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.NoScrollGridView;
@@ -32,7 +34,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PrivateCoursesActivity extends BaseActivity
+public class PrivateCoursesActivity extends BaseActivity implements View.OnClickListener
 {
 
     @Bind(R.id.cardBagListTitleLeft)
@@ -55,10 +57,12 @@ public class PrivateCoursesActivity extends BaseActivity
     Button btnTheDayAfterTomorrow;
     @Bind(R.id.linearLayout4)
     LinearLayout linearLayout4;
-
     @Bind(R.id.privateCoursesGridView)
     NoScrollGridView privateCoursesGridView;
+    @Bind(R.id.btnPrivateCoursesOrder)
+    RelativeLayout btnPrivateCoursesOrder;
     private ImageLoader imageLoader = ImageLoader.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -69,7 +73,7 @@ public class PrivateCoursesActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.courseOrderToolbar);
         setSupportActionBar(toolbar);
         ActivityCollector.addActivity(this);
-        privateCoursesGridView.setVerticalSpacing(10);
+        privateCoursesGridView.setVerticalSpacing(2);
         btnToday.setSelected(true);
         sendRequest();
     }
@@ -95,9 +99,9 @@ public class PrivateCoursesActivity extends BaseActivity
                 privateCoachName.setText(data.getCoach().getName());
                 privateCoachTitle.setText(data.getCoach().getTitle());
                 privateCoachWebView.loadData(data.getDescription(), "text/html", "UTF-8");
-                btnToday.setText(DateUtils.getDateToString(Long.valueOf(data.getRecently_schedule().get(0).getDate()) * 1000));
-                btnTomorrow.setText(DateUtils.getDateToString(Long.valueOf(data.getRecently_schedule().get(1).getDate()) * 1000));
-                btnTheDayAfterTomorrow.setText(DateUtils.getDateToString(Long.valueOf(data.getRecently_schedule().get(2).getDate()) * 1000));
+                btnToday.setText("今天" + DateUtils.getDateToString3(Long.valueOf(data.getRecently_schedule().get(0).getDate()) * 1000));
+                btnTomorrow.setText("明天" + DateUtils.getDateToString3(Long.valueOf(data.getRecently_schedule().get(1).getDate()) * 1000));
+                btnTheDayAfterTomorrow.setText("后天" + DateUtils.getDateToString3(Long.valueOf(data.getRecently_schedule().get(2).getDate()) * 1000));
                 btnToday.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -144,10 +148,15 @@ public class PrivateCoursesActivity extends BaseActivity
             @Override
             public void netFail(VolleyError error)
             {
-
+                CustomToast.showToast(PrivateCoursesActivity.this, "网络连接失败，请稍后再试");
             }
         });
 
     }
 
+    @Override
+    public void onClick(View v)
+    {
+
+    }
 }
