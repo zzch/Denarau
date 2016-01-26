@@ -7,11 +7,23 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:showIn="@layout/activity_my_course"
                 tools:context=".Activities.MyCourseActivity">
-
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/myCoursesFrame"
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        cube_ptr:ptr_duration_to_close="200"
+        cube_ptr:ptr_duration_to_close_header="1000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7">
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/myCourseListView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 </RelativeLayout>

@@ -53,6 +53,8 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
     RelativeLayout positionOrderRl;
     @Bind(R.id.quitLoginRl)
     RelativeLayout quitLoginRl;
+    @Bind(R.id.myCourseRl)
+    RelativeLayout myCourseRl;
     private ImageLoader imageLoader = ImageLoader.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -80,6 +82,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
         personalCenterInfoRl.setOnClickListener(this);
         myRedBagRl.setOnClickListener(this);
         myConsumeRl.setOnClickListener(this);
+        myCourseRl.setOnClickListener(this);
         positionOrderRl.setOnClickListener(this);
         quitLoginRl.setOnClickListener(this);
         personalCenterTitleLeft.setOnClickListener(this);
@@ -169,6 +172,9 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.myConsumeRl:
                 startActivity(new Intent(PersonalCenterActivity.this, TabsAllActivity.class));
+                break;
+            case R.id.myCourseRl:
+                startActivity(new Intent(PersonalCenterActivity.this, MyCourseActivity.class));
                 break;
             case R.id.quitLoginRl:
                 CacheUtils.putString(PersonalCenterActivity.this, "token", null);

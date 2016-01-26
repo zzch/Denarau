@@ -77,11 +77,12 @@
         android:layout_alignStart="@+id/golfCourseName"
         android:layout_marginBottom="15dp"/>
 
-    <Button
+    <TextView
+        android:clickable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
-        android:id="@+id/button13"
+        android:id="@+id/btnRate"
         android:layout_alignTop="@+id/relativeLayout19"
         android:layout_alignParentEnd="true"/>
 </RelativeLayout>
