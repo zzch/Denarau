@@ -1,7 +1,6 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.zhongchuangtiyu.denarau.Entities.MyCourses;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
+import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 
 import butterknife.Bind;
@@ -46,6 +46,7 @@ public class CDA2Activity extends BaseActivity implements View.OnClickListener
     @Bind(R.id.btnRating)
     Button btnRating;
     private ImageLoader imageLoader = ImageLoader.getInstance();
+    private int ratingCount;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -57,12 +58,18 @@ public class CDA2Activity extends BaseActivity implements View.OnClickListener
         setSupportActionBar(toolbar);
         ActivityCollector.addActivity(this);
         initView();
+        setListeners();
+    }
+
+    private void setListeners()
+    {
+        btnRating.setOnClickListener(this);
     }
 
     private void initView()
     {
         imageLoader.init(ImageLoaderConfiguration.createDefault(CDA2Activity.this));
-        MyCourses myCourses = (MyCourses)getIntent().getSerializableExtra("myCourses");
+        MyCourses myCourses = (MyCourses) getIntent().getSerializableExtra("myCourses");
 //        courseDate.setText(myCourses.getLesson().getStarted_at());
 //        courseTime.setText(myCourses.getLesson().getStarted_at());
         courseState.setText(myCourses.getState());
@@ -70,12 +77,18 @@ public class CDA2Activity extends BaseActivity implements View.OnClickListener
         courseCoachName.setText(myCourses.getLesson().getCourse().getCoach().getName());
         courseCoachType.setText(myCourses.getLesson().getCourse().getCoach().getTitle());
         webView2.loadData(myCourses.getLesson().getCourse().getDescription(), "text/html", "UTF-8");
-
     }
 
     @Override
     public void onClick(View v)
     {
-
+        switch (v.getId())
+        {
+            case R.id.btnRating:
+                CustomToast.showToast(CDA2Activity.this,String.valueOf(ratingCount));
+                break;
+            default:
+                break;
+        }
     }
 }
