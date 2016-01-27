@@ -121,19 +121,19 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"/>
 
-        <!--<com.hedgehog.ratingbar.RatingBar-->
-        <!--android:layout_gravity="center"-->
-        <!--android:id="@+id/cda2RatingBar"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:starCount="5"-->
-        <!--app:clickable="true"-->
-        <!--app:starEmpty="@mipmap/xx_mr"-->
-        <!--app:starFill="@mipmap/xx_xz"-->
-        <!--app:starImageSize="50dp"-->
-        <!--android:layout_below="@+id/textView27"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="15dp"></com.hedgehog.ratingbar.RatingBar>-->
+        <com.zhongchuangtiyu.denarau.Utils.RatingBar
+        android:layout_gravity="center"
+        android:id="@+id/cda2RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:starCount="5"
+        app:clickable="true"
+        app:starEmpty="@mipmap/xx_mr"
+        app:starFill="@mipmap/xx_xz"
+        app:starImageSize="50dp"
+        android:layout_below="@+id/textView27"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"></com.zhongchuangtiyu.denarau.Utils.RatingBar>
     </RelativeLayout>
 
     <Button
