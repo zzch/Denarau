@@ -34,6 +34,7 @@ public class MyCourses implements Serializable
     private Object rating;
     private String state;
 
+
     public void setUuid(String uuid)
     {
         this.uuid = uuid;
@@ -229,6 +230,7 @@ public class MyCourses implements Serializable
                 }
             }
         }
+
     }
     public static List<MyCourses> instance(String str)
     {

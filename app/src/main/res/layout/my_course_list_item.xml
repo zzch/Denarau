@@ -7,8 +7,8 @@
 
     <RelativeLayout
         android:background="@mipmap/wodekecheng_rl_bj"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:id="@+id/relativeLayout19">
@@ -49,20 +49,21 @@
     </RelativeLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
         android:id="@+id/courseType"
         android:layout_alignTop="@+id/relativeLayout19"
         android:layout_toEndOf="@+id/relativeLayout19"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:singleLine="true"
+        android:ellipsize="end"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
         android:id="@+id/golfCourseName"
         android:layout_alignBottom="@+id/relativeLayout19"
         android:layout_alignStart="@+id/courseType"/>
@@ -71,7 +72,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
         android:id="@+id/coachName"
         android:layout_above="@+id/golfCourseName"
         android:layout_alignStart="@+id/golfCourseName"
@@ -81,8 +81,10 @@
         android:clickable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
         android:id="@+id/btnRate"
-        android:layout_alignTop="@+id/relativeLayout19"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignTop="@+id/courseType"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:textColor="#ffffff"/>
 </RelativeLayout>

@@ -33,5 +33,5 @@ public class APIUrls
     public static String OPEN_COURSES_RESERVE = "http://staging.lianqiubao.com/api/v1/lessons/reserve_open.json";
     public static String PRIVATE_COURSES = "http://staging.lianqiubao.com/api/v1/private_courses/detail.json?";
     public static String CURRICULUMS = "http://123.57.210.52:80/api/v1/curriculums.json?token=";
-
+    public static String CURRICULUMS_RATING = "http://123.57.210.52:80/api/v1/curriculums/rating.json?";
 }

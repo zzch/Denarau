@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.zhongchuangtiyu.denarau.Entities.MyCourses;
 import com.zhongchuangtiyu.denarau.R;
+import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 
 import java.util.List;
 
@@ -68,13 +69,33 @@ public class MyCourseListAdapter extends BaseAdapter
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
-//        viewHolder.mcMonth.setText(list.get(position).getLesson().getStarted_at());
-//        viewHolder.mcDay.setText(list.get(position).getLesson().getStarted_at());
-//        viewHolder.mcTime.setText(list.get(position).getLesson().getFinished_at());
+        viewHolder.mcMonth.setText(DateUtils.getDateToString5(Long.valueOf(list.get(position).getLesson().getStarted_at())));
+        viewHolder.mcDay.setText(DateUtils.getDateToString6(Long.valueOf(list.get(position).getLesson().getStarted_at())));
+        viewHolder.mcTime.setText(DateUtils.getDateToString2(Long.valueOf(list.get(position).getLesson().getStarted_at())));
         viewHolder.courseType.setText(list.get(position).getLesson().getName());
-        viewHolder.coachName.setText(list.get(position).getLesson().getCourse().getName());
+        viewHolder.coachName.setText(list.get(position).getLesson().getCourse().getCoach().getName());
         viewHolder.golfCourseName.setText(list.get(position).getClub_name());
-        viewHolder.btnRate.setText(list.get(position).getState());
+        switch (list.get(position).getState())
+        {
+            case "progressing":
+                viewHolder.btnRate.setText("等待上课");
+                viewHolder.btnRate.setBackgroundResource(R.mipmap.wodekecheng_zt_bj);
+                break;
+            case "cancelled":
+                viewHolder.btnRate.setText("已取消");
+                viewHolder.btnRate.setBackgroundResource(R.mipmap.yy_yiyuyue);
+                break;
+            case "confirming":
+                viewHolder.btnRate.setText("等待评分");
+                viewHolder.btnRate.setBackgroundResource(R.mipmap.wodekecheng_zt_bj);
+                break;
+            case "finished":
+                viewHolder.btnRate.setText("已完成");
+                viewHolder.btnRate.setBackgroundResource(R.mipmap.yy_yiyuyue);
+                break;
+            default:
+                break;
+        }
         return view;
     }
 

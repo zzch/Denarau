@@ -62,11 +62,30 @@ public class DateUtils
     }
     public static String getDateToString3(long time)
     {
-        Date d = new Date(time * 1000);
+        Date d = new Date(time);
         sf = new SimpleDateFormat("MM-dd");
         sf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sf.format(d);
     }
-
-
+//    yyyy.mm.dd
+public static String getDateToString4(long time)
+{
+    Date d = new Date(time);
+    sf = new SimpleDateFormat("yyyy.MM.dd");
+    return sf.format(d);
+}
+//    MM
+public static String getDateToString5(long time)
+{
+    Date d = new Date(time * 1000);
+    sf = new SimpleDateFormat("MM月");
+    return sf.format(d);
+}
+//    dd
+public static String getDateToString6(long time)
+{
+    Date d = new Date(time * 1000);
+    sf = new SimpleDateFormat("dd");
+    return sf.format(d);
+}
 }
