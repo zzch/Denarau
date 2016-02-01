@@ -49,7 +49,7 @@ public class DateUtils
     {
         Date d = new Date(time * 1000);
         sf = new SimpleDateFormat("MM月dd日");
-        sf.setTimeZone(TimeZone.getTimeZone("GMT"));
+//        sf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sf.format(d);
     }
     /*时间戳转换成字符串 HH-mm*/
@@ -57,14 +57,13 @@ public class DateUtils
     {
         Date d = new Date(time * 1000);
         sf = new SimpleDateFormat("HH:mm");
-        sf.setTimeZone(TimeZone.getTimeZone("GMT"));
+//        sf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sf.format(d);
     }
     public static String getDateToString3(long time)
     {
-        Date d = new Date(time);
+        Date d = new Date(time * 1000);
         sf = new SimpleDateFormat("MM-dd");
-        sf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sf.format(d);
     }
 //    yyyy.mm.dd
@@ -82,10 +81,16 @@ public static String getDateToString5(long time)
     return sf.format(d);
 }
 //    dd
-public static String getDateToString6(long time)
-{
+public static String getDateToString6(long time) {
     Date d = new Date(time * 1000);
     sf = new SimpleDateFormat("dd");
+    return sf.format(d);
+}
+//   MMddHHmm
+public static String getDateToString7(long time)
+{
+    Date d = new Date(time * 1000);
+    sf = new SimpleDateFormat("MM月dd日 HH:ss");
     return sf.format(d);
 }
 }

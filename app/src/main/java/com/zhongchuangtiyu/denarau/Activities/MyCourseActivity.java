@@ -150,7 +150,7 @@ public class MyCourseActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void netFail(VolleyError error)
             {
-
+                CustomToast.showToast(MyCourseActivity.this, "获取数据失败，请刷新或稍后再试");
             }
         });
     }
@@ -169,18 +169,16 @@ public class MyCourseActivity extends BaseActivity implements View.OnClickListen
                 MyCourseListAdapter adapter = new MyCourseListAdapter(MyCourseActivity.this, data);
                 myCourseListView.setAdapter(adapter);
                 myCoursesFrame.refreshComplete();
-                myCourseListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                {
+                myCourseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                    {
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         MyCourses myCourses = data.get(position);
                         Intent intent = new Intent(MyCourseActivity.this, CDA2Activity.class);
                         Bundle mBundle = new Bundle();
                         mBundle.putSerializable("myCourses", myCourses);
                         intent.putExtras(mBundle);
                         startActivity(intent);
-                        CustomToast.showToast(MyCourseActivity.this, "Clicked");
+//                        CustomToast.showToast(MyCourseActivity.this, "Clicked");
                     }
                 });
             }
@@ -188,14 +186,26 @@ public class MyCourseActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void netFail(VolleyError error)
             {
-
+                CustomToast.showToast(MyCourseActivity.this, "获取数据失败");
             }
         });
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
     @Override
     public void onClick(View v)
     {
-        
+        switch (v.getId())
+        {
+            case R.id.myCoursesTitleLeft:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 }

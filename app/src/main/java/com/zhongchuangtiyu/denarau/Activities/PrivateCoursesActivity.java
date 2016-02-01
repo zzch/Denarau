@@ -28,6 +28,7 @@ import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.NoScrollGridView;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -95,11 +96,9 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
         String uuid = intent.getStringExtra("uuid");
         CacheUtils.putString(PrivateCoursesActivity.this, "privateCourseUuid", uuid);
         Map<String, String> map = new HashMap<>();
-        MyApplication.volleyGET(APIUrls.PRIVATE_COURSES + "token=" + token + "&" + "club_uuid=" + club_uuid + "&" + "uuid=" + uuid, map, new MyApplication.VolleyCallBack()
-        {
+        MyApplication.volleyGET(APIUrls.PRIVATE_COURSES + "token=" + token + "&" + "club_uuid=" + club_uuid + "&" + "uuid=" + uuid, map, new MyApplication.VolleyCallBack() {
             @Override
-            public void netSuccess(String response)
-            {
+            public void netSuccess(String response) {
                 final PrivateCourses data = PrivateCourses.instance(response);
                 final List<PrivateCourses> list = data.generateListTodayInfo();
                 List<PrivateCourses.RecentlyScheduleEntity.ScheduleEntity> result = list.get(0).getScheduleEntity();
@@ -110,14 +109,13 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
                 privateCoachName.setText(data.getCoach().getName());
                 privateCoachTitle.setText(data.getCoach().getTitle());
                 privateCoachWebView.loadData(data.getDescription(), "text/html", "UTF-8");
-                btnToday.setText("今天" + DateUtils.getDateToString3(Long.valueOf(data.getRecently_schedule().get(0).getDate()) * 1000));
-                btnTomorrow.setText("明天" + DateUtils.getDateToString3(Long.valueOf(data.getRecently_schedule().get(1).getDate()) * 1000));
-                btnTheDayAfterTomorrow.setText("后天" + DateUtils.getDateToString3(Long.valueOf(data.getRecently_schedule().get(2).getDate()) * 1000));
-                btnToday.setOnClickListener(new View.OnClickListener()
-                {
+                btnToday.setText("今天" + DateUtils.getDateToString3(Long.valueOf(1454256000)));
+                Xlog.d("今天" + data.getRecently_schedule().get(0).getDate());
+                btnTomorrow.setText("明天" + DateUtils.getDateToString3(Long.valueOf(data.getRecently_schedule().get(1).getDate())));
+                btnTheDayAfterTomorrow.setText("后天" + DateUtils.getDateToString3(Long.valueOf(data.getRecently_schedule().get(2).getDate())));
+                btnToday.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         btnToday.setSelected(true);
                         btnTomorrow.setSelected(false);
                         btnTheDayAfterTomorrow.setSelected(false);
@@ -127,11 +125,9 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
                         CacheUtils.putString(PrivateCoursesActivity.this, "whichDay", "0");
                     }
                 });
-                btnTomorrow.setOnClickListener(new View.OnClickListener()
-                {
+                btnTomorrow.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         btnTomorrow.setSelected(true);
                         btnToday.setSelected(false);
                         btnTheDayAfterTomorrow.setSelected(false);
@@ -141,11 +137,9 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
                         CacheUtils.putString(PrivateCoursesActivity.this, "whichDay", "1");
                     }
                 });
-                btnTheDayAfterTomorrow.setOnClickListener(new View.OnClickListener()
-                {
+                btnTheDayAfterTomorrow.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         btnTheDayAfterTomorrow.setSelected(true);
                         btnToday.setSelected(false);
                         btnTomorrow.setSelected(false);
@@ -160,14 +154,18 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
             }
 
             @Override
-            public void netFail(VolleyError error)
-            {
+            public void netFail(VolleyError error) {
                 CustomToast.showToast(PrivateCoursesActivity.this, "网络连接失败，请稍后再试");
             }
         });
 
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
     @Override
     public void onClick(View v)
     {

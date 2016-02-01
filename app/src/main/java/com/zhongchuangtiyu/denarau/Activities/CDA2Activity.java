@@ -151,7 +151,7 @@ public class CDA2Activity extends BaseActivity implements View.OnClickListener
                                     btnRating.setBackgroundResource(R.mipmap.yiwancheng_anniu);
                                     btnRating.setClickable(false);
                                     btnRating.setText("已完成");
-                                    CustomToast.showToast(CDA2Activity.this, String.valueOf(ratingCount));
+//                                    CustomToast.showToast(CDA2Activity.this, String.valueOf(ratingCount));
                                 }
 
                                 @Override
@@ -168,7 +168,12 @@ public class CDA2Activity extends BaseActivity implements View.OnClickListener
 
         }
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
     @Override
     public void onClick(View v)
     {
