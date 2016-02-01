@@ -1,5 +1,6 @@
 package com.zhongchuangtiyu.denarau.Activities;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhongchuangtiyu.denarau.Adapters.PrivateCoursesGridAdapter;
 import com.zhongchuangtiyu.denarau.Entities.PrivateCourses;
+import com.zhongchuangtiyu.denarau.Fragments.MyDialogFragment;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
 import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
@@ -76,6 +78,13 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
         privateCoursesGridView.setVerticalSpacing(2);
         btnToday.setSelected(true);
         sendRequest();
+        setListeners();
+    }
+
+    private void setListeners()
+    {
+        btnPrivateCoursesOrder.setOnClickListener(this);
+        cardBagListTitleLeft.setOnClickListener(this);
     }
 
     private void sendRequest()
@@ -84,6 +93,7 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
         String club_uuid = CacheUtils.getString(PrivateCoursesActivity.this, "clubuuid", null);
         Intent intent = getIntent();
         String uuid = intent.getStringExtra("uuid");
+        CacheUtils.putString(PrivateCoursesActivity.this, "privateCourseUuid", uuid);
         Map<String, String> map = new HashMap<>();
         MyApplication.volleyGET(APIUrls.PRIVATE_COURSES + "token=" + token + "&" + "club_uuid=" + club_uuid + "&" + "uuid=" + uuid, map, new MyApplication.VolleyCallBack()
         {
@@ -93,6 +103,7 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
                 final PrivateCourses data = PrivateCourses.instance(response);
                 final List<PrivateCourses> list = data.generateListTodayInfo();
                 List<PrivateCourses.RecentlyScheduleEntity.ScheduleEntity> result = list.get(0).getScheduleEntity();
+                CacheUtils.putString(PrivateCoursesActivity.this, "whichDay", "0");
                 PrivateCoursesGridAdapter adapter = new PrivateCoursesGridAdapter(PrivateCoursesActivity.this, result);
                 privateCoursesGridView.setAdapter(adapter);
                 imageLoader.displayImage(data.getCoach().getPortrait(), privateCoachImage);
@@ -113,6 +124,7 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
                         List<PrivateCourses.RecentlyScheduleEntity.ScheduleEntity> result = list.get(0).getScheduleEntity();
                         PrivateCoursesGridAdapter adapter = new PrivateCoursesGridAdapter(PrivateCoursesActivity.this, result);
                         privateCoursesGridView.setAdapter(adapter);
+                        CacheUtils.putString(PrivateCoursesActivity.this, "whichDay", "0");
                     }
                 });
                 btnTomorrow.setOnClickListener(new View.OnClickListener()
@@ -126,6 +138,7 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
                         List<PrivateCourses.RecentlyScheduleEntity.ScheduleEntity> result = list.get(1).getScheduleEntity();
                         PrivateCoursesGridAdapter adapter = new PrivateCoursesGridAdapter(PrivateCoursesActivity.this, result);
                         privateCoursesGridView.setAdapter(adapter);
+                        CacheUtils.putString(PrivateCoursesActivity.this, "whichDay", "1");
                     }
                 });
                 btnTheDayAfterTomorrow.setOnClickListener(new View.OnClickListener()
@@ -139,6 +152,7 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
                         List<PrivateCourses.RecentlyScheduleEntity.ScheduleEntity> result = list.get(2).getScheduleEntity();
                         PrivateCoursesGridAdapter adapter = new PrivateCoursesGridAdapter(PrivateCoursesActivity.this, result);
                         privateCoursesGridView.setAdapter(adapter);
+                        CacheUtils.putString(PrivateCoursesActivity.this, "whichDay", "2");
                     }
                 });
 //                PrivateCoursesGridAdapter adapter = new PrivateCoursesGridAdapter(PrivateCoursesActivity.this,result);
@@ -157,6 +171,23 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v)
     {
+        switch (v.getId())
+        {
+            case R.id.btnPrivateCoursesOrder:
+                showDialog(v);
+                break;
+            case R.id.cardBagListTitleLeft:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
+    public void showDialog(View view)
+    {
 
+        FragmentManager manager = getFragmentManager();
+        MyDialogFragment dialog = new MyDialogFragment();
+        dialog.show (manager, "dialog");
     }
 }
