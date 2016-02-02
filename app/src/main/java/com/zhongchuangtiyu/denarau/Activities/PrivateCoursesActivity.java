@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -108,7 +109,13 @@ public class PrivateCoursesActivity extends BaseActivity implements View.OnClick
                 imageLoader.displayImage(data.getCoach().getPortrait(), privateCoachImage);
                 privateCoachName.setText(data.getCoach().getName());
                 privateCoachTitle.setText(data.getCoach().getTitle());
-                privateCoachWebView.loadData(data.getDescription(), "text/html", "UTF-8");
+//                privateCoachWebView.loadData(data.getDescription(), "text/html", "UTF-8");
+                WebSettings settings = privateCoachWebView.getSettings();
+                settings.setTextSize(WebSettings.TextSize.NORMAL);
+                privateCoachWebView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+                privateCoachWebView.loadData(data.getDescription(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+//                privateCoachWebView.getSettings().setUseWideViewPort(true);
+//                privateCoachWebView.getSettings().setLoadWithOverviewMode(true);
                 btnToday.setText("今天" + DateUtils.getDateToString3(Long.valueOf(1454256000)));
                 Xlog.d("今天" + data.getRecently_schedule().get(0).getDate());
                 btnTomorrow.setText("明天" + DateUtils.getDateToString3(Long.valueOf(data.getRecently_schedule().get(1).getDate())));

@@ -25,7 +25,9 @@
         android:layout_below="@+id/announcementsItemTitle"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:maxLines="2"
+        android:ellipsize="end"/>
 
     <TextView
         android:layout_width="wrap_content"

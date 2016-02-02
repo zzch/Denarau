@@ -46,55 +46,56 @@
             android:layout_marginRight="20dp"/>
     </RelativeLayout>
 
+    <!--<RelativeLayout-->
+        <!--android:background="@android:color/white"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="63dp"-->
+        <!--android:layout_below="@+id/personalCenterInfoRl"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:id="@+id/myRedBagRl">-->
+
+        <!--<ImageView-->
+            <!--android:background="@mipmap/geren_hongbao_icon"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/imageView6"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_marginLeft="20dp"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:text="我的红包"-->
+            <!--android:id="@+id/textView10"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toEndOf="@+id/imageView6"-->
+            <!--android:layout_marginLeft="20dp"/>-->
+
+        <!--<ImageView-->
+            <!--android:background="@mipmap/shouye_arrow_icon"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/imageView7"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_marginRight="20dp"/>-->
+    <!--</RelativeLayout>-->
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:id="@+id/imageView10"-->
+        <!--android:background="#f2f2f2"-->
+        <!--android:layout_below="@+id/myRedBagRl"-->
+        <!--android:layout_centerHorizontal="true"/>-->
     <RelativeLayout
+        android:layout_marginTop="30dp"
         android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:layout_below="@+id/personalCenterInfoRl"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:id="@+id/myRedBagRl">
-
-        <ImageView
-            android:background="@mipmap/geren_hongbao_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView6"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="我的红包"
-            android:id="@+id/textView10"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView6"
-            android:layout_marginLeft="20dp"/>
-
-        <ImageView
-            android:background="@mipmap/shouye_arrow_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView7"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="20dp"/>
-    </RelativeLayout>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/imageView10"
-        android:background="#f2f2f2"
-        android:layout_below="@+id/myRedBagRl"
-        android:layout_centerHorizontal="true"/>
-    <RelativeLayout
-        android:background="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:layout_below="@+id/imageView10"
         android:layout_alignParentStart="true"
         android:id="@+id/myConsumeRl">
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -85,7 +86,13 @@ public class PromotionsDetailActivity extends BaseActivity implements View.OnCli
                     String title = data.getTitle();
                     String content = data.getContent();
                     provitionsDetailTitleTv.setText(title);
-                    provitionsDetailWebView.loadData(content, "text/html", "UTF-8");
+//                    provitionsDetailWebView.loadData(content, "text/html", "UTF-8");
+                    WebSettings settings = provitionsDetailWebView.getSettings();
+                    settings.setTextSize(WebSettings.TextSize.NORMAL);
+                    provitionsDetailWebView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+                    provitionsDetailWebView.loadData(data.getContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+//                    provitionsDetailWebView.getSettings().setUseWideViewPort(true);
+//                    provitionsDetailWebView.getSettings().setLoadWithOverviewMode(true);
                 }
             }
 

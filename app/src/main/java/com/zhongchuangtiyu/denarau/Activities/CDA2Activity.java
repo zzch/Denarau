@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -102,7 +103,13 @@ public class CDA2Activity extends BaseActivity implements View.OnClickListener
         imageLoader.displayImage(myCourses.getLesson().getCourse().getCoach().getPortrait(), courseCoachImg);
         courseCoachName.setText(myCourses.getLesson().getCourse().getCoach().getName());
         courseCoachType.setText(myCourses.getLesson().getCourse().getCoach().getTitle());
-        webView2.loadData(myCourses.getLesson().getCourse().getDescription(), "text/html", "UTF-8");
+//        webView2.loadData(myCourses.getLesson().getCourse().getDescription(), "text/html", "UTF-8");
+        WebSettings settings = webView2.getSettings();
+        settings.setTextSize(WebSettings.TextSize.NORMAL);
+        webView2.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+        webView2.loadData(myCourses.getLesson().getCourse().getDescription(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+//        webView2.getSettings().setUseWideViewPort(true);
+//        webView2.getSettings().setLoadWithOverviewMode(true);
         Xlog.d("Rated?Rated?Rated?Rated?Rated?Rated?Rated?" + myCourses.getRating());
         if (myCourses.getRating() != null)
         {

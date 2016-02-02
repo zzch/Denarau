@@ -3,6 +3,9 @@ package com.zhongchuangtiyu.denarau.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +22,7 @@ import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,10 +89,18 @@ public class AnnouncementsDetailActivity extends BaseActivity implements View.On
                 } else
                 {
                     announcementsDetailTitleTv.setText(data.getTitle());
+
+                    Display display = getWindowManager().getDefaultDisplay();
+                    int width=display.getWidth();
+                    String head = "<html><head><title>Example</title><meta name=\"viewport\" content=\"width="+width+", initial-scale=0.25 \" /><style>img { width: 100% }</style></head>";
+                    head = head + "<body>" + data.getContent() + "</body>" + "</html>";
+
+
+//                    announcementsDetailWebView.getSettings().setUseWideViewPort(true);
+//                    announcementsDetailWebView.getSettings().setLoadWithOverviewMode(true);
                     announcementsDetailWebView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
-                    announcementsDetailWebView.loadData(data.getContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
-                    announcementsDetailWebView.getSettings().setUseWideViewPort(true);
-                    announcementsDetailWebView.getSettings().setLoadWithOverviewMode(true);
+                    announcementsDetailWebView.loadData(head, "text/html; charset=UTF-8", null);//这种写法可以正确解码
+
                 }
             }
 

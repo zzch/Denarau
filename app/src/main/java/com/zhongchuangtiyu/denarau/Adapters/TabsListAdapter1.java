@@ -190,13 +190,13 @@ public class TabsListAdapter1 extends BaseAdapter
                                     public void netSuccess(String response)
                                     {
                                         context.setListeners();
-                                        CustomToast.showToast(context,response);
+//                                        CustomToast.showToast(context,response);
                                     }
 
                                     @Override
                                     public void netFail(VolleyError error)
                                     {
-                                        CustomToast.showToast(context,error.toString());
+//                                        CustomToast.showToast(context,error.toString());
 
                                     }
                                 });

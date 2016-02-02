@@ -106,6 +106,7 @@ public class ProvisionsActivity extends BaseActivity
                 } else
                 {
                     List<Provision> data = Provisions.instance(response);
+                    Xlog.d("Provisions" + data.get(0).getType());
                     Map<String, List<Provision>> provGroup = new HashMap<String, List<Provision>>();
                     for (Provision prov : data)
                     {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -95,12 +96,19 @@ public class OpenCoursesActivity extends BaseActivity implements View.OnClickLis
                 } else
                 {
                     OpenCourses data = OpenCourses.instance(response);
+                    Xlog.d("html" + "======" + data.getDescription());
                     final List<OpenCourses> result = data.generateListInfo();
                     Xlog.d(data.toString());
                     imageLoader.displayImage(data.getCoach().getPortrait(), openCoachImage);
                     openCoachName.setText(data.getCoach().getName());
                     openCoachTitle.setText(data.getCoach().getTitle());
-                    openCoachWebView.loadData(data.getDescription(), "text/html", "UTF-8");
+//                    openCoachWebView.loadData(data.getDescription(), "text/html", "UTF-8");
+                    WebSettings settings = openCoachWebView.getSettings();
+                    settings.setTextSize(WebSettings.TextSize.NORMAL);
+                    openCoachWebView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+                    openCoachWebView.loadData(data.getDescription(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+//                    openCoachWebView.getSettings().setUseWideViewPort(true);
+//                    openCoachWebView.getSettings().setLoadWithOverviewMode(true);
                     OpenCourseAdapter adapter = new OpenCourseAdapter(OpenCoursesActivity.this, result);
                     openCoachListView.setAdapter(adapter);
                     SetListViewHeight.setListViewHeightBasedOnChildren(openCoachListView);

@@ -31,26 +31,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:layout_above="@+id/textView12"
-            android:layout_alignStart="@+id/coachDetailValidMonth"/>
+            android:layout_alignTop="@+id/textView11"
+            android:layout_toEndOf="@+id/textView11"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
             android:id="@+id/coachDetailValidMonth"
-            android:layout_above="@+id/textView13"
-            android:layout_alignStart="@+id/tutorialType"/>
+            android:layout_alignTop="@+id/textView12"
+            android:layout_toEndOf="@+id/textView12"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
             android:id="@+id/tutorialType"
-            android:layout_alignParentBottom="true"
+            android:layout_alignTop="@+id/textView13"
             android:layout_toEndOf="@+id/textView13"/>
 
         <TextView

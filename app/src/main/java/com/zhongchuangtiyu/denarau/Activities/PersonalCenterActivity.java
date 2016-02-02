@@ -45,8 +45,8 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
     TextView personalInfoName;
     @Bind(R.id.personalCenterInfoRl)
     RelativeLayout personalCenterInfoRl;
-    @Bind(R.id.myRedBagRl)
-    RelativeLayout myRedBagRl;
+//    @Bind(R.id.myRedBagRl)
+//    RelativeLayout myRedBagRl;
     @Bind(R.id.myConsumeRl)
     RelativeLayout myConsumeRl;
     @Bind(R.id.positionOrderRl)
@@ -80,7 +80,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
     private void setListeners()
     {
         personalCenterInfoRl.setOnClickListener(this);
-        myRedBagRl.setOnClickListener(this);
+//        myRedBagRl.setOnClickListener(this);
         myConsumeRl.setOnClickListener(this);
         myCourseRl.setOnClickListener(this);
         positionOrderRl.setOnClickListener(this);

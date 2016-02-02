@@ -385,6 +385,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                         TextView membershipViewPagerCardBalance = (TextView) view.findViewById(R.id.membershipViewPagerCardBalance);
                         TextView membershipViewPagerCardNumber = (TextView) view.findViewById(R.id.membershipViewPagerCardNumber);
                         TextView membershipViewPagerCardPeriodOfValidity = (TextView) view.findViewById(R.id.periodOfValidity);
+                        ImageView viewPagerDivider = (ImageView) view.findViewById(R.id.viewPagerDivider);
                         RelativeLayout membershipCardViewPagerRoot = (RelativeLayout) view.findViewById(R.id.membershipCardViewPagerRoot);
                         imageLoader.displayImage(data.getClub().getLogo(), membershipViewPagerCourseImage);
                         membershipViewPagerCourseName.setText(data.getClub().getName());
@@ -395,6 +396,12 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                         membershipViewPagerCardNumber.setText("NO:" + data.getMembers().get(i).getNumber());
                         GradientDrawable myGrad = (GradientDrawable) membershipCardViewPagerRoot.getBackground();
                         myGrad.setColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
+                        membershipViewPagerCourseName.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
+                        membershipViewPagerCardType.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
+                        membershipViewPagerCardBalance.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
+                        membershipViewPagerCardNumber.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
+                        membershipViewPagerCardPeriodOfValidity.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
+                        viewPagerDivider.setBackgroundColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
                         pagerViews.add(view);
                         adapter = new MembershipCardViewpagerAdapter(pagerViews, MembershipCardMainActivity.this);
                         membershipCardViewPager.setAdapter(adapter);
