@@ -34,6 +34,7 @@ import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,6 +107,7 @@ public class ProvisionsActivity extends BaseActivity
                 } else
                 {
                     List<Provision> data = Provisions.instance(response);
+                    Collections.reverse(data);
                     Xlog.d("Provisions" + data.get(0).getType());
                     Map<String, List<Provision>> provGroup = new HashMap<String, List<Provision>>();
                     for (Provision prov : data)
@@ -135,7 +137,6 @@ public class ProvisionsActivity extends BaseActivity
                         button.setTag(index++);
                         button.setTextSize(20);
                         button.setHeight(80);
-
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width / 4, LinearLayout.LayoutParams.MATCH_PARENT);
                         LinearLayout.LayoutParams lpll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
                         lpll.setMargins(10, 3, 10, 3);
@@ -147,14 +148,11 @@ public class ProvisionsActivity extends BaseActivity
                         button.setBackgroundColor(Color.parseColor("#292d2f"));
                         button.setViewPager(provisionsViewPager);
                         button.setLinearLayout(buttonContainerLl);
-                        button.setOnClickListener(new View.OnClickListener()
-                        {
+                        button.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v)
-                            {
+                            public void onClick(View v) {
                                 provisionsViewPager.setCurrentItem(Integer.valueOf(v.getTag().toString()).intValue(), true);
-                                for (int i = 0; i < ((ProvButton) v).getLinearLayout().getChildCount(); i++)
-                                {
+                                for (int i = 0; i < ((ProvButton) v).getLinearLayout().getChildCount(); i++) {
                                     LinearLayout buttonContainer = ((ProvButton) v).getLinearLayout();
                                     ((ProvButton) ((LinearLayout) buttonContainer.getChildAt(i)).getChildAt(0)).setTextColor(Color.parseColor("#9a9b9b"));
                                 }
@@ -165,7 +163,6 @@ public class ProvisionsActivity extends BaseActivity
                         linearLayoutBtnIn.addView(button);
                         ProvisionFragments fragment = ProvisionFragments.newInstance(provGroup.get(type));
                         list.add(fragment);
-
                     }
                     buttonContainerLl.getChildAt(0).setBackgroundColor(Color.parseColor("#ffffff"));
                     ((ProvButton) ((LinearLayout) buttonContainerLl.getChildAt(0)).getChildAt(0)).setTextColor(Color.parseColor("#ffffff"));
