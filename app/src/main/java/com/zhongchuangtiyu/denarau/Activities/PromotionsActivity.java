@@ -3,13 +3,13 @@ package com.zhongchuangtiyu.denarau.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Adapters.PromotionsListAdapter;
@@ -20,6 +20,7 @@ import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
+import com.zhongchuangtiyu.denarau.Utils.IsNetworkAvailable;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
@@ -31,6 +32,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
+import de.hdodenhof.circleimageview.CircleImageView;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -47,8 +49,21 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
     ListView promotionsListView;
     @Bind(R.id.ptr)
     PtrClassicFrameLayout ptr;
+    @Bind(R.id.textView)
+    TextView textView;
+    @Bind(R.id.btnRefresh)
+    CircleImageView btnRefresh;
+    @Bind(R.id.textView45)
+    TextView textView45;
+    @Bind(R.id.textView46)
+    TextView textView46;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+    @Bind(R.id.tvLoading)
+    TextView tvLoading;
     private int page = 0;
     private int lastItem;
+    private MaterialHeader header;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -57,23 +72,32 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
         ButterKnife.bind(this);
         StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        header = new MaterialHeader(PromotionsActivity.this);
         setSupportActionBar(toolbar);
 //        sendProtionsRequest();
         JPushInterface.init(getApplicationContext());
+        btnRefresh.setVisibility(View.GONE);
+        textView45.setVisibility(View.GONE);
+        textView46.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        tvLoading.setVisibility(View.GONE);
         setListeners();
+        if (!IsNetworkAvailable.isNetworkAvailable(PromotionsActivity.this))
+        {
+            clickToRefresh();
+        }
         ActivityCollector.addActivity(this);
     }
 
     private void setListeners()
     {
         promotionsTitleLeft.setOnClickListener(this);
-        final MaterialHeader header = new MaterialHeader(PromotionsActivity.this);
+//        final MaterialHeader header = new MaterialHeader(PromotionsActivity.this);
         int[] colors = getResources().getIntArray(R.array.google_colors);
         header.setColorSchemeColors(colors);
         header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
         header.setPadding(0, PtrLocalDisplay.dp2px(15), 0, PtrLocalDisplay.dp2px(10));
         header.setPtrFrameLayout(ptr);
-
         ptr.setLoadingMinTime(1000);
         ptr.setDurationToCloseHeader(1500);
         ptr.setHeaderView(header);
@@ -180,9 +204,10 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
                     startActivity(new Intent(PromotionsActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
-                }else
+                } else
                 {
                     CustomToast.showToast(PromotionsActivity.this, "网络连接失败，请检查网络连接");
+
                     ptr.refreshComplete();
                 }
             }
@@ -214,6 +239,9 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
                     final PromotionsListAdapter adapter = new PromotionsListAdapter(data, PromotionsActivity.this);
                     promotionsListView.setAdapter(adapter);
                     ptr.refreshComplete();
+                    progressBar.setVisibility(View.GONE);
+                    tvLoading.setVisibility(View.GONE);
+                    header.setAlpha(1);
                     promotionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
                         @Override
@@ -233,11 +261,39 @@ public class PromotionsActivity extends BaseActivity implements View.OnClickList
             public void netFail(VolleyError error)
             {
                 CustomToast.showToast(PromotionsActivity.this, "刷新失败，请检查网络连接");
+                if (progressBar.getVisibility() == View.VISIBLE || tvLoading.getVisibility() == View.VISIBLE)
+                {
+                    progressBar.setVisibility(View.GONE);
+                    tvLoading.setVisibility(View.GONE);
+                }
+                clickToRefresh();
                 ptr.refreshComplete();
             }
         });
     }
-
+    private void clickToRefresh()
+    {
+        if (promotionsListView.getCount() <= 0)
+        {
+            header.setAlpha(0);
+            textView46.setVisibility(View.VISIBLE);
+            textView45.setVisibility(View.VISIBLE);
+            btnRefresh.setVisibility(View.VISIBLE);
+            btnRefresh.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    textView46.setVisibility(View.GONE);
+                    textView45.setVisibility(View.GONE);
+                    btnRefresh.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    tvLoading.setVisibility(View.VISIBLE);
+                    sendProtionsRequest();
+                }
+            });
+        }
+    }
     @Override
     protected void onDestroy()
     {

@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zhongchuangtiyu.denarau.Adapters.StudentsAndCoachesAdapter;
@@ -17,6 +19,7 @@ import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
+import com.zhongchuangtiyu.denarau.Utils.IsNetworkAvailable;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
@@ -28,6 +31,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CoachTutorialListActivity extends BaseActivity implements View.OnClickListener
 {
@@ -38,6 +42,18 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
     Toolbar coachTutorialToolBar;
     @Bind(R.id.coachTutorialListView)
     ListView coachTutorialListView;
+    @Bind(R.id.textView)
+    TextView textView;
+    @Bind(R.id.btnRefresh)
+    CircleImageView btnRefresh;
+    @Bind(R.id.textView45)
+    TextView textView45;
+    @Bind(R.id.textView46)
+    TextView textView46;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+    @Bind(R.id.tvLoading)
+    TextView tvLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,7 +66,16 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
         setSupportActionBar(toolbar);
         sendCoachRequest();
         JPushInterface.init(getApplicationContext());
+        btnRefresh.setVisibility(View.GONE);
+        textView45.setVisibility(View.GONE);
+        textView46.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        tvLoading.setVisibility(View.GONE);
         setListeners();
+        if (!IsNetworkAvailable.isNetworkAvailable(CoachTutorialListActivity.this))
+        {
+            clickToRefresh();
+        }
         ActivityCollector.addActivity(this);
     }
 
@@ -61,9 +86,9 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
 
     private void sendCoachRequest()
     {
-        Map<String,String> map = new HashMap<>();
-        String token = CacheUtils.getString(CoachTutorialListActivity.this,"token",null);
-        String club_uuid = CacheUtils.getString(CoachTutorialListActivity.this,"clubuuid",null);
+        Map<String, String> map = new HashMap<>();
+        String token = CacheUtils.getString(CoachTutorialListActivity.this, "token", null);
+        String club_uuid = CacheUtils.getString(CoachTutorialListActivity.this, "clubuuid", null);
         Xlog.d("clubUuid" + club_uuid);
         MyApplication.volleyGET(APIUrls.STUDENTS_AND_COACHES + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
         {
@@ -84,6 +109,8 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
                     final List<StudentsAndCoaches> result = data.generateListInfo();
                     StudentsAndCoachesAdapter adapter = new StudentsAndCoachesAdapter(result, CoachTutorialListActivity.this);
                     coachTutorialListView.setAdapter(adapter);
+                    progressBar.setVisibility(View.GONE);
+                    tvLoading.setVisibility(View.GONE);
                     coachTutorialListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
                         @Override
@@ -96,12 +123,12 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
                                 Intent intent = new Intent(CoachTutorialListActivity.this, CoachesDetailActivity.class);
                                 intent.putExtra("uuid", uuid);
                                 startActivity(intent);
-                            }else if (result.get(position).getType().equals("open"))
+                            } else if (result.get(position).getType().equals("open"))
                             {
                                 Intent intent = new Intent(CoachTutorialListActivity.this, OpenCoursesActivity.class);
                                 intent.putExtra("uuid", uuid);
                                 startActivity(intent);
-                            }else if (result.get(position).getType().equals("private"))
+                            } else if (result.get(position).getType().equals("private"))
                             {
                                 Intent intent = new Intent(CoachTutorialListActivity.this, PrivateCoursesActivity.class);
                                 intent.putExtra("uuid", uuid);
@@ -123,12 +150,37 @@ public class CoachTutorialListActivity extends BaseActivity implements View.OnCl
                     startActivity(new Intent(CoachTutorialListActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
-                }else
-                {
-                    CustomToast.showToast(CoachTutorialListActivity.this, "网络连接失败，请检查网络连接");
                 }
+                if (progressBar.getVisibility() == View.VISIBLE || tvLoading.getVisibility() == View.VISIBLE)
+                {
+                    progressBar.setVisibility(View.GONE);
+                    tvLoading.setVisibility(View.GONE);
+                }
+                clickToRefresh();
             }
         });
+    }
+    private void clickToRefresh()
+    {
+        if (coachTutorialListView.getCount() <= 0)
+        {
+            textView46.setVisibility(View.VISIBLE);
+            textView45.setVisibility(View.VISIBLE);
+            btnRefresh.setVisibility(View.VISIBLE);
+            btnRefresh.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    textView46.setVisibility(View.GONE);
+                    textView45.setVisibility(View.GONE);
+                    btnRefresh.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    tvLoading.setVisibility(View.VISIBLE);
+                    sendCoachRequest();
+                }
+            });
+        }
     }
     @Override
     protected void onDestroy()

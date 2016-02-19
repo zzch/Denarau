@@ -38,4 +38,44 @@
             android:choiceMode="singleChoice" />
 
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/btn_refresh"
+        android:id="@+id/btnRefresh"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击刷新按钮重新加载"
+        android:id="@+id/textView45"
+        android:layout_above="@+id/btnRefresh"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="加载失败"
+        android:id="@+id/textView46"
+        android:layout_above="@+id/textView45"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"/>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="载入中"
+        android:id="@+id/tvLoading"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="8sp"/>
 </RelativeLayout>

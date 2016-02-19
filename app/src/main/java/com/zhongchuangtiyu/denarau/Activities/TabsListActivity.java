@@ -2,17 +2,16 @@ package com.zhongchuangtiyu.denarau.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.zhongchuangtiyu.denarau.Adapters.PromotionsListAdapter;
 import com.zhongchuangtiyu.denarau.Adapters.TabsListAdapter1;
-import com.zhongchuangtiyu.denarau.Entities.Promotions;
 import com.zhongchuangtiyu.denarau.Entities.Tabs;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
@@ -20,11 +19,11 @@ import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.CustomToast;
+import com.zhongchuangtiyu.denarau.Utils.IsNetworkAvailable;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
 
-import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +31,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
+import de.hdodenhof.circleimageview.CircleImageView;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -48,9 +48,19 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
     ImageButton tabsTitleLeft;
     @Bind(R.id.tabsPtr)
     PtrClassicFrameLayout tabsPtr;
+    @Bind(R.id.btnRefresh)
+    CircleImageView btnRefresh;
+    @Bind(R.id.textView45)
+    TextView textView45;
+    @Bind(R.id.textView46)
+    TextView textView46;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+    @Bind(R.id.tvLoading)
+    TextView tvLoading;
     private int page = 0;
     private int lastItem;
-
+    private MaterialHeader header;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -59,16 +69,25 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
         ButterKnife.bind(this);
         StatusBarCompat.compat(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        header = new MaterialHeader(TabsListActivity.this);
         setSupportActionBar(toolbar);
         JPushInterface.init(getApplicationContext());
+        btnRefresh.setVisibility(View.GONE);
+        textView45.setVisibility(View.GONE);
+        textView46.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        tvLoading.setVisibility(View.GONE);
         setListeners();
+        if (!IsNetworkAvailable.isNetworkAvailable(TabsListActivity.this))
+        {
+            clickToRefresh();
+        }
         ActivityCollector.addActivity(this);
     }
 
     public void setListeners()
     {
         tabsTitleLeft.setOnClickListener(this);
-        final MaterialHeader header = new MaterialHeader(TabsListActivity.this);
         int[] colors = getResources().getIntArray(R.array.google_colors);
         header.setColorSchemeColors(colors);
         header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
@@ -181,7 +200,7 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
                     startActivity(new Intent(TabsListActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
-                }else
+                } else
                 {
                     CustomToast.showToast(TabsListActivity.this, "网络连接失败，请检查网络连接");
                     tabsPtr.refreshComplete();
@@ -189,11 +208,12 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
+
     @Override
-        protected void onResume ()
-        {
-            super.onResume();
-        }
+    protected void onResume()
+    {
+        super.onResume();
+    }
 
     private void sendRequest()
     {
@@ -219,6 +239,9 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
                     TabsListAdapter1 adapter1 = new TabsListAdapter1(data, TabsListActivity.this);
                     tabListView1.setAdapter(adapter1);
                     tabsPtr.refreshComplete();
+                    progressBar.setVisibility(View.GONE);
+                    tvLoading.setVisibility(View.GONE);
+                    header.setAlpha(1);
                 }
             }
 
@@ -226,9 +249,38 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
             public void netFail(VolleyError error)
             {
                 CustomToast.showToast(TabsListActivity.this, "刷新失败，请检查网络连接");
+                if (progressBar.getVisibility() == View.VISIBLE || tvLoading.getVisibility() == View.VISIBLE)
+                {
+                    progressBar.setVisibility(View.GONE);
+                    tvLoading.setVisibility(View.GONE);
+                }
+                clickToRefresh();
                 tabsPtr.refreshComplete();
             }
         });
+    }
+    private void clickToRefresh()
+    {
+        if (tabListView1.getCount() <= 0)
+        {
+            header.setAlpha(0);
+            textView46.setVisibility(View.VISIBLE);
+            textView45.setVisibility(View.VISIBLE);
+            btnRefresh.setVisibility(View.VISIBLE);
+            btnRefresh.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    textView46.setVisibility(View.GONE);
+                    textView45.setVisibility(View.GONE);
+                    btnRefresh.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    tvLoading.setVisibility(View.VISIBLE);
+                    sendRequest();
+                }
+            });
+        }
     }
     @Override
     protected void onDestroy()
@@ -236,6 +288,7 @@ public class TabsListActivity extends BaseActivity implements View.OnClickListen
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
+
     @Override
     public void onClick(View v)
     {
