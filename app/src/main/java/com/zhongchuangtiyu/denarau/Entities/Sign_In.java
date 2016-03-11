@@ -80,6 +80,17 @@ public class Sign_In implements Serializable
         private Object portrait;
         private Object birthday;
         private String token;
+        private String uuid;
+
+        public String getUuid()
+        {
+            return uuid;
+        }
+
+        public void setUuid(String uuid)
+        {
+            this.uuid = uuid;
+        }
 
         public void setName(String name)
         {

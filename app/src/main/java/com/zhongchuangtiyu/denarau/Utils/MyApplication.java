@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.youzan.sdk.YouzanSDK;
 
 import java.util.Map;
 
@@ -39,6 +40,13 @@ public class MyApplication extends Application
         super.onCreate();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         mcontext = this;
+
+        /**
+         * 初始化
+         * @param Context application Context
+         * @param userAgent 用户代理, 填写UA
+         */
+        YouzanSDK.init(this, "5252300f8935683a9c1456191629356");
     }
 
     public static void volleyGET(String url, final Map<String, String> map, final VolleyCallBack listener)

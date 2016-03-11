@@ -37,6 +37,7 @@ import com.zhongchuangtiyu.denarau.Utils.DateUtils;
 import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.Utils.Xlog;
+import com.zhongchuangtiyu.denarau.h5.H5Activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -499,7 +500,13 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 startActivity(new Intent(MembershipCardMainActivity.this, PersonalCenterActivity.class));
                 break;
             case R.id.btnMemberStore:
-                startActivity(new Intent(MembershipCardMainActivity.this, PromotionsActivity.class));
+//                startActivity(new Intent(MembershipCardMainActivity.this, PromotionsActivity.class));
+                Intent intent = new Intent(MembershipCardMainActivity.this, H5Activity.class);
+                /**
+                 * 传入链接, 请修改成你们店铺的链接
+                 */
+                intent.putExtra(H5Activity.SIGN_URL, "http://kdt.im/bbXtJr");
+                startActivity(intent);
                 break;
             case R.id.membershipCardNoticeInfo:
                 startActivity(new Intent(MembershipCardMainActivity.this, AnnouncementsListActivity.class));

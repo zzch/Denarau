@@ -2,6 +2,13 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/zhongchuangtiyu/denarau/Utils/RatingBar.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/zhongchuangtiyu/denarau/base/AutoViewHolder.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/zhongchuangtiyu/denarau/base/BaseWebActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/zhongchuangtiyu/denarau/base/QuickAdapter.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/zhongchuangtiyu/denarau/event/AppPayEvent.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/zhongchuangtiyu/denarau/event/ShareEvent.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/zhongchuangtiyu/denarau/event/UserEvent.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/zhongchuangtiyu/denarau/h5/H5Activity.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/values-v21/attrs.xml" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

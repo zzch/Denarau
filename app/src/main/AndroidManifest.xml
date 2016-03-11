@@ -65,6 +65,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- AppID -->
+        <meta-data
+            android:name="YZ_APP_ID"
+            android:value="8a0c4cda44ac62f216"/>
+        <!-- AppSecret -->
+        <meta-data
+            android:name="YZ_APP_SECRET"
+            android:value="996b1a3f4ece78039a6fcbb35ce4909f"/>
+
         <!-- 友盟start -->
         <!-- ###################添加UmengAppkey###################### -->
         <meta-data
@@ -385,6 +394,10 @@
             android:name=".Activities.OpenCoursesActivity"
             android:label="@string/title_activity_course_order2"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".h5.H5Activity"
+                  android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".Demos.TimePickerTest"
