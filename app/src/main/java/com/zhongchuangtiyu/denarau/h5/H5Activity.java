@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.BaseAdapter;
@@ -33,6 +34,8 @@ import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
 import com.zhongchuangtiyu.denarau.event.ShareEvent;
 import com.zhongchuangtiyu.denarau.event.UserEvent;
+
+import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -82,7 +85,14 @@ public class H5Activity extends BaseActivity
             @Override
             public void onClick(View v)
             {
-                finish();
+                Runtime runtime = Runtime.getRuntime();
+                try
+                {
+                    runtime.exec("input keyevent " + KeyEvent.KEYCODE_BACK);
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -97,7 +107,8 @@ public class H5Activity extends BaseActivity
         YouzanUser user = new YouzanUser();
         String userUuid = CacheUtils.getString(H5Activity.this, "userUuid", null);
         user.setUserId(userUuid);
-        user.setAvatar("http://..");
+        String userPortrait = CacheUtils.getString(H5Activity.this, "userPortrait", null);
+        user.setAvatar(userPortrait);
         String gender = CacheUtils.getString(H5Activity.this, "gender", null);
         if (gender.equals("male"))
         {

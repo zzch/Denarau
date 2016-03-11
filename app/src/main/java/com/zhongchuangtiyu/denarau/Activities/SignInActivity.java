@@ -711,12 +711,14 @@ public class SignInActivity extends BaseActivity implements TextWatcher, View.On
                     String club_uuid = data.getClub().getUuid();
                     String userUuid = data.getUser().getUuid();
                     String telephone = loginPhoneNum.getText().toString();
+                    String userPortrait = data.getUser().getPortrait().toString();
                     CacheUtils.putString(SignInActivity.this, "token", token);
                     CacheUtils.putString(SignInActivity.this, "clubuuid", club_uuid);
                     CacheUtils.putString(SignInActivity.this, "name", name);
                     CacheUtils.putString(SignInActivity.this, "gender", gender);
                     CacheUtils.putString(SignInActivity.this, "userUuid", userUuid);
                     CacheUtils.putString(SignInActivity.this, "telephone", telephone);
+                    CacheUtils.putString(SignInActivity.this, "userPortrait", userPortrait);
                     if (!registration_id.equals(""))
                     {
                         putRegistrationId();
