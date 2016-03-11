@@ -77,8 +77,8 @@ public class Sign_In implements Serializable
 
         private String name;
         private String gender;
-        private Object portrait;
-        private Object birthday;
+        private String portrait;
+        private String birthday;
         private String token;
         private String uuid;
 
@@ -102,12 +102,12 @@ public class Sign_In implements Serializable
             this.gender = gender;
         }
 
-        public void setPortrait(Object portrait)
+        public void setPortrait(String portrait)
         {
             this.portrait = portrait;
         }
 
-        public void setBirthday(Object birthday)
+        public void setBirthday(String birthday)
         {
             this.birthday = birthday;
         }
@@ -127,12 +127,12 @@ public class Sign_In implements Serializable
             return gender;
         }
 
-        public Object getPortrait()
+        public String getPortrait()
         {
             return portrait;
         }
 
-        public Object getBirthday()
+        public String getBirthday()
         {
             return birthday;
         }

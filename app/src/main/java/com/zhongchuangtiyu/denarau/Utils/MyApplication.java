@@ -2,6 +2,7 @@ package com.zhongchuangtiyu.denarau.Utils;
 
 
 import android.app.Application;
+import android.content.Context;
 
 
 import com.android.volley.DefaultRetryPolicy;
@@ -33,14 +34,14 @@ public class MyApplication extends Application
 
         void netFail(VolleyError error);
     }
-
+    private static Context context;
     @Override
     public void onCreate()
     {
         super.onCreate();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         mcontext = this;
-
+        MyApplication.context = getApplicationContext();
         /**
          * 初始化
          * @param Context application Context
@@ -48,7 +49,9 @@ public class MyApplication extends Application
          */
         YouzanSDK.init(this, "5252300f8935683a9c1456191629356");
     }
-
+    public static Context getAppContext() {
+        return MyApplication.context;
+    }
     public static void volleyGET(String url, final Map<String, String> map, final VolleyCallBack listener)
     {
 //        String token = CacheUtils.getString(mcontext, "token","aa");

@@ -1,64 +1,84 @@
 package com.zhongchuangtiyu.denarau.event;
 
+
 import com.youzan.sdk.YouzanSDK;
 import com.youzan.sdk.YouzanUser;
 import com.youzan.sdk.web.bridge.IBridgeEnv;
 import com.youzan.sdk.web.event.UserInfoEvent;
+import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
+import com.zhongchuangtiyu.denarau.Utils.MyApplication;
 
 
 /**
- * ¹¦ÄÜ    : Í¬²½×¢²áÓĞÔŞÓÃ»§ĞÅÏ¢(¸ß½×ÊµÏÖ)
+ * ï¿½ï¿½ï¿½ï¿½    : Í¬ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢(ï¿½ß½ï¿½Êµï¿½ï¿½)
  *
- * Ê¹ÓÃ³¡¾°: ´ò¿ªÓĞÔŞµÄÍøÒ³ÓĞ¿ÉÄÜ»áÔçÓÚ¿Í»§¶ËÓÃ»§µÇÂ¼(±ÈÈçÒ»Ğ©APP²»Ç¿ÖÆÓÃ»§ÏÈµÇÂ¼ÔÙÊ¹ÓÃ),
- * ´¥·¢Ìõ¼ş: Ò³Ãæ×Ô¶¯´¥·¢
- * ËµÃ÷    : Ò»¸öÓÃ»§ĞèÒªÔÚÄúµÄAPPÖĞÍ¨¹ıÓĞÔŞµÄSDKÍê³ÉÕû¸ö½»Ò×¹ı³Ì, ĞèÒªÏòÓĞÔŞµÄºóÌ¨×¢²áÒ»¸öÓÃ»§.
- * ²ÎÊıËµÃ÷:
+ * Ê¹ï¿½Ã³ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½Şµï¿½ï¿½ï¿½Ò³ï¿½Ğ¿ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½Ú¿Í»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Â¼(ï¿½ï¿½ï¿½ï¿½Ò»Ğ©APPï¿½ï¿½Ç¿ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Èµï¿½Â¼ï¿½ï¿½Ê¹ï¿½ï¿½),
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: Ò³ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
+ * Ëµï¿½ï¿½    : Ò»ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½APPï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Şµï¿½SDKï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¹ï¿½ï¿½ï¿½, ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ŞµÄºï¿½Ì¨×¢ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ã»ï¿½.
+ * ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½:
  *
  * {@link com.youzan.sdk.YouzanUser}
- *          UserId :    ±ØĞè×Ö¶Î
- *                  ÒâÒå: ÓÃ»§ID,ÓÃÓÚ±êÊ¶¸ÃÓÃ»§ÔÚAPPÖĞÊÇÎ¨Ò»µÄ(ÍÆ¼öÊ¹ÓÃÓÃ»§µÄÊÖ»úºÅµÈ),
- *                  ÀàĞÍ: ×Ö·û´®
+ *          UserId :    ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ã»ï¿½ID,ï¿½ï¿½ï¿½Ú±ï¿½Ê¶ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½APPï¿½ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½(ï¿½Æ¼ï¿½Ê¹ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Åµï¿½),
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ö·ï¿½ï¿½ï¿½
  *
- *          Avatar :    ·Ç±ØÒª×Ö¶Î
- *                  ÒâÒå: Í·ÏñÍ¼±êÁ´½Ó
- *                  ÀàĞÍ: ×Ö·û´®
+ *          Avatar :    ï¿½Ç±ï¿½Òªï¿½Ö¶ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: Í·ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ö·ï¿½ï¿½ï¿½
  *
- *          Gender :    ·Ç±ØÒª×Ö¶Î
- *                  ÒâÒå: ĞÔ±ğ
- *                  ÀàĞÍ: ÕûĞÍ, 1´ú±íÄĞĞÔ, 0´ú±íÅ®ĞÔ
+ *          Gender :    ï¿½Ç±ï¿½Òªï¿½Ö¶ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ô±ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½, 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 0ï¿½ï¿½ï¿½ï¿½Å®ï¿½ï¿½
  *
- *          NickName :  ·Ç±ØÒª×Ö¶Î
- *                  ÒâÒå: êÇ³Æ
- *                  ÀàĞÍ: ×Ö·û´®
+ *          NickName :  ï¿½Ç±ï¿½Òªï¿½Ö¶ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ç³ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ö·ï¿½ï¿½ï¿½
  *
- *          Telephone :  ·Ç±ØÒª×Ö¶Î
- *                  ÒâÒå: ÊÖ»úºÅ
- *                  ÀàĞÍ: ×Ö·û´®
+ *          Telephone :  ï¿½Ç±ï¿½Òªï¿½Ö¶ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ö»ï¿½ï¿½ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ö·ï¿½ï¿½ï¿½
  *
- *          UserName :  ·Ç±ØÒª×Ö¶Î
- *                  ÒâÒå: ÓÃ»§Ãû
- *                  ÀàĞÍ: ×Ö·û´®
+ *          UserName :  ï¿½Ç±ï¿½Òªï¿½Ö¶ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ã»ï¿½ï¿½ï¿½
+ *                  ï¿½ï¿½ï¿½ï¿½: ï¿½Ö·ï¿½ï¿½ï¿½
  *
  *  {@link IBridgeEnv}
- *          ÒâÒå: °ü¹üÒ»Ğ©ÉÏÏÂÎÄ»·¾³ĞÅÏ¢
- *          ËµÃ÷: {@code IBridgeEnv.getWebView()}¿ÉÒÔ»ñÈ¡WebView¶ÔÏó
- *                {@code IBridgeEnv.getActivity()}¿ÉÒÔ»ñÈ¡Activity¶ÔÏó
+ *          ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½Ò»Ğ©ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+ *          Ëµï¿½ï¿½: {@code IBridgeEnv.getWebView()}ï¿½ï¿½ï¿½Ô»ï¿½È¡WebViewï¿½ï¿½ï¿½ï¿½
+ *                {@code IBridgeEnv.getActivity()}ï¿½ï¿½ï¿½Ô»ï¿½È¡Activityï¿½ï¿½ï¿½ï¿½
  *
  */
 public final class UserEvent extends UserInfoEvent
 {
-
     @Override
     public void call(IBridgeEnv env) {
         YouzanUser user = new YouzanUser();
-        user.setUserId("12345");
-        user.setAvatar("http://..");
-        user.setGender(1);
-        user.setNickName("Ğ¡Ã÷µÄêÇ³Æ");
-        user.setTelephone("12345678901");
-        user.setUserName("Ğ¡Ã÷");
+        String userId = CacheUtils.getString(MyApplication.getAppContext(), "userId", null);
+//        user.setUserId("1234566");
+//        user.setAvatar("http://..");
+//        user.setGender(1);
+//        user.setNickName("ç‹èŒ");
+//        user.setTelephone("12345678901");
+//        user.setUserName("aaaa");
 
-        //Ö´ĞĞÍ¬²½×¢²áÓĞÔŞÓÃ»§²Ù×÷
+        String userUuid = CacheUtils.getString(MyApplication.getAppContext(), "userUuid", null);
+        user.setUserId(userUuid);
+        String userPortrait = CacheUtils.getString(MyApplication.getAppContext(), "userPortrait", null);
+        user.setAvatar(userPortrait);
+        String gender = CacheUtils.getString(MyApplication.getAppContext(), "gender", null);
+        if (gender.equals("male"))
+        {
+            user.setGender(1);
+        } else if (gender.equals("female"))
+        {
+            user.setGender(0);
+        }
+        String nickName = CacheUtils.getString(MyApplication.getAppContext(), "name", null);
+        user.setNickName(nickName);
+        String telephone = CacheUtils.getString(MyApplication.getAppContext(), "telephone", null);
+        user.setTelephone(telephone);
+        user.setUserName(nickName);
+
         YouzanSDK.syncRegisterUser(env.getWebView(), user);
     }
 }

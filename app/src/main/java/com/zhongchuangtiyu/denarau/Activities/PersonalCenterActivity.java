@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.youzan.sdk.YouzanSDK;
 import com.zhongchuangtiyu.denarau.Entities.UsersDetail;
 import com.zhongchuangtiyu.denarau.R;
 import com.zhongchuangtiyu.denarau.Utils.APIUrls;
@@ -182,6 +183,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
                 CacheUtils.putString(PersonalCenterActivity.this, "setPortrait", null);
                 CacheUtils.putString(PersonalCenterActivity.this, "registration_id",null);
                 startActivity(new Intent(PersonalCenterActivity.this, SignInActivity.class));
+                YouzanSDK.userLogout(PersonalCenterActivity.this);
                 finish();
                 ActivityCollector.finishAll();
                 break;

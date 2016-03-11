@@ -7,9 +7,9 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 /**
- * 范例
- * BaseWebActivity里面会动态生成一个WebView对象, 你也可以通过布局文件获取
- * 参考{@link android.webkit.WebViewFragment}中对WebView生命周期的控制
+// * 锟斤拷锟斤拷
+ * BaseWebActivity锟斤拷锟斤拷岫拷锟斤拷锟揭伙拷锟絎ebView锟斤拷锟斤拷, 锟斤拷也锟斤拷锟斤拷通锟斤拷锟斤拷锟斤拷锟侥硷拷锟斤拷取
+ * 锟轿匡拷{@link android.webkit.WebViewFragment}锟叫讹拷WebView锟斤拷锟斤拷锟斤拷锟节的匡拷锟斤拷
  */
 public abstract class BaseWebActivity extends Activity
 {

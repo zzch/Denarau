@@ -1,6 +1,5 @@
 package com.zhongchuangtiyu.denarau.h5;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +8,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youzan.sdk.YouzanBridge;
@@ -32,6 +28,7 @@ import com.zhongchuangtiyu.denarau.Utils.ActivityCollector;
 import com.zhongchuangtiyu.denarau.Utils.BaseActivity;
 import com.zhongchuangtiyu.denarau.Utils.CacheUtils;
 import com.zhongchuangtiyu.denarau.Utils.StatusBarCompat;
+import com.zhongchuangtiyu.denarau.Utils.Xlog;
 import com.zhongchuangtiyu.denarau.event.ShareEvent;
 import com.zhongchuangtiyu.denarau.event.UserEvent;
 
@@ -41,13 +38,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * #html5½»»¥°æ
+ * #html5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * #======
  * <p/>
- * #²»±Ø¼Ì³ÐBaseWebActivity, ½ö²Î¿¼×÷ÓÃ
+ * #ï¿½ï¿½ï¿½Ø¼Ì³ï¿½BaseWebActivity, ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½
  * #
- * #¼Ç×¡²»ÒªÓÃ¶ÌÁ´½Ó£¬¶ÌÁ´½ÓÀàËÆ£ºhttp://kdt.im/......, Ê¹ÓÃ³¤Á¬½Ó
- * #²»È»»á¶àÒ»´ÎÌø×ªhttp://wap.koudaitong.com/v2/showcase/homepage?alias=xxxxxx
+ * #ï¿½ï¿½×¡ï¿½ï¿½Òªï¿½Ã¶ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½http://kdt.im/......, Ê¹ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ï¿½
+ * #ï¿½ï¿½È»ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½×ªhttp://wap.koudaitong.com/v2/showcase/homepage?alias=xxxxxx
  */
 public class H5Activity extends BaseActivity
 {
@@ -57,7 +54,7 @@ public class H5Activity extends BaseActivity
     @Bind(R.id.webView3)
     WebView web;
     /**
-     * H5ºÍÔ­ÉúµÄÇÅ½Ó¶ÔÏó
+     * H5ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½Å½Ó¶ï¿½ï¿½ï¿½
      */
     private YouzanBridge bridge;
     /**
@@ -98,9 +95,9 @@ public class H5Activity extends BaseActivity
     }
 
     /**
-     * ´ò¿ªÓÐÔÞÈë¿ÚÍøÒ³ÐèÏÈ×¢²áÓÐÔÞÓÃ»§
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
      * <p/>
-     * Èç¹ûÄãÃÇAppµÄÓÃ»§Õâ¸öÊ±ºò»¹Ã»ÓÐµÇÂ¼, ÇëÏÈÌø×ªÄãÃÇµÄµÇÂ¼Ò³Ãæ, È»ºóÔÙ»ØÀ´Í¬²½ÓÃ»§ÐÅÏ¢
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Appï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ã»ï¿½Ðµï¿½Â¼, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ÇµÄµï¿½Â¼Ò³ï¿½ï¿½, È»ï¿½ï¿½ï¿½Ù»ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
      */
     private void registerYouzanUser()
     {
@@ -122,15 +119,15 @@ public class H5Activity extends BaseActivity
         user.setNickName(nickName);
         String telephone = CacheUtils.getString(H5Activity.this, "telephone", null);
         user.setTelephone(telephone);
-//        user.setUserName("´óÃ÷");
+        user.setUserName(nickName);
 
 
         YouzanSDK.asyncRegisterUser(user, new OnRegister()
         {
             /**
-             * ×¢²áÊ§°Ü, Çë²Î¿¼´íÎóÐÅÏ¢ÐÞ¸Ä×¢²á²ÎÊý
+             * ×¢ï¿½ï¿½Ê§ï¿½ï¿½, ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Þ¸ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½
              * <p/>
-             * Èç±¨·Ç·¨ÇëÇó, Çë¼ì²éUAÊÇ·ñÕýÈ·
+             * ï¿½ç±¨ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½UAï¿½Ç·ï¿½ï¿½ï¿½È·
              */
             @Override
             public void onFailed(QueryError queryError)
@@ -139,7 +136,7 @@ public class H5Activity extends BaseActivity
             }
 
             /**
-             * ×¢²á³É¹¦, ´ò¿ªÓÐÔÞÈë¿ÚÍøÒ³
+             * ×¢ï¿½ï¿½É¹ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³
              */
             @Override
             public void onSuccess()
@@ -151,7 +148,7 @@ public class H5Activity extends BaseActivity
 
 
     /**
-     * ³õÊ¼»¯ÊÓÍ¼
+     * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Í¼
      */
     private void iniView()
     {
@@ -164,9 +161,9 @@ public class H5Activity extends BaseActivity
 
         rootView.setOrientation(LinearLayout.VERTICAL);
         configView.setOrientation(LinearLayout.HORIZONTAL);
-//        buttonShare.setText("·ÖÏí");
-//        buttonRefresh.setText("Ë¢ÐÂ");
-//        tvTips.setText("DEMOÑÝÊ¾");
+//        buttonShare.setText("ï¿½ï¿½ï¿½ï¿½");
+//        buttonRefresh.setText("Ë¢ï¿½ï¿½");
+//        tvTips.setText("DEMOï¿½ï¿½Ê¾");
 //        configView.addView(buttonShare);
 //        configView.addView(buttonRefresh);
 //        configView.addView(tvTips);
@@ -177,7 +174,7 @@ public class H5Activity extends BaseActivity
 //        buttonShare.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                if (bridge != null) {//·ÖÏí
+//                if (bridge != null) {//ï¿½ï¿½ï¿½ï¿½
 //                    bridge.sharePage();
 //                }
 //            }
@@ -185,7 +182,7 @@ public class H5Activity extends BaseActivity
 //        buttonRefresh.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                if (web != null) {//Ë¢ÐÂ
+//                if (web != null) {//Ë¢ï¿½ï¿½
 //                    web.reload();
 //                }
 //            }
@@ -193,7 +190,7 @@ public class H5Activity extends BaseActivity
     }
 
     /**
-     * ´ò¿ªÁ´½Ó
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     private void openWebview()
     {
@@ -207,34 +204,34 @@ public class H5Activity extends BaseActivity
 
 
     /**
-     * ³õÊ¼»¯ÇÅ½Ó¶ÔÏó
+     * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Å½Ó¶ï¿½ï¿½ï¿½
      * <p/>
-     * {@link YouzanBridge}ÊÇÒ»¸öÇÅ½Ó¶ÔÏó, ÓÃÓÚ´òÍ¨Html5Ò³ÃæºÍÔ­ÉúµÄ½»»¥.
-     * Í¨¹ý{@code YouzanBridge.build(activity, webView).create(); }µÄ·½Ê½³õÊ¼»¯.
+     * {@link YouzanBridge}ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Å½Ó¶ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ú´ï¿½Í¨Html5Ò³ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½.
+     * Í¨ï¿½ï¿½{@code YouzanBridge.build(activity, webView).create(); }ï¿½Ä·ï¿½Ê½ï¿½ï¿½Ê¼ï¿½ï¿½.
      * <p/>
-     * Í¨¹ý{@code YouzanBridge.add(event)}¿ÉÒÔÌí¼ÓÇÅ½ÓÊÂ¼þ, ÏÖÔÚÖ§³ÖµÄÊÂ¼þÓÐ:
+     * Í¨ï¿½ï¿½{@code YouzanBridge.add(event)}ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å½ï¿½ï¿½Â¼ï¿½, ï¿½ï¿½ï¿½ï¿½Ö§ï¿½Öµï¿½ï¿½Â¼ï¿½ï¿½ï¿½:
      * <p/>
-     * {@link ShareDataEvent} => ·ÖÏíÊÂ¼þ
-     * ËµÃ÷:  µ÷ÓÃ{@code YouzanBridge.sharePage()}À´´¥·¢
+     * {@link ShareDataEvent} => ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
+     * Ëµï¿½ï¿½:  ï¿½ï¿½ï¿½ï¿½{@code YouzanBridge.sharePage()}ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * <p/>
-     * {@link UserInfoEvent} => ÓÃ»§Í¬²½µÇÂ¼ÊÂ¼þ(¸ß½×ÊµÏÖ)
-     * ËµÃ÷:  Èç¹û²»Ê¹ÓÃ{@code YouzanSDK.asyncRegisterUser(user);}
+     * {@link UserInfoEvent} => ï¿½Ã»ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Â¼ï¿½(ï¿½ß½ï¿½Êµï¿½ï¿½)
+     * Ëµï¿½ï¿½:  ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½{@code YouzanSDK.asyncRegisterUser(user);}
      * <p/>
-     * {@link WXAppPayEvent} => Î¢ÐÅAPPÖ§¸¶ÊÂ¼þ(¸ß½×ÊµÏÖ)
-     * ËµÃ÷:  ÐèÔÚÓÐÔÞºóÌ¨ÒÑ¾­¿ªÆôÎ¢ÐÅAPPÖ§¸¶, ÊÂ¼þ·µ»ØÖ§¸¶²ÎÊý, ¿ª·¢ÕßÊ¹ÓÃÎ¢ÐÅSDK
+     * {@link WXAppPayEvent} => Î¢ï¿½ï¿½APPÖ§ï¿½ï¿½ï¿½Â¼ï¿½(ï¿½ß½ï¿½Êµï¿½ï¿½)
+     * Ëµï¿½ï¿½:  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þºï¿½Ì¨ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½Î¢ï¿½ï¿½APPÖ§ï¿½ï¿½, ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Î¢ï¿½ï¿½SDK
      * http://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419319167&token=&lang=zh_CN
-     * ÊµÏÖÌø×ªÖ§¸¶.
+     * Êµï¿½ï¿½ï¿½ï¿½×ªÖ§ï¿½ï¿½.
      * <p/>
-     * {@link WebReadyEvent} =>Ò³Ãæ³õÊ¼»¯Íê³É(·ÏÆú)
+     * {@link WebReadyEvent} =>Ò³ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
      */
     private void initBridge()
     {
         bridge = YouzanBridge.build(this, web)
-                //.setWebClient(new WebClient())clientÍØÕ¹Ê¾Àý, ²»½øÐÐÍØÕ¹¿ÉÒÔÉ¾³ýÕâÐÐ´úÂë
+                //.setWebClient(new WebClient())clientï¿½ï¿½Õ¹Ê¾ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½
                 .create();
 
-        //¸ù¾ÝÐèÇóÌí¼ÓÏàÓ¦µÄÇÅ½ÓÊÂ¼þ
-        bridge.add(new ShareEvent())//·ÖÏí
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Å½ï¿½ï¿½Â¼ï¿½
+        bridge.add(new ShareEvent())//ï¿½ï¿½ï¿½ï¿½
                 .add(new ShareDataEvent()
                 {
 
@@ -242,25 +239,25 @@ public class H5Activity extends BaseActivity
                     public void call(IBridgeEnv env, GoodsShareModel data)
                     {
                         /**
-                         *»òÕßµ÷ÓÃ·ÖÏí×é¼þ½øÐÐÉÌÆ·ÐÅÏ¢·ÖÏí, ²Î¿¼{@link ShareEvent}
+                         *ï¿½ï¿½ï¿½ßµï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½, ï¿½Î¿ï¿½{@link ShareEvent}
                          */
                         new AlertDialog
                                 .Builder(H5Activity.this)
                                 .setTitle(data.getTitle())
-                                .setMessage("·ÖÏíÁ´½Ó:\n" + data.getLink() + "\n\nÍ¼Æ¬Á´½Ó:\n" + data.getImgUrl() + "\n\nÃèÊö:\n" + data.getDesc())
+                                .setMessage("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:\n" + data.getLink() + "\n\nÍ¼Æ¬ï¿½ï¿½ï¿½ï¿½:\n" + data.getImgUrl() + "\n\nï¿½ï¿½ï¿½ï¿½:\n" + data.getDesc())
                                 .create()
                                 .show();
 
                     }
                 })
-                .add(new UserEvent());//Í¬²½×¢²áÓÐÔÞÓÃ»§, ÐèÒªÏÈ´ò¿ªÍøÒ³ºóÒªÇóÓÃ»§µÇÂ¼µÄ¿ÉÒÔÊ¹ÓÃÕâÖÖ
+                .add(new UserEvent());//Í¬ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½, ï¿½ï¿½Òªï¿½È´ï¿½ï¿½ï¿½Ò³ï¿½ï¿½Òªï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Â¼ï¿½Ä¿ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
 
     /**
-     * ¼ÓÔØÁ´½Ó
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      *
-     * @param url Á´½Ó, ÍÆ¼ö²»ÒªÊ¹ÓÃ¶ÌÁ´½Ó(¶àÒ»´ÎÖØ¶¨Ïò)
+     * @param url ï¿½ï¿½ï¿½ï¿½, ï¿½Æ¼ï¿½ï¿½ï¿½ÒªÊ¹ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½)
      */
     private void loadPage(String url)
     {
@@ -271,9 +268,9 @@ public class H5Activity extends BaseActivity
     }
 
     /**
-     * Ò³Ãæ»ØÍË
+     * Ò³ï¿½ï¿½ï¿½ï¿½ï¿½
      * <p/>
-     * bridge.pageGoBack()·µ»ØTrue±íÊ¾´¦ÀíµÄÊÇÍøÒ³µÄ»ØÍË
+     * bridge.pageGoBack()ï¿½ï¿½ï¿½ï¿½Trueï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½Ä»ï¿½ï¿½ï¿½
      */
     @Override
     public void onBackPressed()
