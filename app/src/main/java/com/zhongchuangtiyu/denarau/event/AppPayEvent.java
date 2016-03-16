@@ -6,16 +6,16 @@ import com.youzan.sdk.web.event.WXAppPayEvent;
 
 
 /**
- * ¹¦ÄÜ   : ·µ»ØÎ¢ĞÅAPPÖ§¸¶µÄÊı¾İ(¸ß½×ÊµÏÖ)
+ * åŠŸèƒ½   : è¿”å›å¾®ä¿¡APPæ”¯ä»˜çš„æ•°æ®(é«˜é˜¶å®ç°)
  *
- * Ê¹ÓÃ³¡¾°: ÒÑÓĞ¹«ÖÚºÅ²¢¿ªÍ¨Î¢ĞÅÖ§¸¶
- * ´¥·¢Ìõ¼ş: ÍøÒ³Ò³Ãæ´¥·¢, ²¢ÔÚÓĞÔŞºóÌ¨¿ªÆôÁËÎ¢ĞÅAPPÖ§¸¶
- * ËµÃ÷    : Î¢ĞÅAPPÖ§¸¶¼¯³É±È½ÏÂé·³, ÍÆ¼öÊ¹ÓÃÎ¢ĞÅWAPÖ§¸¶(Ä¬ÈÏ¿ªÆô)
- *           ½Ó¿ÚÖ»»á·µ»ØÎ¢ĞÅÖ§¸¶µÄ¶©µ¥Êı¾İ, Ö®ºóµÄÌø×ªÖ§¸¶ĞèÒª¿ª·¢Õß×ÔĞĞ¼¯³É
- *           ²Î¿¼Î¢ĞÅSDKÎÄµµ http://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419319167&token=&lang=zh_CN
- * ²ÎÊıËµÃ÷:
+ * ä½¿ç”¨åœºæ™¯: å·²æœ‰å…¬ä¼—å·å¹¶å¼€é€šå¾®ä¿¡æ”¯ä»˜
+ * è§¦å‘æ¡ä»¶: ç½‘é¡µé¡µé¢è§¦å‘, å¹¶åœ¨æœ‰èµåå°å¼€å¯äº†å¾®ä¿¡APPæ”¯ä»˜
+ * è¯´æ˜    : å¾®ä¿¡APPæ”¯ä»˜é›†æˆæ¯”è¾ƒéº»çƒ¦, æ¨èä½¿ç”¨å¾®ä¿¡WAPæ”¯ä»˜(é»˜è®¤å¼€å¯)
+ *           æ¥å£åªä¼šè¿”å›å¾®ä¿¡æ”¯ä»˜çš„è®¢å•æ•°æ®, ä¹‹åçš„è·³è½¬æ”¯ä»˜éœ€è¦å¼€å‘è€…è‡ªè¡Œé›†æˆ
+ *           å‚è€ƒå¾®ä¿¡SDKæ–‡æ¡£ http://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419319167&token=&lang=zh_CN
+ * å‚æ•°è¯´æ˜:
  *
- * {@link com.youzan.sdk.model.trade.WxPayModel}ÀàÍ¬ÓÚ{@link com.tencent.mm.sdk.modelpay.PayReq}
+ * {@link com.youzan.sdk.model.trade.WxPayModel}ç±»åŒäº{@link com.tencent.mm.sdk.modelpay.PayReq}
  *
  *
  */

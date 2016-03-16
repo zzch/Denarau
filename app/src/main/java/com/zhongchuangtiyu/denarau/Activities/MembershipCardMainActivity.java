@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -83,6 +82,10 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     RelativeLayout membershipCardMainTitleRight;
     @Bind(R.id.membershipCardMainTitleLeft)
     RelativeLayout membershipCardMainTitleLeft;
+    @Bind(R.id.membershipCardNoticeInfoDate)
+    TextView membershipCardNoticeInfoDate;
+    @Bind(R.id.membershipCardNoticeInfoLl)
+    LinearLayout membershipCardNoticeInfoLl;
     private List<View> pagerViews;
     private MembershipCardViewpagerAdapter adapter;
     private View view;
@@ -90,6 +93,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     private Button mPreSelectedBt;
     private boolean isSelected = true;
     private final List<String> list = new ArrayList<String>();
+    private final List<String> list1 = new ArrayList<String>();
     private int j = 0;
     private Timer timer;
     private String registration_id;
@@ -187,7 +191,6 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         Map map = new HashMap();
         String token = CacheUtils.getString(MembershipCardMainActivity.this, "token", null);
         String club_uuid = CacheUtils.getString(MembershipCardMainActivity.this, "clubuuid", null);
-
         MyApplication.volleyGET(APIUrls.ANNOUNCEMENTS + "token=" + token + "&" + "club_uuid=" + club_uuid, map, new MyApplication.VolleyCallBack()
         {
             @Override
@@ -201,17 +204,21 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                     startActivity(new Intent(MembershipCardMainActivity.this, SignInActivity.class));
                     finish();
                     ActivityCollector.finishAll();
-                } else
+                } else if (!response.contains("10003"))
                 {
+                    Xlog.d("responseresponseresponseresponse" + response.toString());
                     List<Announcements> data = Announcements.instance(response);
                     if (data.size() > 0)
                     {
                         for (int i = 0; i < data.size(); i++)
                         {
                             String text = data.get(i).getTitle();
+                            String text1 = DateUtils.getDateToString(Long.valueOf(data.get(i).getPublished_at()) * 1000);
                             list.add(text);
+                            list1.add(text1);
                         }
                         membershipCardNoticeInfo.setText(data.get(0).getTitle());
+                        membershipCardNoticeInfoDate.setText(DateUtils.getDateToString(Long.valueOf(data.get(0).getPublished_at()) * 1000));
                         Xlog.d(list.toString() + "list------------------------------------");
                     }
 
@@ -238,9 +245,9 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
 
     private void setAnnouncementOutAnimation()
     {
-        Animation announcementOutAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY(), -70f);
+        Animation announcementOutAnimation = new TranslateAnimation(membershipCardNoticeInfoLl.getScaleX(), membershipCardNoticeInfoLl.getScaleX(), membershipCardNoticeInfoLl.getScaleY(), -150f);
         announcementOutAnimation.setDuration(500);
-        membershipCardNoticeInfo.startAnimation(announcementOutAnimation);
+        membershipCardNoticeInfoLl.startAnimation(announcementOutAnimation);
         announcementOutAnimation.setAnimationListener(new Animation.AnimationListener()
         {
             @Override
@@ -265,9 +272,9 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
 
     private void setAnnouncementInAnimation()
     {
-        Animation announcementInAnimation = new TranslateAnimation(membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleX(), membershipCardNoticeInfo.getScaleY() + 70f, membershipCardNoticeInfo.getScaleY());
+        Animation announcementInAnimation = new TranslateAnimation(membershipCardNoticeInfoLl.getScaleX(), membershipCardNoticeInfoLl.getScaleX(), membershipCardNoticeInfoLl.getScaleY() + 150f, membershipCardNoticeInfoLl.getScaleY());
         announcementInAnimation.setDuration(500);
-        membershipCardNoticeInfo.startAnimation(announcementInAnimation);
+        membershipCardNoticeInfoLl.startAnimation(announcementInAnimation);
         announcementInAnimation.setAnimationListener(new Animation.AnimationListener()
         {
             @Override
@@ -276,6 +283,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 if (list.size() != 0 && list.get(j) != null)
                 {
                     membershipCardNoticeInfo.setText(list.get(j));
+                    membershipCardNoticeInfoDate.setText(list1.get(j));
                 }
 
             }
@@ -305,12 +313,15 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         Button button1 = (Button) indicatorLinearLayout.getChildAt(0);
         if (isSelected)
         {
-            button1.setBackgroundResource(R.mipmap.home_page_dot_select);
+//            button1.setBackgroundResource(R.mipmap.home_page_dot_select);
+            button1.setBackgroundResource(R.mipmap.icon_dot_normal);
         } else
         {
-            button1.setBackgroundResource(R.mipmap.icon_dot_normal);
+            button1.setBackgroundResource(R.mipmap.home_page_dot_select);
+//            button1.setBackgroundResource(R.mipmap.icon_dot_normal);
         }
-        indicator.setBackgroundResource(R.mipmap.icon_dot_normal);
+//        indicator.setBackgroundResource(R.mipmap.icon_dot_normal);
+        indicator.setBackgroundResource(R.mipmap.home_page_dot_select);
         membershipCardViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
         {
             @Override
@@ -319,7 +330,9 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 if (!isSelected)
                 {
                     Button button1 = (Button) indicatorLinearLayout.getChildAt(0);
-                    button1.setBackgroundResource(R.mipmap.icon_dot_normal);
+//                    button1.setBackgroundResource(R.mipmap.icon_dot_normal);
+                    button1.setBackgroundResource(R.mipmap.home_page_dot_select);
+
                 }
             }
 
@@ -329,7 +342,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
 
                 if (mPreSelectedBt != null)
                 {
-                    mPreSelectedBt.setBackgroundResource(R.mipmap.icon_dot_normal);
+//                    mPreSelectedBt.setBackgroundResource(R.mipmap.icon_dot_normal);
+                    mPreSelectedBt.setBackgroundResource(R.mipmap.home_page_dot_select);
                 }
                 if (position != 0)
                 {
@@ -339,7 +353,8 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                     isSelected = true;
                 }
                 Button currentBt = (Button) indicatorLinearLayout.getChildAt(position);
-                currentBt.setBackgroundResource(R.mipmap.home_page_dot_select);
+//                currentBt.setBackgroundResource(R.mipmap.home_page_dot_select);
+                currentBt.setBackgroundResource(R.mipmap.icon_dot_normal);
                 mPreSelectedBt = currentBt;
             }
 
@@ -381,28 +396,28 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                     {
                         view = LayoutInflater.from(MembershipCardMainActivity.this).inflate(R.layout.membership_viewpager_item, null);
                         ImageView membershipViewPagerCourseImage = (ImageView) view.findViewById(R.id.membershipViewPagerCourseImage);
-                        TextView membershipViewPagerCourseName = (TextView) view.findViewById(R.id.membershipViewPagerCourseName);
+//                        TextView membershipViewPagerCourseName = (TextView) view.findViewById(R.id.membershipViewPagerCourseName);
                         TextView membershipViewPagerCardType = (TextView) view.findViewById(R.id.membershipViewPagerCardType);
                         TextView membershipViewPagerCardBalance = (TextView) view.findViewById(R.id.membershipViewPagerCardBalance);
                         TextView membershipViewPagerCardNumber = (TextView) view.findViewById(R.id.membershipViewPagerCardNumber);
                         TextView membershipViewPagerCardPeriodOfValidity = (TextView) view.findViewById(R.id.periodOfValidity);
-                        ImageView viewPagerDivider = (ImageView) view.findViewById(R.id.viewPagerDivider);
+//                        ImageView viewPagerDivider = (ImageView) view.findViewById(R.id.viewPagerDivider);
                         RelativeLayout membershipCardViewPagerRoot = (RelativeLayout) view.findViewById(R.id.membershipCardViewPagerRoot);
                         imageLoader.displayImage(data.getClub().getLogo(), membershipViewPagerCourseImage);
-                        membershipViewPagerCourseName.setText(data.getClub().getName());
+//                        membershipViewPagerCourseName.setText(data.getClub().getName());
                         membershipViewPagerCardType.setText(data.getMembers().get(i).getCard().getName());
                         String periodOfValidity = DateUtils.getDateToString(Long.valueOf(data.getMembers().get(i).getExpired_at()) * 1000);
-                        membershipViewPagerCardPeriodOfValidity.setText("有效日期：" + periodOfValidity);
-                        membershipViewPagerCardBalance.setText("余额:￥" + data.getMembers().get(i).getBalance());
-                        membershipViewPagerCardNumber.setText("NO:" + data.getMembers().get(i).getNumber());
-                        GradientDrawable myGrad = (GradientDrawable) membershipCardViewPagerRoot.getBackground();
-                        myGrad.setColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
-                        membershipViewPagerCourseName.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
+                        membershipViewPagerCardPeriodOfValidity.setText("有效期至：" + periodOfValidity);
+                        membershipViewPagerCardBalance.setText(data.getMembers().get(i).getBalance());
+                        membershipViewPagerCardNumber.setText("卡号:" + data.getMembers().get(i).getNumber());
+//                        GradientDrawable myGrad = (GradientDrawable) membershipCardViewPagerRoot.getBackground();
+//                        myGrad.setColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getBackground_color()));
+//                        membershipViewPagerCourseName.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
                         membershipViewPagerCardType.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
                         membershipViewPagerCardBalance.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
                         membershipViewPagerCardNumber.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
                         membershipViewPagerCardPeriodOfValidity.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
-                        viewPagerDivider.setBackgroundColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
+//                        viewPagerDivider.setBackgroundColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
                         pagerViews.add(view);
                         adapter = new MembershipCardViewpagerAdapter(pagerViews, MembershipCardMainActivity.this);
                         membershipCardViewPager.setAdapter(adapter);
@@ -470,7 +485,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
         btnFoodService.setOnClickListener(this);
         membershipCardMainTitleLeft.setOnClickListener(this);
         btnMemberStore.setOnClickListener(this);
-        membershipCardNoticeInfo.setOnClickListener(this);
+        membershipCardNoticeInfoLl.setOnClickListener(this);
         btnCostHistory.setOnClickListener(this);
         membershipCardMainImageLeft.setClickable(false);
         membershipCardMainImageRight.setClickable(false);
@@ -508,7 +523,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                 intent.putExtra(H5Activity.SIGN_URL, "http://kdt.im/bbXtJr");
                 startActivity(intent);
                 break;
-            case R.id.membershipCardNoticeInfo:
+            case R.id.membershipCardNoticeInfoLl:
                 startActivity(new Intent(MembershipCardMainActivity.this, AnnouncementsListActivity.class));
                 break;
             case R.id.btnCostHistory:

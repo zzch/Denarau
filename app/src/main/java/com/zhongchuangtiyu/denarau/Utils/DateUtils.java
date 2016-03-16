@@ -73,6 +73,13 @@ public static String getDateToString4(long time)
     sf = new SimpleDateFormat("yyyy.MM.dd");
     return sf.format(d);
 }
+//    yyyy/mm/dd
+public static String getDateToString8(long time)
+{
+    Date d = new Date(time);
+    sf = new SimpleDateFormat("yyyy/MM/dd");
+    return sf.format(d);
+}
 //    MM
 public static String getDateToString5(long time)
 {

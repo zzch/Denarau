@@ -7,38 +7,38 @@ import com.youzan.sdk.web.bridge.IBridgeEnv;
 import com.youzan.sdk.web.event.ShareDataEvent;
 
 /**
- * ¹¦ÄÜ    : »ñÈ¡µ±Ç°Ò³ÃæµÄ·ÖÏíĞÅÏ¢
+ * åŠŸèƒ½    : è·å–å½“å‰é¡µé¢çš„åˆ†äº«ä¿¡æ¯
  *
- * Ê¹ÓÃ³¡¾°: ½«µ±Ç°ÉÌÆ·Ò³Ãæ·ÖÏíµ½¸÷´óÉç½»Æ½Ì¨Ôö¼ÓÆØ¹âÂÊ
- * ´¥·¢Ìõ¼ş: ÔÚµ±Ç°Ò³Ãæ¼ÓÔØÍê³Éºóµ÷ÓÃ{@code YouzanBridge.sharePage()}
- * ËµÃ÷    : »Øµ÷ÖĞÖ»»áÌá¹©·ÖÏíĞÅÏ¢, Ö®ºóµÄ·ÖÏí¶¯×÷ĞèÒª¿ª·¢Õß×ÔĞĞ¼¯³É
- * ²ÎÊıËµÃ÷:
+ * ä½¿ç”¨åœºæ™¯: å°†å½“å‰å•†å“é¡µé¢åˆ†äº«åˆ°å„å¤§ç¤¾äº¤å¹³å°å¢åŠ æ›å…‰ç‡
+ * è§¦å‘æ¡ä»¶: åœ¨å½“å‰é¡µé¢åŠ è½½å®Œæˆåè°ƒç”¨{@code YouzanBridge.sharePage()}
+ * è¯´æ˜    : å›è°ƒä¸­åªä¼šæä¾›åˆ†äº«ä¿¡æ¯, ä¹‹åçš„åˆ†äº«åŠ¨ä½œéœ€è¦å¼€å‘è€…è‡ªè¡Œé›†æˆ
+ * å‚æ•°è¯´æ˜:
  *
  * {@link com.youzan.sdk.model.goods.GoodsShareModel}
  *
- *      title:  Ò³Ãæ±êÌâ
- *      link:   µ±Ç°Ò³ÃæÁ´½Ó
- *      desc:   ÉÌÆ·ÏêÏ¸µÄÃèÊö
- *      imgUrl: ÉÌÆ·Í¼Æ¬Á´½Ó
- *      imgWidth:   Í¼Æ¬¿í¶È
- *      imgHeight:  Í¼Æ¬¸ß¶È
+ *      title:  é¡µé¢æ ‡é¢˜
+ *      link:   å½“å‰é¡µé¢é“¾æ¥
+ *      desc:   å•†å“è¯¦ç»†çš„æè¿°
+ *      imgUrl: å•†å“å›¾ç‰‡é“¾æ¥
+ *      imgWidth:   å›¾ç‰‡å®½åº¦
+ *      imgHeight:  å›¾ç‰‡é«˜åº¦
  *
  */
 public final class ShareEvent extends ShareDataEvent
 {
 
     /**
-     * »Ø´«·ÖÏíÊı¾İ, ÔÙµ÷ÓÃ×é¼ş½øĞĞ·ÖÏí
+     * å›ä¼ åˆ†äº«æ•°æ®, å†è°ƒç”¨ç»„ä»¶è¿›è¡Œåˆ†äº«
      *
-     * @param env Ò»Ğ©ÉÏÏÂÎÄ»·¾³
-     * @param data ·ÖÏíÊı¾İ
+     * @param env ä¸€äº›ä¸Šä¸‹æ–‡ç¯å¢ƒ
+     * @param data åˆ†äº«æ•°æ®
      */
     @Override
     public void call(IBridgeEnv env, GoodsShareModel data) {
         new AlertDialog
                 .Builder(env.getActivity())
                 .setTitle(data.getTitle())
-                .setMessage("·ÖÏíÁ´½Ó:\n" + data.getLink() + "\n\nÍ¼Æ¬Á´½Ó:\n" + data.getImgUrl() + "\n\nÃèÊö:\n" + data.getDesc())
+                .setMessage("åˆ†äº«é“¾æ¥:\n" + data.getLink() + "\n\nå›¾ç‰‡é“¾æ¥:\n" + data.getImgUrl() + "\n\næè¿°:\n" + data.getDesc())
                 .create()
                 .show();
     }

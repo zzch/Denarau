@@ -1,71 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/layout_border"
-                android:id="@+id/membershipCardViewPagerRoot"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp">
+                android:layout_height="200dp"
+                android:id="@+id/membershipCardViewPagerRoot">
 
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/membershipViewPagerCourseImage"/>
+    <!--<de.hdodenhof.circleimageview.CircleImageView-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:id="@+id/membershipViewPagerCourseImage"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentStart="true"/>-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="珀翡高"
-        android:id="@+id/membershipViewPagerCourseName"
-        android:layout_marginLeft="2dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/membershipViewPagerCourseImage"
-        android:layout_marginTop="10dp"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+        <!--android:text="珀翡高"-->
+        <!--android:id="@+id/membershipViewPagerCourseName"-->
+        <!--android:layout_marginLeft="2dp"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_toEndOf="@+id/membershipViewPagerCourseImage"-->
+        <!--android:layout_marginTop="10dp"/>-->
 
     <TextView
+        android:textColor="#a29d9d"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="储值卡"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/membershipViewPagerCardType"
-        android:textSize="30sp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignTop="@+id/imageView6"
+        android:layout_toEndOf="@+id/imageView6"
+        android:layout_marginTop="30dp"/>
 
     <TextView
+        android:textColor="#b5b5b5"
+        android:textSize="12sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="NO. 1111 1111 1111 1111"
         android:id="@+id/membershipViewPagerCardNumber"
-        android:layout_below="@+id/viewPagerDivider"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="4dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="余额：￥2000"
-        android:id="@+id/membershipViewPagerCardBalance"
-        android:layout_marginRight="10dp"
-        android:layout_alignBottom="@+id/viewPagerDivider"
-        android:layout_alignEnd="@+id/viewPagerDivider"
-        android:layout_marginBottom="4dp"/>
-    <ImageView
-        android:id="@+id/viewPagerDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#a29d9d"
-        android:layout_marginTop="68dp"
-        android:layout_below="@+id/membershipViewPagerCardType"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/periodOfValidity"
         android:layout_alignParentStart="true"/>
 
     <TextView
+        android:textColor="#a29d9d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/membershipViewPagerCardBalance"
+        android:layout_marginRight="5dp"
+        android:layout_alignBottom="@+id/membershipViewPagerCourseImageBg"
+        android:layout_toEndOf="@+id/imageView6"
+        />
+    <!--<ImageView-->
+        <!--android:id="@+id/viewPagerDivider"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#a29d9d"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentStart="true"/>-->
+
+    <TextView
+        android:textSize="12sp"
+        android:textColor="#b5b5b5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/periodOfValidity"
-        android:layout_alignBottom="@+id/membershipViewPagerCardBalance"
-        android:layout_alignParentStart="true"/>
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#a29d9d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="储值余额"
+        android:id="@+id/textView47"
+        android:layout_marginLeft="5dp"
+        android:layout_above="@+id/membershipViewPagerCardBalance"
+        android:layout_toEndOf="@+id/imageView6"
+        android:layout_marginBottom="8dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView6"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:background="@mipmap/backgroudball"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/membershipViewPagerCourseImageBg"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="500dp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/membershipViewPagerCourseImage"
+        android:layout_marginLeft="61dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="68dp"/>
+
 </RelativeLayout>
