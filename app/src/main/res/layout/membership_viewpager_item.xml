@@ -94,7 +94,7 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:background="@mipmap/backgroudball"
-        android:layout_width="100dp"
+        android:layout_width="105dp"
         android:layout_height="100dp"
         android:id="@+id/membershipViewPagerCourseImageBg"
         android:layout_centerVertical="true"
@@ -106,7 +106,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:id="@+id/membershipViewPagerCourseImage"
-        android:layout_marginLeft="61dp"
+        android:layout_marginLeft="62dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="68dp"/>
