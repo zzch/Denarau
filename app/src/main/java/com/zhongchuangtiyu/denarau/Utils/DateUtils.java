@@ -100,4 +100,18 @@ public static String getDateToString7(long time)
     sf = new SimpleDateFormat("MM月dd日 HH:ss");
     return sf.format(d);
 }
+//   MMddHHmm
+public static String getDateToString9(long time)
+{
+    Date d = new Date(time * 1000);
+    sf = new SimpleDateFormat("MM-dd");
+    return sf.format(d);
+}
+//   MMddHHmm
+public static String getDateToString10(long time)
+{
+    Date d = new Date(time * 1000);
+    sf = new SimpleDateFormat("HH:ss");
+    return sf.format(d);
+}
 }

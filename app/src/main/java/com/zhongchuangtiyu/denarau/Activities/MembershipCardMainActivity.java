@@ -87,6 +87,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
     @Bind(R.id.membershipCardNoticeInfoLl)
     LinearLayout membershipCardNoticeInfoLl;
     private List<View> pagerViews;
+    private int position1;
     private MembershipCardViewpagerAdapter adapter;
     private View view;
     private ImageLoader imageLoader = ImageLoader.getInstance();
@@ -356,6 +357,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
 //                currentBt.setBackgroundResource(R.mipmap.home_page_dot_select);
                 currentBt.setBackgroundResource(R.mipmap.icon_dot_normal);
                 mPreSelectedBt = currentBt;
+                position1 = position;
             }
 
             @Override
@@ -419,8 +421,21 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                         membershipViewPagerCardPeriodOfValidity.setTextColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
 //                        viewPagerDivider.setBackgroundColor(Color.parseColor("#" + data.getMembers().get(i).getCard().getFont_color()));
                         pagerViews.add(view);
+                        Xlog.d("position1position1position1position1====" + position1);
+                        pagerViews.get(position1).setOnClickListener(new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                String member_uuid = data.getMembers().get(position1).getUuid();
+                                Intent intent = new Intent(MembershipCardMainActivity.this, SwipeCardHistory.class);
+                                intent.putExtra("member_uuid", member_uuid);
+                                startActivity(intent);
+                            }
+                        });
                         adapter = new MembershipCardViewpagerAdapter(pagerViews, MembershipCardMainActivity.this);
                         membershipCardViewPager.setAdapter(adapter);
+
                         final int finalI = i;
 //                        membershipCardViewPagerRoot.setOnClickListener(new View.OnClickListener()
 //                        {
@@ -439,6 +454,7 @@ public class MembershipCardMainActivity extends BaseActivity implements View.OnC
                     membershipCardMainWeather.setText("今天：" + String.valueOf(data.getWeather().getMaximum_temperature()) + "℃");
                     Xlog.d(data.getWeather().getMaximum_temperature() + "data.getWeatherEntity().getMaximum_temperature()------------------");
                     membershipCardViewPager.setAdapter(adapter);
+
                 }
             }
 

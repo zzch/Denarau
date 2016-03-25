@@ -66,6 +66,8 @@
     <string name="title_activity_my_course">MyCourseActivity</string>
     <string name="title_activity_course_order2">CourseOrder2Activity</string>
     <string name="title_activity_time_picker_test">TimePickerTest</string>
+    <string name="title_activity_swipe_card_history">SwipeCardHistory</string>
+    <string name="title_activity_swipe_card_detail">SwipeCardDetail</string>
     <!--极光推送end-->
 
 </resources>

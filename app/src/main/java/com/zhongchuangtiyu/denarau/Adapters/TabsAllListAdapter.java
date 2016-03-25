@@ -160,6 +160,10 @@ public class TabsAllListAdapter extends BaseAdapter
                         viewholder.tvState.setText("已取消");
                         viewholder.tvState.setVisibility(View.VISIBLE);
                         break;
+                    case "voided":
+                        viewholder.tvState.setText("已撤销");
+                        viewholder.tvState.setVisibility(View.VISIBLE);
+                        break;
                 }
                 method.setGravity(Gravity.CENTER_HORIZONTAL);
                 method.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));

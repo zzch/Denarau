@@ -35,6 +35,8 @@ public class APIUrls
 //    public static String CURRICULUMS = "http://staging.lianqiubao.com/api/v1/curriculums.json?token=";
 //    public static String CURRICULUMS_RATING = "http://staging.lianqiubao.com/api/v1/curriculums/rating.json?";
 //    public static String PRIVATE_COURSES_RESERVE = "http://staging.lianqiubao.com/api/v1/lessons/reserve_private.json";
+//    public static String MEMBERS = "http://staging.lianqiubao.com/api/v1/members/transaction_records.json?";
+//    public static String TABS_DETAIL = "http://staging.lianqiubao.com/api/v1/tabs/detail.json?";
 
 
     public static String SIGN_IN_URL = "http://lianqiubao.com/api/v1/sign_in.json";
@@ -67,4 +69,6 @@ public class APIUrls
     public static String CURRICULUMS = "http://lianqiubao.com/api/v1/curriculums.json?token=";
     public static String CURRICULUMS_RATING = "http://lianqiubao.com/api/v1/curriculums/rating.json?";
     public static String PRIVATE_COURSES_RESERVE = "http://lianqiubao.com/api/v1/lessons/reserve_private.json";
+    public static String MEMBERS = "http://lianqiubao.com/api/v1/members/transaction_records.json?";
+    public static String TABS_DETAIL = "http://lianqiubao.com/api/v1/tabs/detail.json?";
 }

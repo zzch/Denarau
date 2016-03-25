@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context="com.zhongchuangtiyu.denarau.Activities.SwipeCardDetail"
+                tools:showIn="@layout/activity_swipe_card_detail">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
+        <LinearLayout
+            android:background="@drawable/xiaofeixinxi_bj"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/relativeLayout11"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="消费单号"
+                    android:id="@+id/textView26"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="前台支付"
+                    android:id="@+id/textView51"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/sequence"
+                    android:layout_below="@+id/textView26"
+                    android:layout_alignStart="@+id/textView26"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/reception_payment"
+                    android:layout_below="@+id/textView51"
+                    android:layout_alignEnd="@+id/textView51"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayout11"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/relativeLayout12"
+                android:layout_marginTop="7dp">
+
+                <ImageView
+                    android:background="@mipmap/xiaofeixinxi_xuanx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView42"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:textColor="#e54a4b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="消费时间"
+                    android:id="@+id/textView52"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/imageView42"
+                    android:layout_marginTop="16dp"/>
+
+                <ImageView
+                    android:background="#e54a4b"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/imageView43"
+                    android:layout_below="@+id/textView52"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/entranceDate"
+                    android:layout_below="@+id/imageView43"
+                    android:layout_alignStart="@+id/textView52"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/tabs_time"
+                    android:layout_below="@+id/imageView43"
+                    android:layout_toEndOf="@+id/entranceDate"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/relativeLayout13"
+                android:layout_below="@+id/relativeLayout12">
+
+                <ImageView
+                    android:background="@mipmap/xiaofeixinxi_xuanx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView70"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:textColor="#e54a4b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="消费明细"
+                    android:id="@+id/textView67"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/imageView70"
+                    android:layout_marginTop="16dp"/>
+
+                <ImageView
+                    android:background="#e54a4b"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/imageView71"
+                    android:layout_below="@+id/textView67"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView71"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="消费内容"
+                        android:layout_alignTop="@+id/imageView71"
+                        android:layout_alignStart="@+id/imageView71"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="小计"
+                        android:layout_alignTop="@+id/imageView71"
+                        android:layout_centerHorizontal="true"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="付款方式"
+                        android:layout_below="@+id/imageView71"
+                        android:layout_alignEnd="@+id/imageView71"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayout13"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/tabListView2"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+            <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="New Button"-->
+            <!--android:id="@+id/btnConfirmC"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerHorizontal="true"/>-->
+
+            <TextView
+                android:textColor="#ffffff"
+                android:background="@mipmap/xfjl_anniu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/tvState"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_below="@+id/tabListView2"
+                android:layout_alignParentEnd="true"
+                />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

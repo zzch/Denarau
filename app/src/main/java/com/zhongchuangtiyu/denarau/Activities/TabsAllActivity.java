@@ -146,7 +146,7 @@ public class TabsAllActivity extends BaseActivity implements View.OnClickListene
         Xlog.d(String.valueOf(page) + "page------------------------------");
         Xlog.d(token + "token------------------------------");
 
-        MyApplication.volleyGET(APIUrls.TABS_ALL + "token=" + token + "&" + "&" + "page=" + page, map, new MyApplication.VolleyCallBack()
+        MyApplication.volleyGET(APIUrls.TABS_ALL + "token=" + token + "&" + "page=" + page, map, new MyApplication.VolleyCallBack()
         {
             @Override
             public void netSuccess(String response)

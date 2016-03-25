@@ -164,6 +164,10 @@ public class TabsListAdapter1 extends BaseAdapter
                         viewholder.tvState.setText("已取消");
                         viewholder.tvState.setVisibility(View.VISIBLE);
                         break;
+                    case "voided":
+                        viewholder.tvState.setText("已撤销");
+                        viewholder.tvState.setVisibility(View.VISIBLE);
+                        break;
                     case "confirming":
                         viewholder.btnConfirmC.setText("确认消费");
                         viewholder.btnConfirmC.setVisibility(View.VISIBLE);

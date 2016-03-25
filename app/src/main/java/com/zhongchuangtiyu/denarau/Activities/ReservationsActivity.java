@@ -210,7 +210,6 @@ public class ReservationsActivity extends BaseActivity implements View.OnClickLi
                     reservationsFrame.refreshComplete();
                 }
             }
-
             @Override
             public void netFail(VolleyError error)
             {
@@ -219,7 +218,12 @@ public class ReservationsActivity extends BaseActivity implements View.OnClickLi
             }
         });
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
     @Override
     public void onClick(View v)
     {

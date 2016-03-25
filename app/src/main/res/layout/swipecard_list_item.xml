@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:minHeight="80dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="03-05"
+                android:id="@+id/swipeCardDate"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="11:00"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:id="@+id/swipeCardTime"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <ImageView
+                android:background="@mipmap/sk_canying"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/canyin"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                android:layout_marginLeft="8dp"/>
+
+            <ImageView
+                android:background="@mipmap/sk_chongzhi"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/chongzhi"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:background="@mipmap/sk_dawei"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/dawei"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:background="@mipmap/sk_qita"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/qita"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:background="@mipmap/sk_tuikuan"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/tuikuan"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="+5000.00"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:id="@+id/swipeCardSum"
+                android:layout_weight="1"
+                android:textSize="19sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

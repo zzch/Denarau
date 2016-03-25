@@ -289,7 +289,6 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <activity
             android:name=".Activities.CoachesDetailActivity"
@@ -395,13 +394,23 @@
             android:label="@string/title_activity_course_order2"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".h5.H5Activity"
-                  android:theme="@style/AppTheme.NoActionBar">
-
+        <activity
+            android:name=".h5.H5Activity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".Demos.TimePickerTest"
             android:label="@string/title_activity_time_picker_test">
+        </activity>
+        <activity
+            android:name=".Activities.SwipeCardHistory"
+            android:label="@string/title_activity_swipe_card_history"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".Activities.SwipeCardDetail"
+            android:label="@string/title_activity_swipe_card_detail"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 
